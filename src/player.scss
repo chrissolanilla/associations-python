@@ -1,1 +1,47 @@
 /* my player scss */
+.modalClass {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.styled-button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.styled-button:hover {
+    background-color: #333;
+}
+
+.styled-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+.wordsPreview {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.previewItem {
+    opacity: 1;
+    font-size: 1rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #efefe6;
+    border-radius: 6px;
+    height: 4rem;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0.5rem;
+}

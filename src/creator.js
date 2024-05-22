@@ -12,6 +12,28 @@ let widgetState = {
     description3: '',
     description4: ''
 };
+function updatePreview() {
+	//get the words from the input seperated by comma
+	widgetState.words1 = document.getElementById('Words1').value.split(',').map(word => word.trim());
+	widgetState.words2 = document.getElementById('Words2').value.split(',').map(word => word.trim());
+	widgetState.words3 = document.getElementById('Words3').value.split(',').map(word => word.trim());
+	widgetState.words4 = document.getElementById('Words4').value.split(',').map(word => word.trim());
+
+	const allWords = [...widgetState.words1, ...widgetState.words2, ...widgetState.words3, ...widgetState.words4].filter(word => word);
+
+	const previewItems = document.querySelectorAll('.previewItem');
+	//update the item divs live
+	previewItems.forEach((item, index) => {
+		item.textContent = allWords[index] || '';
+	});
+}
+
+function updateDescription() {
+	widgetState.description1 = document.getElementById('Description1').value.trim();
+	widgetState.description2 = document.getElementById('Description2').value.trim();
+	widgetState.description3 = document.getElementById('Description3').value.trim();
+	widgetState.description4 = document.getElementById('Description4').value.trim();
+}
 //event listeners for the description and words input
 document.querySelectorAll('.CreatorAnswers input').forEach(input => {
 	input.addEventListener('input', updatePreview);
@@ -20,28 +42,6 @@ document.querySelectorAll('.AnswerDescriptions input').forEach(input => {
 	input.addEventListener('input', updateDescription);
 });
 
-function updatePreview() {
-	//get the words from the input seperated by comma
-    widgetState.words1 = document.getElementById('Words1').value.split(',').map(word => word.trim());
-    widgetState.words2 = document.getElementById('Words2').value.split(',').map(word => word.trim());
-    widgetState.words3 = document.getElementById('Words3').value.split(',').map(word => word.trim());
-    widgetState.words4 = document.getElementById('Words4').value.split(',').map(word => word.trim());
-
-    const allWords = [...widgetState.words1, ...widgetState.words2, ...widgetState.words3, ...widgetState.words4].filter(word => word);
-
-    const previewItems = document.querySelectorAll('.previewItem');
-	//update the item divs live
-    previewItems.forEach((item, index) => {
-        item.textContent = allWords[index] || '';
-    });
-}
-
-function updateDescription() {
-    widgetState.description1 = document.getElementById('Description1').value.trim();
-    widgetState.description2 = document.getElementById('Description2').value.trim();
-    widgetState.description3 = document.getElementById('Description3').value.trim();
-    widgetState.description4 = document.getElementById('Description4').value.trim();
-}
 
 Materia.CreatorCore.start({
     initNewWidget: (widget, baseUrl, mediaUrl) => {

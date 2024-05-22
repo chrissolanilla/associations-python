@@ -4,12 +4,43 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="player.css">
         <title>Connections</title>
 
         <script src="materia.enginecore.js"></script>
     </head>
     <body>
-        <div id="root"></div>
+        <!--Show a modal in the beginning?-->
+        <!-- <button data-open-modal >Open the modal</button> -->
+        <dialog data-modal class="modal">
+            <div class="modalClass">
+                <h1>Welcome to the Connections Game!</h1>
+                <p>Select words in pairs of 4 that belong to a common category</p>
+                <button data-close-modal class="styled-button">Start Game</button>
+            </div>
+        </dialog>
+
+        <main>
+            <h1>This is the main content!</h1>
+            <div class="wordsPreview">
+                <div class="previewItem" id="preview1"></div>
+                <div class="previewItem" id="preview2"></div>
+                <div class="previewItem" id="preview3"></div>
+                <div class="previewItem" id="preview4"></div>
+                <div class="previewItem" id="preview5"></div>
+                <div class="previewItem" id="preview6"></div>
+                <div class="previewItem" id="preview7"></div>
+                <div class="previewItem" id="preview8"></div>
+                <div class="previewItem" id="preview9"></div>
+                <div class="previewItem" id="preview10"></div>
+                <div class="previewItem" id="preview11"></div>
+                <div class="previewItem" id="preview12"></div>
+                <div class="previewItem" id="preview13"></div>
+                <div class="previewItem" id="preview14"></div>
+                <div class="previewItem" id="preview15"></div>
+                <div class="previewItem" id="preview16"></div>
+            </div>
+        </main>
 
 		<script src="player.js"></script>
     </body>
