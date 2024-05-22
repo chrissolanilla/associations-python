@@ -7,8 +7,12 @@ const widgetWebpack = require('materia-widget-development-kit/webpack-widget')
 
 const rules = widgetWebpack.getDefaultRules()
 const copy = [
-	...widgetWebpack.getDefaultCopyList()
-]
+	...widgetWebpack.getDefaultCopyList(),
+	{
+		from: path.join(__dirname, 'src', 'demo.json'),
+        to: path.join(outputPath, 'demo.json')
+	}
+];
 
 const entries = {
 	'player': [
