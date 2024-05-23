@@ -1,4 +1,7 @@
 /* my player scss */
+body{
+	font-family: Georgia, serif;
+}
 h1 {
 	text-align: center;
 }
@@ -89,21 +92,50 @@ h1 {
 	background-color: blue;
 }
 .previewItem.selected {
-	background-color: red;
+	background-color: rgb(219, 154, 154);
 }
 
 .previewItem input[type="checkbox"]:checked + label {
 	background-color: red;
 }
 .previewItem.selected-4 input[type="checkbox"]:checked + label {
-	background-color: red;
+	background-color: rgb(223, 123, 234);;
 }
 .previewItem.selected-8 input[type="checkbox"]:checked + label {
-	background-color: blue;
+	background-color: rgb(84, 146, 255);;
 }
 .previewItem.selected-12 input[type="checkbox"]:checked + label {
-	background-color: green;
+	background-color: rgb(105, 227, 82);
 }
 .previewItem.selected-16 input[type="checkbox"]:checked + label {
-	background-color: yellow;
+	background-color: rgb(251, 212, 0);
+}
+.CorrectAnswers {
+	display: grid;
+    justify-content: center;
+    // margin-bottom: 8px;
+    gap: 8px;
+    // background-color: rgb(84, 146, 255);;
+    text-align: center;
+    // padding: 2rem 2rem;
+    // color: white;
+	font-weight: bold;
+}
+.AnswerDivBackground {	
+	padding: 2rem 2rem;
+	margin-bottom: 8px;
+	width: 90vw;
+	// how do i make the colors correspond to the groups like red blue and green?
+}
+.AnswerDivBackground.selected-4 {
+	background-color:rgb(223, 123, 234);
+}
+.AnswerDivBackground.selected-8 {
+	background-color:rgb(84, 146, 255);
+}
+.AnswerDivBackground.selected-12 {
+	background-color:rgb(105, 227, 82);
+}
+.AnswerDivBackground.selected-16 {
+	background-color:rgb(251, 212, 0);
 }

@@ -78,67 +78,97 @@ function selectWord(word, wordElement, checkbox) {
 }
 //this reduces a lot of redundant code in update seleciton styles
 function updateButtonStyles(buttonId, isEnabled) {
-    const button = document.getElementById(buttonId);
-    if (isEnabled) {
-        button.classList.remove('greyOutButton');
-        button.classList.add('styled-button');
-    } else {
-        button.classList.remove('styled-button');
-        button.classList.add('greyOutButton');
-    }
+	const button = document.getElementById(buttonId);
+	if (isEnabled) {
+		button.classList.remove('greyOutButton');
+		button.classList.add('styled-button');
+	} else {
+		button.classList.remove('styled-button');
+		button.classList.add('greyOutButton');
+	}
 }
 
 function updateSelectionStyles() {
-    const wordsGrid = document.querySelector('.wordsPreview');
-    wordsGrid.querySelectorAll('.previewItem').forEach(item => {
-        item.classList.remove('selected-4', 'selected-8', 'selected-12', 'selected-16');
-    });
+	const wordsGrid = document.querySelector('.wordsPreview');
+	
+	wordsGrid.querySelectorAll('.previewItem').forEach(item => {
+		item.classList.remove('selected-4', 'selected-8', 'selected-12', 'selected-16');
+	});
 
-    selectedWords.forEach((word, index) => {
-        const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
-            .find(input => input.nextElementSibling.textContent === word);
-        const item = checkbox.parentNode;
-        if (index < 4) item.classList.add('selected-4');
-        else if (index < 8) item.classList.add('selected-8');
-        else if (index < 12) item.classList.add('selected-12');
-        else item.classList.add('selected-16');
-    });
+	selectedWords.forEach((word, index) => {
+		const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
+			.find(input => input.nextElementSibling.textContent === word);
+		const item = checkbox.parentNode;
+		if (index < 4) item.classList.add('selected-4');
+		else if (index < 8) item.classList.add('selected-8');
+		else if (index < 12) item.classList.add('selected-12');
+		else item.classList.add('selected-16');
+	});
 
-    const selectionCount = selectedWords.length;
-    updateButtonStyles('check4', selectionCount === 4);
-    updateButtonStyles('check8', selectionCount === 8);
-    updateButtonStyles('check12', selectionCount === 12);
-    updateButtonStyles('check16', selectionCount === 16);
+	const selectionCount = selectedWords.length;
+	updateButtonStyles('check4', selectionCount === 4);
+	updateButtonStyles('check8', selectionCount === 8);
+	updateButtonStyles('check12', selectionCount === 12);
+	updateButtonStyles('check16', selectionCount === 16);
 }
 
 function checkSelection(count) {
-    const groups = [
-        selectedWords.filter(word => currentQset.words1.includes(word)),
-        selectedWords.filter(word => currentQset.words2.includes(word)),
-        selectedWords.filter(word => currentQset.words3.includes(word)),
-        selectedWords.filter(word => currentQset.words4.includes(word))
-    ];
-    let foundCount = 0;
-    groups.forEach((group, index) => {
-        if (group.length === 4) {
-            alert(`Correct! Description: ${currentDescriptions[index]}`);
-            foundCount += 4;
-        }
-    });
-    if (foundCount === count) {
-        alert('All selected groups are correct!');
-    } else {
-        alert('Incorrect. Try again.');
+	//get our grid and our correct answers div
+	const wordsGrid = document.querySelector('.wordsPreview');
+    const correctAnswersDiv = document.getElementById('correctAnswers'); 
+	const groups = [
+		selectedWords.filter(word => currentQset.words1.includes(word)),
+		selectedWords.filter(word => currentQset.words2.includes(word)),
+		selectedWords.filter(word => currentQset.words3.includes(word)),
+		selectedWords.filter(word => currentQset.words4.includes(word))
+	];
+	let foundCount = 0;
+	groups.forEach((group, index) => {
+		if (group.length === 4) {
+			// alert(`Correct! Description: ${currentDescriptions[index]}`);
+			foundCount += 4;
+			//dynamically load the correct answers into the dom
+            const answerDiv = document.createElement('div');
+            answerDiv.classList.add('AnswerDivBackground');
+			//group them into selection groups so that we can style them seperately
+			if (index === 0) answerDiv.classList.add('selected-4');
+            else if (index === 1) answerDiv.classList.add('selected-8');
+            else if (index === 2) answerDiv.classList.add('selected-12');
+            else if (index === 3) answerDiv.classList.add('selected-16'); 
+            const strongDiv = document.createElement('div');
+            const strongElement = document.createElement('strong');
+            strongElement.textContent = currentDescriptions[index];
+            strongDiv.appendChild(strongElement);
+            
+            const answerDivWords = document.createElement('div');
+            answerDivWords.textContent = group.join(', ');
+            
+            answerDiv.appendChild(strongDiv);
+            answerDiv.appendChild(answerDivWords);
+            correctAnswersDiv.appendChild(answerDiv);
+			//remove the selected words off the checkbox grid
+			group.forEach(word => {
+				const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
+					.find(input => input.nextElementSibling.textContent === word);
+				const item = checkbox.parentNode;
+				wordsGrid.removeChild(item);
+			});
+		}
+	});
+	if (foundCount === count) {
+		// alert('All selected groups are correct!');
+	} else {
+		alert('Incorrect. Try again.');
 		document.getElementById('check4').classList.remove('styled-button');
 		document.getElementById('check8').classList.remove('styled-button');
 		document.getElementById('check12').classList.remove('styled-button');
 		document.getElementById('check16').classList.remove('styled-button');	
-    }
-    selectedWords = [];
-    document.querySelectorAll('.previewItem input[type="checkbox"]:checked').forEach(checkbox => {
-        checkbox.checked = false;
-    });
-    updateSelectionStyles();
+	}
+	selectedWords = [];
+	document.querySelectorAll('.previewItem input[type="checkbox"]:checked').forEach(checkbox => {
+		checkbox.checked = false;
+	});
+	updateSelectionStyles();
 }
 
 
