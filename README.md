@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="src/_icons/icon-394.png" alt="Logo" width="80" height="80">
+    <img src="src/_icons/icon-394.png" alt="Logo" width="394" height="394">
   </a>
 
   <h3 align="center">Connections Game Materia Widget</h3>
