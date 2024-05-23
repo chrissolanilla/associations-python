@@ -1,1 +1,36 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="player.css">
+		<title>Connections</title>
+
+		<script src="materia.enginecore.js"></script>
+	</head>
+	<body>
+		<dialog data-modal class="modal">
+			<div class="modalClass">
+				<h1>Welcome to the Connections Game!</h1>
+				<p>Select words in pairs of 4 that belong to a common category</p>
+				<button data-close-modal class="styled-button">Start Game</button>
+			</div>
+		</dialog>
+
+		<main>
+			<h1>Connections Game!</h1>
+			<div class="wordsPreview">
+				<!-- Words will be dynamically inserted here -->
+			</div>
+			<div class="controls">
+				<button id="check4" class="styled-button">Check 4</button>
+				<button id="check8" class="styled-button">Check 8</button>
+				<button id="check12" class="styled-button">Check 12</button>
+				<button id="check16" class="styled-button">Check 16</button>
+			</div>
+		</main>
+
+		<script src="player.js"></script>
+	</body>
+</html>

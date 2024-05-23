@@ -1,5 +1,93 @@
-<html>
-	<body>
-		<h1>Hi</h1>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connections</title>
+
+    <link rel="stylesheet" type="text/css" href="creator.css">
+    <script src="materia.creatorcore.js"></script>
+    <script src="http://localhost:8097"></script> <!-- for the standalone react-devtools app -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.9.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.9.0/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Create a Puzzle</h1>
+    </header>
+    <form>
+        <div class="CreaterForm">
+            <!--blue-->
+            <div class="CreatorKVP Blue">
+                <div class="CreatorAnswers">
+                    <label for="Words1"> Answers (Comma-separated)</label>
+                    <input type="text" name="Words1" id="Words1" oninput="updatePreview()" />
+                </div>
+
+                <div class="AnswerDescriptions">
+                    <label for="Description1"> Description</label>
+                    <input type="text" name="Description1" id="Description1" oninput="updateDescription()" />
+                </div>
+            </div>
+            <!--green-->
+            <div class="CreatorKVP Green">
+                <div class="CreatorAnswers">
+                    <label for="Words2"> Answers (Comma-separated)</label>
+                    <input type="text" name="Words2" id="Words2" oninput="updatePreview()" />
+                </div>
+                
+                <div class="AnswerDescriptions">
+                    <label for="Description2"> Description</label>
+                    <input type="text" name="Description2" id="Description2" oninput="updateDescription()" />
+                </div>
+            </div>
+            <!--yellow-->
+            <div class="CreatorKVP Yellow">
+                <div class="CreatorAnswers">
+                    <label for="Words3"> Answers (Comma-separated)</label>
+                    <input type="text" name="Words3" id="Words3" oninput="updatePreview()" />
+                </div>
+
+                <div class="AnswerDescriptions">
+                    <label for="Description3"> Description</label>
+                    <input type="text" name="Description3" id="Description3" oninput="updateDescription()" />
+                </div>
+            </div>
+            <!--pink-->
+            <div class="CreatorKVP Pink">
+                <div class="CreatorAnswers">
+                    <label for="Words4"> Answers (Comma-separated)</label>
+                    <input type="text" name="Words4" id="Words4" oninput="updatePreview()" />
+                </div>
+
+                <div class="AnswerDescriptions">
+                    <label for="Description4"> Description</label>
+                    <input type="text" name="Description4" id="Description4" oninput="updateDescription()" />
+                </div>
+            </div>
+        </div>
+
+        <div class="wordsPreview">
+            <div class="previewItem" id="preview1"></div>
+            <div class="previewItem" id="preview2"></div>
+            <div class="previewItem" id="preview3"></div>
+            <div class="previewItem" id="preview4"></div>
+            <div class="previewItem" id="preview5"></div>
+            <div class="previewItem" id="preview6"></div>
+            <div class="previewItem" id="preview7"></div>
+            <div class="previewItem" id="preview8"></div>
+            <div class="previewItem" id="preview9"></div>
+            <div class="previewItem" id="preview10"></div>
+            <div class="previewItem" id="preview11"></div>
+            <div class="previewItem" id="preview12"></div>
+            <div class="previewItem" id="preview13"></div>
+            <div class="previewItem" id="preview14"></div>
+            <div class="previewItem" id="preview15"></div>
+            <div class="previewItem" id="preview16"></div>
+        </div>
+    </form>    
+
+    <script src="creator.js"></script>
+</body>
 </html>
