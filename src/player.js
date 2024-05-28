@@ -19,7 +19,7 @@ function shuffleArray(array) {
 let currentDescriptions = [];
 let currentQset = {};
 // Variables to keep track of the score
-let score = 0, attempts = 0;
+let percentScore=0, attempts=0, scoreCount =0;
 const AttemptsElement = document.getElementById("Attempts");
 AttemptsElement.innerHTML = attempts;
 const maxAttempts = 4; // Probably make this changable for the creator at some point later
@@ -152,7 +152,8 @@ function checkSelection(count) {
     groups.forEach((group, index) => {
         if (group.length === 4) {
             foundCount += 4;
-            score += 100 / 4; // Make each correct guess worth 25 points
+            percentScore += 100 / 4; // Make each correct guess worth 25 points
+			scoreCount++;
 			//guessedWordsSet.add(word);
             const className = `selected-${(index + 1) * 4}`;
             const answerDiv = createAnswerDiv(currentDescriptions[index], group, className);
@@ -165,6 +166,9 @@ function checkSelection(count) {
                 wordsGrid.removeChild(item);
             });
         }
+		if(scoreCount >=4){
+			disableGame();
+		}
     });
     if (foundCount === count) {
         // Do nothing if all selected groups are correct
@@ -177,7 +181,7 @@ function checkSelection(count) {
         document.getElementById('check16').classList.remove('styled-button');
         
         if (attempts >= maxAttempts) {
-            alert("Game over, max attempts reached");
+            alert("Game over, max attempts reached\nYou had "+scoreCount+ "right");
             showRemainingCorrectAnswers();
             disableGame();
         }
@@ -224,6 +228,26 @@ function disableGame() {
 	const wordsGrid = document.querySelector('.wordsPreview');
 	wordsGrid.querySelectorAll('.previewItem input[type="checkbox"]').forEach(checkbox => {
 		checkbox.disabled = true;
+	});
+	//get the modal and show the results
+    const resultsModal = document.getElementById('resultsModal');
+    const finalResults = document.getElementById('finalResults');
+    finalResults.innerHTML = `
+        <p>Correct Selections: ${scoreCount}</p>
+        <p>Wrong Attempts: ${attempts}</p>
+		<p>Grade : ${percentScore} </p>
+    `;
+    showRemainingCorrectAnswers();
+    // Show the modal for the final score
+    resultsModal.showModal();
+	console.log(percentScore);
+	document.getElementById("goToScoreScreen").addEventListener("click",() => {
+		//submit the final score and tell materia to end the game
+		//TODO do not use submitFinalScore function, use the submit question for scoring and have the backend score 
+		//each question individually but still have the frontend fake it
+		Materia.Score.submitFinalScoreFromClient(0, '', percentScore);
+		Materia.Engine.end();
+
 	});
 }
 

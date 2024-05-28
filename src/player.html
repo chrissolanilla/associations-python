@@ -17,7 +17,15 @@
 				<button data-close-modal class="styled-button">Start Game</button>
 			</div>
 		</dialog>
-
+		<dialog id="resultsModal" class="modal">
+			<div class="modalClass">
+				<h1>Game Over</h1>
+				<div id="finalResults">
+					<!-- Final results will be inserted here -->
+				</div>
+				<button id="goToScoreScreen" class="styled-button">Go to Score Screen</button>
+			</div>
+		</dialog>
 		<main>
 			<h1>Connections Game!</h1>
 			<div class="CorrectAnswers" id="correctAnswers">
@@ -31,7 +39,7 @@
 				<button id="check8" class="greyOutButton">Check 8</button>
 				<button id="check12" class="greyOutButton">Check 12</button>
 				<button id="check16" class="greyOutButton">Check 16</button>
-				<span>Attempts: <span id="Attempts"> </span>  </span>
+				<span>Wrong Attempts: <span id="Attempts"> </span>  </span>
 			</div>
 		</main>
 
