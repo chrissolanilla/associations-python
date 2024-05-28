@@ -10,7 +10,7 @@ const copy = [
 	...widgetWebpack.getDefaultCopyList(),
 	{
 		from: path.join(__dirname, 'src', 'demo.json'),
-        to: path.join(outputPath, 'demo.json')
+		to: path.join(outputPath, 'demo.json')
 	}
 ];
 

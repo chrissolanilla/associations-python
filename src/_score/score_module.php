@@ -5,6 +5,7 @@ class Score_Modules_PyramidWidget extends Score_Module
 {
 	public function check_answer($log)
 	{
+		$totalQuestions 1
 		return false;
 		if (isset($this->questions[$log->item_id]))
 		{

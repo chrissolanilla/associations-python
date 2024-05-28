@@ -1,6 +1,6 @@
 import './player.scss';
 
-// modal code
+// Modal code
 const closeButton = document.querySelector("[data-close-modal]");
 const modal = document.querySelector("[data-modal]");
 modal.showModal();
@@ -18,6 +18,11 @@ function shuffleArray(array) {
 
 let currentDescriptions = [];
 let currentQset = {};
+// Variables to keep track of the score
+let score = 0, attempts = 0;
+const AttemptsElement = document.getElementById("Attempts");
+AttemptsElement.innerHTML = attempts;
+const maxAttempts = 4; // Probably make this changable for the creator at some point later
 
 function setupGame(qset) {
 	console.log("Setting up game with qset:", qset);
@@ -26,7 +31,7 @@ function setupGame(qset) {
 		return;
 	}
 
-	currentQset = qset; // update the current qset
+	currentQset = qset; // Update the current qset
 	currentDescriptions = [
 		qset.description1,
 		qset.description2,
@@ -67,16 +72,17 @@ let selectedWords = [];
 function selectWord(word, wordElement, checkbox) {
 	const wordIndex = selectedWords.indexOf(word);
 	if (wordIndex > -1) {
-		// deselect word
+		// Deselect word
 		selectedWords.splice(wordIndex, 1);
 	} else if (selectedWords.length < 16) {
-		// select word
+		// Select word
 		selectedWords.push(word);
 	}
 	console.log('Selected Words:', selectedWords);
 	updateSelectionStyles();
 }
-//this reduces a lot of redundant code in update seleciton styles
+
+// This reduces a lot of redundant code in update selection styles
 function updateButtonStyles(buttonId, isEnabled) {
 	const button = document.getElementById(buttonId);
 	if (isEnabled) {
@@ -111,66 +117,115 @@ function updateSelectionStyles() {
 	updateButtonStyles('check12', selectionCount === 12);
 	updateButtonStyles('check16', selectionCount === 16);
 }
+//need this to keep track of guessed words correctly
+const guessedWordsSet = new Set();
 
-function checkSelection(count) {
-	//get our grid and our correct answers div
-	const wordsGrid = document.querySelector('.wordsPreview');
-    const correctAnswersDiv = document.getElementById('correctAnswers'); 
-	const groups = [
-		selectedWords.filter(word => currentQset.words1.includes(word)),
-		selectedWords.filter(word => currentQset.words2.includes(word)),
-		selectedWords.filter(word => currentQset.words3.includes(word)),
-		selectedWords.filter(word => currentQset.words4.includes(word))
-	];
-	let foundCount = 0;
-	groups.forEach((group, index) => {
-		if (group.length === 4) {
-			// alert(`Correct! Description: ${currentDescriptions[index]}`);
-			foundCount += 4;
-			//dynamically load the correct answers into the dom
-            const answerDiv = document.createElement('div');
-            answerDiv.classList.add('AnswerDivBackground');
-			//group them into selection groups so that we can style them seperately
-			if (index === 0) answerDiv.classList.add('selected-4');
-            else if (index === 1) answerDiv.classList.add('selected-8');
-            else if (index === 2) answerDiv.classList.add('selected-12');
-            else if (index === 3) answerDiv.classList.add('selected-16'); 
-            const strongDiv = document.createElement('div');
-            const strongElement = document.createElement('strong');
-            strongElement.textContent = currentDescriptions[index];
-            strongDiv.appendChild(strongElement);
-            
-            const answerDivWords = document.createElement('div');
-            answerDivWords.textContent = group.join(', ');
-            
-            answerDiv.appendChild(strongDiv);
-            answerDiv.appendChild(answerDivWords);
-            correctAnswersDiv.appendChild(answerDiv);
-			//remove the selected words off the checkbox grid
-			group.forEach(word => {
-				const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
-					.find(input => input.nextElementSibling.textContent === word);
-				const item = checkbox.parentNode;
-				wordsGrid.removeChild(item);
-			});
-		}
-	});
-	if (foundCount === count) {
-		// alert('All selected groups are correct!');
-	} else {
-		alert('Incorrect. Try again.');
-		document.getElementById('check4').classList.remove('styled-button');
-		document.getElementById('check8').classList.remove('styled-button');
-		document.getElementById('check12').classList.remove('styled-button');
-		document.getElementById('check16').classList.remove('styled-button');	
-	}
-	selectedWords = [];
-	document.querySelectorAll('.previewItem input[type="checkbox"]:checked').forEach(checkbox => {
-		checkbox.checked = false;
-	});
-	updateSelectionStyles();
+//this function refactors and reduces code for check selection and show remaining
+function createAnswerDiv(description, group, className) {
+    const answerDiv = document.createElement('div');
+    answerDiv.classList.add('AnswerDivBackground', className);
+
+    const strongDiv = document.createElement('div');
+    const strongElement = document.createElement('strong');
+    strongElement.textContent = description;
+    strongDiv.appendChild(strongElement);
+    
+    const answerDivWords = document.createElement('div');
+    answerDivWords.textContent = group.join(', ');
+
+    answerDiv.appendChild(strongDiv);
+    answerDiv.appendChild(answerDivWords);
+
+    return answerDiv;
 }
 
+function checkSelection(count) {
+    const wordsGrid = document.querySelector('.wordsPreview');
+    const correctAnswersDiv = document.getElementById('correctAnswers'); 
+    const groups = [
+        selectedWords.filter(word => currentQset.words1.includes(word)),
+        selectedWords.filter(word => currentQset.words2.includes(word)),
+        selectedWords.filter(word => currentQset.words3.includes(word)),
+        selectedWords.filter(word => currentQset.words4.includes(word))
+    ];
+    let foundCount = 0;
+    groups.forEach((group, index) => {
+        if (group.length === 4) {
+            foundCount += 4;
+            score += 100 / 4; // Make each correct guess worth 25 points
+			//guessedWordsSet.add(word);
+            const className = `selected-${(index + 1) * 4}`;
+            const answerDiv = createAnswerDiv(currentDescriptions[index], group, className);
+            correctAnswersDiv.appendChild(answerDiv);
+
+            group.forEach(word => {
+                const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
+                    .find(input => input.nextElementSibling.textContent === word);
+                const item = checkbox.parentNode;
+                wordsGrid.removeChild(item);
+            });
+        }
+    });
+    if (foundCount === count) {
+        // Do nothing if all selected groups are correct
+    } else {
+        attempts++;
+        AttemptsElement.innerHTML = attempts;
+        document.getElementById('check4').classList.remove('styled-button');
+        document.getElementById('check8').classList.remove('styled-button');
+        document.getElementById('check12').classList.remove('styled-button');
+        document.getElementById('check16').classList.remove('styled-button');
+        
+        if (attempts >= maxAttempts) {
+            alert("Game over, max attempts reached");
+            showRemainingCorrectAnswers();
+            disableGame();
+        }
+    }
+    selectedWords = [];
+    document.querySelectorAll('.previewItem input[type="checkbox"]:checked').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    updateSelectionStyles();
+}
+
+function showRemainingCorrectAnswers() {
+    const wordsGrid = document.querySelector('.wordsPreview');
+    const correctAnswersDiv = document.getElementById('correctAnswers');
+    
+    const alreadyGuessedWords = Array.from(correctAnswersDiv.querySelectorAll('.AnswerDivBackground div div'))
+        .map(div => div.textContent.split(', ')).flat();
+
+    const groupWords = [
+        currentQset.words1.filter(word => !alreadyGuessedWords.includes(word)),
+        currentQset.words2.filter(word => !alreadyGuessedWords.includes(word)),
+        currentQset.words3.filter(word => !alreadyGuessedWords.includes(word)),
+        currentQset.words4.filter(word => !alreadyGuessedWords.includes(word))
+    ];
+
+    const groupNames = ["selected-4", "selected-8", "selected-12", "selected-16"];
+
+    groupWords.forEach((group, index) => {
+        if (group.length > 0) {
+            const className = groupNames[index];
+            // Check if the element with the class already exists
+            if (!correctAnswersDiv.querySelector(`.${className}`)) {
+                const answerDiv = createAnswerDiv(currentDescriptions[index], group, className);
+                correctAnswersDiv.appendChild(answerDiv);
+            }
+        }
+    });
+
+    wordsGrid.innerHTML = '';
+}
+
+
+function disableGame() {
+	const wordsGrid = document.querySelector('.wordsPreview');
+	wordsGrid.querySelectorAll('.previewItem input[type="checkbox"]').forEach(checkbox => {
+		checkbox.disabled = true;
+	});
+}
 
 function fetchDemoData() {
 	fetch('demo.json') 

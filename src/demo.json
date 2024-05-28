@@ -1,16 +1,16 @@
 {
-    "name": "Connections Widget Demo",
-    "qset": {
-        "version": 1,
-        "data": {
-            "words1": ["Chris", "Golden", "Sim Ho", "Bed"],
-            "description1": "Names",
-            "words2": ["Lazy Moon", "BurgerFi", "TacoBell", "Wawa"],
-            "description2": "Restaurants",
-            "words3": ["Dragons", "Fairies", "Unicorns", "Mermaids"],
-            "description3": "Magical Creatures",
-            "words4": ["Dinosaurs", "Mammoths", "Saber Tooth", "Pandas"],
-            "description4": "Extinct Creatures"
-        }
-    }
+	"name": "Connections Widget Demo",
+	"qset": {
+		"version": 1,
+		"data": {
+			"words1": ["Chris", "Golden", "Sim Ho", "Bed"],
+			"description1": "Names",
+			"words2": ["Lazy Moon", "BurgerFi", "TacoBell", "Wawa"],
+			"description2": "Restaurants",
+			"words3": ["Dragons", "Fairies", "Unicorns", "Mermaids"],
+			"description3": "Magical Creatures",
+			"words4": ["Dinosaurs", "Mammoths", "Saber Tooth", "Pandas"],
+			"description4": "Extinct Creatures"
+		}
+	}
 }
