@@ -16,38 +16,27 @@ function shuffleArray(array) {
 	return array;
 }
 
-let currentDescriptions = [];
 let currentQset = {};
 // Variables to keep track of the score
-let percentScore=0, attempts=0, scoreCount =0;
+let percentScore = 0, attempts = 0, scoreCount = 0;
 const AttemptsElement = document.getElementById("Attempts");
 AttemptsElement.innerHTML = attempts;
-const maxAttempts = 4; // Probably make this changable for the creator at some point later
+let maxAttempts = 4;
 
 function setupGame(qset) {
 	console.log("Setting up game with qset:", qset);
-	if (!qset || !qset.words1) {
+	if (!qset || !qset.items) {
 		console.error('Invalid qset data', qset);
 		return;
 	}
 
 	currentQset = qset; // Update the current qset
-	currentDescriptions = [
-		qset.description1,
-		qset.description2,
-		qset.description3,
-		qset.description4
-	];
-
+	const descriptions = qset.items.map(item => item.description);
 	const wordsGrid = document.querySelector('.wordsPreview');
-	const allWords = [
-		...qset.words1,
-		...qset.words2,
-		...qset.words3,
-		...qset.words4
-	];
+	const allWords = qset.items.flatMap(item => item.answers);
 	const shuffledWords = shuffleArray(allWords);
 	wordsGrid.innerHTML = '';
+
 	shuffledWords.forEach((word, index) => {
 		const wordElement = document.createElement('div');
 		wordElement.className = 'previewItem';
@@ -65,6 +54,10 @@ function setupGame(qset) {
 			selectWord(word, wordElement, checkbox);
 		});
 	});
+
+	// Adjust maxAttempts based on the number of items
+	maxAttempts = qset.items.length;
+	AttemptsElement.innerHTML = attempts;
 }
 
 let selectedWords = [];
@@ -117,61 +110,71 @@ function updateSelectionStyles() {
 	updateButtonStyles('check12', selectionCount === 12);
 	updateButtonStyles('check16', selectionCount === 16);
 }
-//need this to keep track of guessed words correctly
-const guessedWordsSet = new Set();
 
-//this function refactors and reduces code for check selection and show remaining
 function createAnswerDiv(description, group, className) {
-    const answerDiv = document.createElement('div');
-    answerDiv.classList.add('AnswerDivBackground', className);
+	const answerDiv = document.createElement('div');
+	answerDiv.classList.add('AnswerDivBackground', className);
 
-    const strongDiv = document.createElement('div');
-    const strongElement = document.createElement('strong');
-    strongElement.textContent = description;
-    strongDiv.appendChild(strongElement);
-    
-    const answerDivWords = document.createElement('div');
-    answerDivWords.textContent = group.join(', ');
+	const strongDiv = document.createElement('div');
+	const strongElement = document.createElement('strong');
+	strongElement.textContent = description;
+	strongDiv.appendChild(strongElement);
+	
+	const answerDivWords = document.createElement('div');
+	answerDivWords.textContent = group.join(', ');
 
-    answerDiv.appendChild(strongDiv);
-    answerDiv.appendChild(answerDivWords);
+	answerDiv.appendChild(strongDiv);
+	answerDiv.appendChild(answerDivWords);
 
-    return answerDiv;
+	return answerDiv;
 }
 
 function checkSelection(count) {
     const wordsGrid = document.querySelector('.wordsPreview');
-    const correctAnswersDiv = document.getElementById('correctAnswers'); 
-    const groups = [
-        selectedWords.filter(word => currentQset.words1.includes(word)),
-        selectedWords.filter(word => currentQset.words2.includes(word)),
-        selectedWords.filter(word => currentQset.words3.includes(word)),
-        selectedWords.filter(word => currentQset.words4.includes(word))
-    ];
-    let foundCount = 0;
-    groups.forEach((group, index) => {
-        if (group.length === 4) {
-            foundCount += 4;
-            percentScore += 100 / 4; // Make each correct guess worth 25 points
-			scoreCount++;
-			//guessedWordsSet.add(word);
-            const className = `selected-${(index + 1) * 4}`;
-            const answerDiv = createAnswerDiv(currentDescriptions[index], group, className);
-            correctAnswersDiv.appendChild(answerDiv);
+    const correctAnswersDiv = document.getElementById('correctAnswers');
+    let validGroupsCount = 0;
+    let validWordsCount = 0;
 
-            group.forEach(word => {
-                const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
-                    .find(input => input.nextElementSibling.textContent === word);
-                const item = checkbox.parentNode;
-                wordsGrid.removeChild(item);
-            });
-        }
-		if(scoreCount >=4){
-			disableGame();
-		}
+    // Track groups that should be removed
+    let groupsToRemove = [];
+
+    // Process selected words in groups of four
+    for (let i = 0; i < selectedWords.length; i += 4) {
+        const currentGroup = selectedWords.slice(i, i + 4);
+        currentQset.items.forEach((item, index) => {
+            const group = currentGroup.filter(word => item.answers.includes(word));
+            if (group.length === 4) {
+                validGroupsCount++;
+                validWordsCount += 4;
+                console.log(validGroupsCount)
+                const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
+                percentScore += pointsPerCorrectGroup;
+                scoreCount++;
+                console.log("Checking Groups again:" + group);
+                // Submit the group as a single answer with the question ID and group of words
+                Materia.Score.submitQuestionForScoring(index, group.join(','), pointsPerCorrectGroup);
+
+                const className = `selected-${(index + 1) * 4}`;
+                const answerDiv = createAnswerDiv(item.description, group, className);
+                correctAnswersDiv.appendChild(answerDiv);
+
+                groupsToRemove.push(group);
+            }
+        });
+    }
+
+    // Only remove words from valid groups
+    groupsToRemove.forEach(group => {
+        group.forEach(word => {
+            const checkbox = [...document.querySelectorAll('.previewItem input[type="checkbox"]')]
+                .find(input => input.nextElementSibling.textContent === word);
+            const item = checkbox.parentNode;
+            wordsGrid.removeChild(item);
+        });
     });
-    if (foundCount === count) {
-        // Do nothing if all selected groups are correct
+
+    if (validWordsCount === count) {
+        // If valid words match the expected count, all selected groups are correct
     } else {
         attempts++;
         AttemptsElement.innerHTML = attempts;
@@ -181,48 +184,45 @@ function checkSelection(count) {
         document.getElementById('check16').classList.remove('styled-button');
         
         if (attempts >= maxAttempts) {
-            alert("Game over, max attempts reached\nYou had "+scoreCount+ "right");
+            alert("Game over, max attempts reached\nYou had " + scoreCount + " right");
             showRemainingCorrectAnswers();
             disableGame();
         }
     }
+
+    // Clear selectedWords after evaluation
     selectedWords = [];
     document.querySelectorAll('.previewItem input[type="checkbox"]:checked').forEach(checkbox => {
         checkbox.checked = false;
     });
     updateSelectionStyles();
+	//this works for now;
+	if(scoreCount>=maxAttempts) disableGame();
 }
+
 
 function showRemainingCorrectAnswers() {
-    const wordsGrid = document.querySelector('.wordsPreview');
-    const correctAnswersDiv = document.getElementById('correctAnswers');
-    
-    const alreadyGuessedWords = Array.from(correctAnswersDiv.querySelectorAll('.AnswerDivBackground div div'))
-        .map(div => div.textContent.split(', ')).flat();
+	const wordsGrid = document.querySelector('.wordsPreview');
+	const correctAnswersDiv = document.getElementById('correctAnswers');
+	
+	const alreadyGuessedWords = Array.from(correctAnswersDiv.querySelectorAll('.AnswerDivBackground div div'))
+		.map(div => div.textContent.split(', ')).flat();
 
-    const groupWords = [
-        currentQset.words1.filter(word => !alreadyGuessedWords.includes(word)),
-        currentQset.words2.filter(word => !alreadyGuessedWords.includes(word)),
-        currentQset.words3.filter(word => !alreadyGuessedWords.includes(word)),
-        currentQset.words4.filter(word => !alreadyGuessedWords.includes(word))
-    ];
+	const groupWords = currentQset.items.map(item => item.answers.filter(word => !alreadyGuessedWords.includes(word)));
 
-    const groupNames = ["selected-4", "selected-8", "selected-12", "selected-16"];
+	groupWords.forEach((group, index) => {
+		if (group.length > 0) {
+			const className = `selected-${(index + 1) * 4}`;
+			// Check if the element with the class already exists
+			if (!correctAnswersDiv.querySelector(`.${className}`)) {
+				const answerDiv = createAnswerDiv(currentQset.items[index].description, group, className);
+				correctAnswersDiv.appendChild(answerDiv);
+			}
+		}
+	});
 
-    groupWords.forEach((group, index) => {
-        if (group.length > 0) {
-            const className = groupNames[index];
-            // Check if the element with the class already exists
-            if (!correctAnswersDiv.querySelector(`.${className}`)) {
-                const answerDiv = createAnswerDiv(currentDescriptions[index], group, className);
-                correctAnswersDiv.appendChild(answerDiv);
-            }
-        }
-    });
-
-    wordsGrid.innerHTML = '';
+	wordsGrid.innerHTML = '';
 }
-
 
 function disableGame() {
 	const wordsGrid = document.querySelector('.wordsPreview');
@@ -230,24 +230,20 @@ function disableGame() {
 		checkbox.disabled = true;
 	});
 	//get the modal and show the results
-    const resultsModal = document.getElementById('resultsModal');
-    const finalResults = document.getElementById('finalResults');
-    finalResults.innerHTML = `
-        <p>Correct Selections: ${scoreCount}</p>
-        <p>Wrong Attempts: ${attempts}</p>
+	const resultsModal = document.getElementById('resultsModal');
+	const finalResults = document.getElementById('finalResults');
+	finalResults.innerHTML = `
+		<p>Correct Selections: ${scoreCount}</p>
+		<p>Wrong Attempts: ${attempts}</p>
 		<p>Grade : ${percentScore} </p>
-    `;
-    showRemainingCorrectAnswers();
-    // Show the modal for the final score
-    resultsModal.showModal();
+	`;
+	showRemainingCorrectAnswers();
+	// Show the modal for the final score
+	resultsModal.showModal();
 	console.log(percentScore);
-	document.getElementById("goToScoreScreen").addEventListener("click",() => {
-		//submit the final score and tell materia to end the game
-		//TODO do not use submitFinalScore function, use the submit question for scoring and have the backend score 
-		//each question individually but still have the frontend fake it
-		Materia.Score.submitFinalScoreFromClient(0, '', percentScore);
+	document.getElementById("goToScoreScreen").addEventListener("click", () => {
+		// End the game and go to the score screen
 		Materia.Engine.end();
-
 	});
 }
 
@@ -261,7 +257,7 @@ function fetchDemoData() {
 		})
 		.then(data => {
 			console.log('Fetched demo data:', data);
-			setupGame(data.qset);
+			setupGame(data.qset.data);
 		})
 		.catch(error => {
 			console.error('Error loading demo data:', error);
