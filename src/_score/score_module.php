@@ -3,11 +3,22 @@ namespace Materia;
 
 class Score_Modules_Connections extends Score_Module
 {
+    private function calculateAsciiSum($array)
+    {
+        $sum = 0;
+        foreach ($array as $item) {
+            foreach (str_split($item) as $char) {
+                $sum += ord($char);
+            }
+        }
+        return $sum;
+    }
+
     public function check_answer($log)
     {
         $questionID = $log->item_id;
         $userAnswer = $log->text;
-        trace($userAnswer); //example text log is : 'Dragons,Unicorns,Fairies,Mermaids'
+        trace($userAnswer); // Example text log is : 'Dragons,Unicorns,Fairies,Mermaids'
         trace("The question ID is : $questionID and user answer is: $userAnswer");
         trace("newchris");
         trace("Available question IDs: " . implode(',', array_keys($this->questions)));
@@ -16,19 +27,20 @@ class Score_Modules_Connections extends Score_Module
         if (isset($this->questions[$questionID])) {
             $question = $this->questions[$questionID];
             $userAnswerArray = explode(',', $userAnswer);
-            // Makes it so the order does not matter when checking the descriptions
-            sort($userAnswerArray);
 
             $correctAnswerArray = array_map(function ($a) {
                 return $a['text'];
             }, $question->answers);
-            sort($correctAnswerArray);
 
-            trace("The correct array answer is " . implode(',', $correctAnswerArray));
-            trace(implode(',', $userAnswerArray));
-            if ($userAnswerArray == $correctAnswerArray) {
-                trace("Match found successfully for question ID: $questionID with value: {$question->answers[0]['value']}");
-                return $question->answers[0]['value'];
+            $userAsciiSum = $this->calculateAsciiSum($userAnswerArray);
+            $correctAsciiSum = $this->calculateAsciiSum($correctAnswerArray);
+
+            trace("User ASCII sum: " . $userAsciiSum);
+            trace("Correct ASCII sum: " . $correctAsciiSum);
+
+            if ($userAsciiSum == $correctAsciiSum) {
+                trace("Match found successfully for question ID: $questionID");
+                return 100 / count($this->questions); // Assuming equal weight for each question
             }
         } else {
             trace("SORRY Question ID: $questionID not found in questions array");

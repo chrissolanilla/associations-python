@@ -9,28 +9,28 @@
                     "questions": [{"text": "Names"}],
                     "type": "connections",
                     "id": null,
-                    "answers": [{"text": "Chris","value": 25}, {"text": "Golden","value": 25}, {"text": "Sim Ho","value": 25}, {"text": "Bed","value": 25}]
+                    "answers": [{"text": "Sim Ho,Bed,Chris,Golden","value": 100}]
                 },
                 {
                     "materiaType": "question",
                     "type": "connections",
                     "id": null,
                     "questions": [{"text": "Restaurants"}],
-                    "answers": [{"text": "Lazy Moon","value": 25}, {"text": "BurgerFi","value": 25}, {"text": "TacoBell","value": 25}, {"text": "Wawa","value": 25}]
+                    "answers": [{"text": "BugerFi, TacoBell, Wawa,Lazy Moon","value": 25}]
                 },
                 {
                     "materiaType": "question",
                     "id": null,
                     "questions": [{"text": "Magical Creatures"}],
                     "type": "connections",
-                    "answers": [{"text": "Dragons","value": 25}, {"text": "Fairies","value": 25}, {"text": "Unicorns","value": 25}, {"text": "Mermaids","value": 25}]
+                    "answers": [{"text": "Fairies, Mermaids, Unicorns,Dragons","value": 25}]
                 },
                 {
                     "materiaType": "question",
                     "id": null,
                     "questions": [{"text": "Extinct Creatures"}],
                     "type": "connections",
-                    "answers": [{"text": "Dinosaurs","value": 25}, {"text": "Mammoths","value": 25}, {"text": "Saber Tooth","value": 25}, {"text": "Pandas","value": 25}]
+                    "answers": [{"text": "Mammoths, Pandas, Saber Tooth,Dinosaurs","value": 25}]
                 }
             ]
         }

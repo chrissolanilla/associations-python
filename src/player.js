@@ -33,9 +33,9 @@ function setupGame(qset) {
     currentQset = qset; // Update the current qset
     const descriptions = qset.items.map(item => item.questions[0].text); // Extract descriptions
     console.log("Descriptions:", descriptions);
-	const questionIds = qset.items.map( item => item.id);//extract the ID so we can match them in teh php
+    const questionIds = qset.items.map(item => item.id); // Extract the ID so we can match them in the PHP
     const wordsGrid = document.querySelector('.wordsPreview');
-    const allWords = qset.items.flatMap(item => item.answers.map(answer => answer.text)); // Extract text from answers
+    const allWords = qset.items.flatMap(item => item.answers[0].text.split(',')); // Extract individual words from the concatenated answer strings
     console.log("All words:", allWords);
     const shuffledWords = shuffleArray(allWords);
     wordsGrid.innerHTML = '';
@@ -62,6 +62,7 @@ function setupGame(qset) {
     maxAttempts = qset.items.length;
     AttemptsElement.innerHTML = attempts;
 }
+
 
 
 let selectedWords = [];
@@ -144,9 +145,9 @@ function checkSelection(count) {
 
     // Process selected words in groups of four
     for (let i = 0; i < selectedWords.length; i += 4) {
-        const currentGroup = selectedWords.slice(i, i + 4);
+        const currentGroup = selectedWords.slice(i, i + 4).sort(); // Sort the selected words
         currentQset.items.forEach((item, index) => {
-            const group = currentGroup.filter(word => item.answers.some(answer => answer.text === word));
+            const group = currentGroup.filter(word => item.answers[0].text.split(',').includes(word));
             if (group.length === 4) {
                 validGroupsCount++;
                 validWordsCount += 4;
@@ -186,7 +187,7 @@ function checkSelection(count) {
         document.getElementById('check8').classList.remove('styled-button');
         document.getElementById('check12').classList.remove('styled-button');
         document.getElementById('check16').classList.remove('styled-button');
-        
+
         if (attempts >= maxAttempts) {
             showRemainingCorrectAnswers();
             disableGame();
@@ -199,8 +200,10 @@ function checkSelection(count) {
         checkbox.checked = false;
     });
     updateSelectionStyles();
-    if(scoreCount >= maxAttempts) disableGame();
+    if (scoreCount >= maxAttempts) disableGame();
 }
+
+
 
 
 
