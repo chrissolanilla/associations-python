@@ -33,6 +33,7 @@ function setupGame(qset) {
     currentQset = qset; // Update the current qset
     const descriptions = qset.items.map(item => item.questions[0].text); // Extract descriptions
     console.log("Descriptions:", descriptions);
+	const questionIds = qset.items.map( item => item.id);//extract the ID so we can match them in teh php
     const wordsGrid = document.querySelector('.wordsPreview');
     const allWords = qset.items.flatMap(item => item.answers.map(answer => answer.text)); // Extract text from answers
     console.log("All words:", allWords);
@@ -155,7 +156,7 @@ function checkSelection(count) {
                 scoreCount++;
                 console.log("Checking Groups again:" + group);
                 // Submit the group as a single answer with the question ID and group of words
-                Materia.Score.submitQuestionForScoring(index, group.join(','), pointsPerCorrectGroup);
+                Materia.Score.submitQuestionForScoring(item.id, group.join(','), pointsPerCorrectGroup);
 
                 const className = `selected-${(index + 1) * 4}`;
                 const answerDiv = createAnswerDiv(item.questions[0].text, group, className);

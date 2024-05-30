@@ -8,29 +8,29 @@
                     "materiaType": "question",
                     "questions": [{"text": "Names"}],
                     "type": "connections",
-                    "id": 0,
-                    "answers": [{"text": "Chris"}, {"text": "Golden"}, {"text": "Sim Ho"}, {"text": "Bed"}]
+                    "id": null,
+                    "answers": [{"text": "Chris","value": 25}, {"text": "Golden","value": 25}, {"text": "Sim Ho","value": 25}, {"text": "Bed","value": 25}]
                 },
                 {
                     "materiaType": "question",
                     "type": "connections",
-                    "id": 1,
+                    "id": null,
                     "questions": [{"text": "Restaurants"}],
-                    "answers": [{"text": "Lazy Moon"}, {"text": "BurgerFi"}, {"text": "TacoBell"}, {"text": "Wawa"}]
+                    "answers": [{"text": "Lazy Moon","value": 25}, {"text": "BurgerFi","value": 25}, {"text": "TacoBell","value": 25}, {"text": "Wawa","value": 25}]
                 },
                 {
                     "materiaType": "question",
-                    "id": 2,
+                    "id": null,
                     "questions": [{"text": "Magical Creatures"}],
                     "type": "connections",
-                    "answers": [{"text": "Dragons"}, {"text": "Fairies"}, {"text": "Unicorns"}, {"text": "Mermaids"}]
+                    "answers": [{"text": "Dragons","value": 25}, {"text": "Fairies","value": 25}, {"text": "Unicorns","value": 25}, {"text": "Mermaids","value": 25}]
                 },
                 {
                     "materiaType": "question",
-                    "id": 3,
+                    "id": null,
                     "questions": [{"text": "Extinct Creatures"}],
                     "type": "connections",
-                    "answers": [{"text": "Dinosaurs"}, {"text": "Mammoths"}, {"text": "Saber Tooth"}, {"text": "Pandas"}]
+                    "answers": [{"text": "Dinosaurs","value": 25}, {"text": "Mammoths","value": 25}, {"text": "Saber Tooth","value": 25}, {"text": "Pandas","value": 25}]
                 }
             ]
         }
