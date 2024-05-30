@@ -24,41 +24,44 @@ AttemptsElement.innerHTML = attempts;
 let maxAttempts = 4;
 
 function setupGame(qset) {
-	console.log("Setting up game with qset:", qset);
-	if (!qset || !qset.items) {
-		console.error('Invalid qset data', qset);
-		return;
-	}
+    console.log("Setting up game with qset:", qset);
+    if (!qset || !qset.items) {
+        console.error('Invalid qset data', qset);
+        return;
+    }
 
-	currentQset = qset; // Update the current qset
-	const descriptions = qset.items.map(item => item.description);
-	const wordsGrid = document.querySelector('.wordsPreview');
-	const allWords = qset.items.flatMap(item => item.answers);
-	const shuffledWords = shuffleArray(allWords);
-	wordsGrid.innerHTML = '';
+    currentQset = qset; // Update the current qset
+    const descriptions = qset.items.map(item => item.questions[0].text); // Extract descriptions
+    console.log("Descriptions:", descriptions);
+    const wordsGrid = document.querySelector('.wordsPreview');
+    const allWords = qset.items.flatMap(item => item.answers.map(answer => answer.text)); // Extract text from answers
+    console.log("All words:", allWords);
+    const shuffledWords = shuffleArray(allWords);
+    wordsGrid.innerHTML = '';
 
-	shuffledWords.forEach((word, index) => {
-		const wordElement = document.createElement('div');
-		wordElement.className = 'previewItem';
-		const checkbox = document.createElement('input');
-		checkbox.type = 'checkbox';
-		checkbox.id = `word${index}`;
-		const label = document.createElement('label');
-		label.htmlFor = `word${index}`;
-		label.textContent = word;
-		wordElement.appendChild(checkbox);
-		wordElement.appendChild(label);
-		wordsGrid.appendChild(wordElement);
+    shuffledWords.forEach((word, index) => {
+        const wordElement = document.createElement('div');
+        wordElement.className = 'previewItem';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `word${index}`;
+        const label = document.createElement('label');
+        label.htmlFor = `word${index}`;
+        label.textContent = word;
+        wordElement.appendChild(checkbox);
+        wordElement.appendChild(label);
+        wordsGrid.appendChild(wordElement);
 
-		checkbox.addEventListener('change', () => {
-			selectWord(word, wordElement, checkbox);
-		});
-	});
+        checkbox.addEventListener('change', () => {
+            selectWord(word, wordElement, checkbox);
+        });
+    });
 
-	// Adjust maxAttempts based on the number of items
-	maxAttempts = qset.items.length;
-	AttemptsElement.innerHTML = attempts;
+    // Adjust maxAttempts based on the number of items
+    maxAttempts = qset.items.length;
+    AttemptsElement.innerHTML = attempts;
 }
+
 
 let selectedWords = [];
 
@@ -142,11 +145,11 @@ function checkSelection(count) {
     for (let i = 0; i < selectedWords.length; i += 4) {
         const currentGroup = selectedWords.slice(i, i + 4);
         currentQset.items.forEach((item, index) => {
-            const group = currentGroup.filter(word => item.answers.includes(word));
+            const group = currentGroup.filter(word => item.answers.some(answer => answer.text === word));
             if (group.length === 4) {
                 validGroupsCount++;
                 validWordsCount += 4;
-                console.log(validGroupsCount)
+                console.log(validGroupsCount);
                 const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
                 percentScore += pointsPerCorrectGroup;
                 scoreCount++;
@@ -155,7 +158,7 @@ function checkSelection(count) {
                 Materia.Score.submitQuestionForScoring(index, group.join(','), pointsPerCorrectGroup);
 
                 const className = `selected-${(index + 1) * 4}`;
-                const answerDiv = createAnswerDiv(item.description, group, className);
+                const answerDiv = createAnswerDiv(item.questions[0].text, group, className);
                 correctAnswersDiv.appendChild(answerDiv);
 
                 groupsToRemove.push(group);
@@ -184,7 +187,6 @@ function checkSelection(count) {
         document.getElementById('check16').classList.remove('styled-button');
         
         if (attempts >= maxAttempts) {
-            alert("Game over, max attempts reached\nYou had " + scoreCount + " right");
             showRemainingCorrectAnswers();
             disableGame();
         }
@@ -196,33 +198,34 @@ function checkSelection(count) {
         checkbox.checked = false;
     });
     updateSelectionStyles();
-	//this works for now;
-	if(scoreCount>=maxAttempts) disableGame();
+    if(scoreCount >= maxAttempts) disableGame();
 }
+
 
 
 function showRemainingCorrectAnswers() {
-	const wordsGrid = document.querySelector('.wordsPreview');
-	const correctAnswersDiv = document.getElementById('correctAnswers');
-	
-	const alreadyGuessedWords = Array.from(correctAnswersDiv.querySelectorAll('.AnswerDivBackground div div'))
-		.map(div => div.textContent.split(', ')).flat();
+    const wordsGrid = document.querySelector('.wordsPreview');
+    const correctAnswersDiv = document.getElementById('correctAnswers');
 
-	const groupWords = currentQset.items.map(item => item.answers.filter(word => !alreadyGuessedWords.includes(word)));
+    const alreadyGuessedWords = Array.from(correctAnswersDiv.querySelectorAll('.AnswerDivBackground div div'))
+        .map(div => div.textContent.split(', ')).flat();
 
-	groupWords.forEach((group, index) => {
-		if (group.length > 0) {
-			const className = `selected-${(index + 1) * 4}`;
-			// Check if the element with the class already exists
-			if (!correctAnswersDiv.querySelector(`.${className}`)) {
-				const answerDiv = createAnswerDiv(currentQset.items[index].description, group, className);
-				correctAnswersDiv.appendChild(answerDiv);
-			}
-		}
-	});
+    const groupWords = currentQset.items.map(item => item.answers.map(answer => answer.text).filter(word => !alreadyGuessedWords.includes(word)));
 
-	wordsGrid.innerHTML = '';
+    groupWords.forEach((group, index) => {
+        if (group.length > 0) {
+            const className = `selected-${(index + 1) * 4}`;
+            // Check if the element with the class already exists
+            if (!correctAnswersDiv.querySelector(`.${className}`)) {
+                const answerDiv = createAnswerDiv(currentQset.items[index].questions[0].text, group, className);
+                correctAnswersDiv.appendChild(answerDiv);
+            }
+        }
+    });
+
+    wordsGrid.innerHTML = '';
 }
+
 
 function disableGame() {
 	const wordsGrid = document.querySelector('.wordsPreview');

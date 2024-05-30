@@ -1,35 +1,38 @@
 {
-	"name": "Connections Widget Demo",
-	"qset": {
-		"version": 1,
-		"data": {
-			"items": [
-				{
-				"materiaType": "question",
-				"id": null,
-				"description": "Names",
-				"answers": ["Chris", "Golden", "Sim Ho", "Bed"]
-
-				},
-				{
-					"materiaType": "question",
-					"id": null,
-					"description": "Restaurants",
-					"answers": ["Lazy Moon", "BurgerFi", "TacoBell", "Wawa"]
-				},
-				{
-					"materiaType": "question",
-					"id": null,
-					"description": "Magical Creatures",
-					"answers": ["Dragons", "Fairies", "Unicorns", "Mermaids"]	
-				},
-				{
-					"materiaType": "question",
-					"id": null,
-					"description": "Extinct Creatures",
-					"answers": ["Dinosaurs", "Mammoths", "Saber Tooth", "Pandas"]
-				}
-			]
-		}
-	}
+    "name": "Connections Widget Demo",
+    "qset": {
+        "version": 1,
+        "data": {
+            "items": [
+                {
+                    "materiaType": "question",
+                    "questions": [{"text": "Names"}],
+                    "type": "connections",
+                    "id": 0,
+                    "answers": [{"text": "Chris"}, {"text": "Golden"}, {"text": "Sim Ho"}, {"text": "Bed"}]
+                },
+                {
+                    "materiaType": "question",
+                    "type": "connections",
+                    "id": 1,
+                    "questions": [{"text": "Restaurants"}],
+                    "answers": [{"text": "Lazy Moon"}, {"text": "BurgerFi"}, {"text": "TacoBell"}, {"text": "Wawa"}]
+                },
+                {
+                    "materiaType": "question",
+                    "id": 2,
+                    "questions": [{"text": "Magical Creatures"}],
+                    "type": "connections",
+                    "answers": [{"text": "Dragons"}, {"text": "Fairies"}, {"text": "Unicorns"}, {"text": "Mermaids"}]
+                },
+                {
+                    "materiaType": "question",
+                    "id": 3,
+                    "questions": [{"text": "Extinct Creatures"}],
+                    "type": "connections",
+                    "answers": [{"text": "Dinosaurs"}, {"text": "Mammoths"}, {"text": "Saber Tooth"}, {"text": "Pandas"}]
+                }
+            ]
+        }
+    }
 }
