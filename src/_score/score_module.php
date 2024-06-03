@@ -15,12 +15,13 @@ class Score_Modules_Connections extends Score_Module
         // Check if question exists
         if (isset($this->questions[$questionID])) {
             $question = $this->questions[$questionID];
-            $userAnswerArray = explode(',', $userAnswer);
+            $userAnswerArray = array_map('trim', explode(',', $userAnswer)); // Trim whitespace
 
-            foreach ($question['answers'] as $correctAnswer) {
-                if ($this->contains_all($correctAnswer, $userAnswerArray)) {
+            foreach ($question->answers as $answer) {
+                $correctAnswerArray = array_map('trim', explode(',', $answer['text'])); // Convert correct answer text to array and trim whitespace
+                if ($this->contains_all($correctAnswerArray, $userAnswerArray)) {
                     trace("Match found successfully for question ID: $questionID");
-                    return 100 / count($this->questions); // Assuming equal weight for each question
+                    return 100; // Assuming equal weight for each question
                 }
             }
         } else {
@@ -65,4 +66,3 @@ class Score_Modules_Connections extends Score_Module
         return true;
     }
 }
-
