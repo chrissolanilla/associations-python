@@ -3,17 +3,6 @@ namespace Materia;
 
 class Score_Modules_Connections extends Score_Module
 {
-    private function calculateAsciiSum($array)
-    {
-        $sum = 0;
-        foreach ($array as $item) {
-            foreach (str_split($item) as $char) {
-                $sum += ord($char);
-            }
-        }
-        return $sum;
-    }
-
     public function check_answer($log)
     {
         $questionID = $log->item_id;
@@ -28,25 +17,17 @@ class Score_Modules_Connections extends Score_Module
             $question = $this->questions[$questionID];
             $userAnswerArray = explode(',', $userAnswer);
 
-            $correctAnswerArray = array_map(function ($a) {
-                return $a['text'];
-            }, $question->answers);
-
-            $userAsciiSum = $this->calculateAsciiSum($userAnswerArray);
-            $correctAsciiSum = $this->calculateAsciiSum($correctAnswerArray);
-
-            trace("User ASCII sum: " . $userAsciiSum);
-            trace("Correct ASCII sum: " . $correctAsciiSum);
-
-            if ($userAsciiSum == $correctAsciiSum) {
-                trace("Match found successfully for question ID: $questionID");
-                return 100 / count($this->questions); // Assuming equal weight for each question
+            foreach ($question['answers'] as $correctAnswer) {
+                if ($this->contains_all($correctAnswer, $userAnswerArray)) {
+                    trace("Match found successfully for question ID: $questionID");
+                    return 100 / count($this->questions); // Assuming equal weight for each question
+                }
             }
         } else {
             trace("SORRY Question ID: $questionID not found in questions array");
         }
 
-        trace("GET PWN\'D No match found for question ID: $questionID with user answer: $userAnswer");
+        trace("GET PWN'D No match found for question ID: $questionID with user answer: $userAnswer");
         return 0;
     }
 
@@ -73,4 +54,15 @@ class Score_Modules_Connections extends Score_Module
             trace("Questions loaded: " . print_r($this->questions, true));
         }
     }
+
+    private function contains_all($correctAnswerArray, $userAnswerArray)
+    {
+        foreach ($correctAnswerArray as $answer) {
+            if (!in_array($answer, $userAnswerArray)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
