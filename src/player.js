@@ -21,6 +21,8 @@ let currentQset = {};
 let percentScore = 0,
   attempts = 0,
   scoreCount = 0;
+//have a set of guessed groups
+let guessedGroups = new Set();
 const AttemptsElement = document.getElementById("Attempts");
 AttemptsElement.innerHTML = attempts;
 let maxAttempts = 4;
@@ -147,21 +149,29 @@ function checkSelection(count) {
   const correctAnswersDiv = document.getElementById("correctAnswers");
   let validGroupsCount = 0;
   let validWordsCount = 0;
-
+  console.log("starting to check selection");
   // Track groups that should be removed
   let groupsToRemove = [];
 
   // Process selected words in groups of four
   for (let i = 0; i < selectedWords.length; i += 4) {
+    console.log("inside the for loop");
     const currentGroup = selectedWords.slice(i, i + 4).sort(); // Sort the selected words
+    let groupFound = false;
     currentQset.items.forEach((item, index) => {
+      if (guessedGroups.has(item.questions[0].text)) {
+        return; // Skip already guessed groups
+      }
+      console.log("checking inside a for each loop of currentQsetItems");
       const group = currentGroup.filter((word) =>
         item.answers[0].text.split(",").includes(word),
       );
       if (group.length === 4) {
+        guessedGroups.add(item.questions[0].text); // Add description to guessed set
+        console.log(item.questions[0].text);
         validGroupsCount++;
         validWordsCount += 4;
-        console.log(validGroupsCount);
+        console.log("valid groups count is ", validGroupsCount);
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
@@ -182,8 +192,23 @@ function checkSelection(count) {
         correctAnswersDiv.appendChild(answerDiv);
 
         groupsToRemove.push(group);
+        groupFound = true;
       }
     });
+
+    if (!groupFound && currentGroup.length === 4) {
+      const unguessedDescription = currentQset.items.find((item) => {
+        return !guessedGroups.has(item.questions[0].text);
+      });
+      if (unguessedDescription) {
+        guessedGroups.add(unguessedDescription.questions[0].text); // Add to guessed to avoid rechecking
+        Materia.Score.submitQuestionForScoring(
+          unguessedDescription.id,
+          currentGroup.join(","),
+          0,
+        );
+      }
+    }
   }
 
   // Only remove words from valid groups
@@ -197,9 +222,7 @@ function checkSelection(count) {
     });
   });
 
-  if (validWordsCount === count) {
-    // If valid words match the expected count, all selected groups are correct
-  } else {
+  if (validWordsCount !== count) {
     attempts++;
     AttemptsElement.innerHTML = attempts;
     document.getElementById("check4").classList.remove("styled-button");
@@ -260,26 +283,50 @@ function showRemainingCorrectAnswers() {
 
 function disableGame() {
   const wordsGrid = document.querySelector(".wordsPreview");
+  const correctAnswersDiv = document.getElementById("correctAnswers");
+
+  const alreadyGuessedWords = Array.from(
+    correctAnswersDiv.querySelectorAll(".AnswerDivBackground div div"),
+  )
+    .map((div) => div.textContent.split(", "))
+    .flat();
+
+  const unguessedDescriptions = currentQset.items.filter((item) => {
+    return !guessedGroups.has(item.questions[0].text);
+  });
+
+  unguessedDescriptions.forEach((item) => {
+    console.log("sending this question for scoring:\n ", item.id);
+    Materia.Score.submitQuestionForScoring(
+      item.id,
+      "Out of lives, Try again next time, best of luck, gg",
+      0,
+    );
+  });
+
   wordsGrid
     .querySelectorAll('.previewItem input[type="checkbox"]')
     .forEach((checkbox) => {
       checkbox.disabled = true;
     });
+
   //get the modal and show the results
   const resultsModal = document.getElementById("resultsModal");
   const finalResults = document.getElementById("finalResults");
   finalResults.innerHTML = `
-		<p>Correct Selections: ${scoreCount}</p>
-		<p>Wrong Attempts: ${attempts}</p>
-		<p>Grade : ${percentScore} </p>
-	`;
+        <p>Correct Selections: ${scoreCount}</p>
+        <p>Wrong Attempts: ${attempts}</p>
+        <p>Grade : ${percentScore} </p>
+    `;
   showRemainingCorrectAnswers();
   // Show the modal for the final score
   resultsModal.showModal();
   console.log(percentScore);
   document.getElementById("goToScoreScreen").addEventListener("click", () => {
     // End the game and go to the score screen
-    Materia.Engine.end();
+    setTimeout(() => {
+      Materia.Engine.end();
+    });
   });
 }
 

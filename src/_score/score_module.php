@@ -3,66 +3,75 @@ namespace Materia;
 
 class Score_Modules_Connections extends Score_Module
 {
-    public function check_answer($log)
-    {
-        $questionID = $log->item_id;
-        $userAnswer = $log->text;
-        trace($userAnswer); // Example text log is : 'Dragons,Unicorns,Fairies,Mermaids'
-        trace("The question ID is : $questionID and user answer is: $userAnswer");
-        trace("newchris");
-        trace("Available question IDs: " . implode(',', array_keys($this->questions)));
+  public function check_answer($log)
+  {
+    $questionID = $log->item_id;
+    $userAnswer = $log->text;
+    $seenAnswers = []; // Use an array to track seen questions
+    $isCorrect = false;
 
-        // Check if question exists
-        if (isset($this->questions[$questionID])) {
-            $question = $this->questions[$questionID];
-            $userAnswerArray = array_map('trim', explode(',', $userAnswer)); // Trim whitespace
+    // trace("Seen answers array: $seenAnswers");
+    trace($userAnswer); // Example text log is : 'Dragons,Unicorns,Fairies,Mermaids'
+    trace("The question ID is : $questionID and user answer is: $userAnswer");
+    trace("newchris");
+    trace("Available question IDs: " . implode(',', array_keys($this->questions)));
 
-            foreach ($question->answers as $answer) {
-                $correctAnswerArray = array_map('trim', explode(',', $answer['text'])); // Convert correct answer text to array and trim whitespace
-                if ($this->contains_all($correctAnswerArray, $userAnswerArray)) {
-                    trace("Match found successfully for question ID: $questionID");
-                    return 100; // Assuming equal weight for each question
-                }
-            }
-        } else {
-            trace("SORRY Question ID: $questionID not found in questions array");
+    // Check if question exists
+    if (isset($this->questions[$questionID])) {
+      trace("question has been found");
+      trace("checking if we have seen this question before");
+      if (in_array($questionID, $seenAnswers)) {
+        trace("we have seen this question before");
+        return; // Exit if question has been seen
+      }
+      trace("adding it to the seen answers array");
+      $seenAnswers[] = $questionID; // Add question ID to seen list
+
+      $question = $this->questions[$questionID];
+      $userAnswerArray = array_map('trim', explode(',', $userAnswer)); // Trim whitespace
+
+      foreach ($question->answers as $answer) {
+        $correctAnswerArray = array_map('trim', explode(',', $answer['text'])); // Convert correct answer text to array and trim whitespace
+        if ($this->contains_all($correctAnswerArray, $userAnswerArray)) {
+          trace("Match found successfully for question ID: $questionID");
+          $isCorrect = true;
+          break; // Exit the loop after finding a correct answer
         }
+      }
 
-        trace("GET PWN'D No match found for question ID: $questionID with user answer: $userAnswer");
+      if ($isCorrect) {
+        return 100;
+      } else {
+        $seen_wrong_answers[$questionID] = $userAnswer; // Assuming you want to track wrong answers (uncomment if needed)
+        // trace("never seen this wrong answer before"); // Uncomment if using seen_wrong_answers
         return 0;
+      }
+    } else {
+      trace("SORRY Question ID: $questionID not found in questions array");
+      trace("why are we here");
+    }
+  }
+
+  protected function load_questions($timestamp = false)
+  {
+    trace("Checking Question count: $this->total_questions ");
+    if (empty($this->inst->qset->data)) {
+      $this->inst->get_qset($this->inst->id, $timestamp);
     }
 
-    public function finalize_score($instance, $logs)
-    {
-        $totalScore = 0;
-        foreach ($logs as $log) {
-            trace("Processing log: " . print_r($log, true));
-            $totalScore += $this->check_answer($log);
-        }
-        trace("Total score after finalizing: $totalScore");
-        return $totalScore;
+    if (!empty($this->inst->qset->data)) {
+      $this->questions = Widget_Instance::find_questions($this->inst->qset->data);
+      trace("Questions loaded: " . print_r($this->questions, true));
     }
+  }
 
-    protected function load_questions($timestamp = false)
-    {
-        trace("Checking Question count: $this->total_questions ");
-        if (empty($this->inst->qset->data)) {
-            $this->inst->get_qset($this->inst->id, $timestamp);
-        }
-
-        if (!empty($this->inst->qset->data)) {
-            $this->questions = Widget_Instance::find_questions($this->inst->qset->data);
-            trace("Questions loaded: " . print_r($this->questions, true));
-        }
+  private function contains_all($correctAnswerArray, $userAnswerArray)
+  {
+    foreach ($correctAnswerArray as $answer) {
+      if (!in_array($answer, $userAnswerArray)) {
+        return false;
+      }
     }
-
-    private function contains_all($correctAnswerArray, $userAnswerArray)
-    {
-        foreach ($correctAnswerArray as $answer) {
-            if (!in_array($answer, $userAnswerArray)) {
-                return false;
-            }
-        }
-        return true;
-    }
+    return true;
+  }
 }
