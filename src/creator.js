@@ -125,42 +125,45 @@ Materia.CreatorCore.start({
   onSaveClicked: (mode = "save") => {
     // Save widget data
     const qset = {
-      version: 1,
-      data: {
-        items: [
-          {
-            materiaType: "question",
-            type: "connections",
-            id: null,
-            questions: [{ text: widgetState.description1 }],
-            answers: [{ text: widgetState.words1.join(","), value: 25 }],
-          },
-          {
-            materiaType: "question",
-            type: "connections",
-            id: null,
-            questions: [{ text: widgetState.description2 }],
-            answers: [{ text: widgetState.words2.join(","), value: 25 }],
-          },
-          {
-            materiaType: "question",
-            type: "connections",
-            id: null,
-            questions: [{ text: widgetState.description3 }],
-            answers: [{ text: widgetState.words3.join(","), value: 25 }],
-          },
-          {
-            materiaType: "question",
-            type: "connections",
-            id: null,
-            questions: [{ text: widgetState.description4 }],
-            answers: [{ text: widgetState.words4.join(","), value: 25 }],
-          },
-        ],
+      name: widgetState._title,
+      qset: {
+        version: 1,
+        data: {
+          items: [
+            {
+              materiaType: "question",
+              type: "connections",
+              id: null,
+              questions: [{ text: widgetState.description1 }],
+              answers: [{ text: widgetState.words1.join(","), value: 25 }],
+            },
+            {
+              materiaType: "question",
+              type: "connections",
+              id: null,
+              questions: [{ text: widgetState.description2 }],
+              answers: [{ text: widgetState.words2.join(","), value: 25 }],
+            },
+            {
+              materiaType: "question",
+              type: "connections",
+              id: null,
+              questions: [{ text: widgetState.description3 }],
+              answers: [{ text: widgetState.words3.join(","), value: 25 }],
+            },
+            {
+              materiaType: "question",
+              type: "connections",
+              id: null,
+              questions: [{ text: widgetState.description4 }],
+              answers: [{ text: widgetState.words4.join(","), value: 25 }],
+            },
+          ],
+        },
       },
     };
     console.log(qset);
     console.log(widgetState._title);
-    Materia.CreatorCore.save(widgetState._title, qset);
+    Materia.CreatorCore.save(widgetState._title, qset.qset.data);
   },
 });
