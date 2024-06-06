@@ -1,4 +1,18 @@
 import "./player.scss";
+import {
+  shuffleArray,
+  createAnswerDiv,
+  updateSelectionStyles,
+  selectWord,
+  setCurrentQset,
+  getCurrentQset,
+  setGuessedGroups,
+  getGuessedGroups,
+  setSelectedWords,
+  getSelectedWords,
+  resetSelectedWords,
+  resetGuessedGroups,
+} from "./FunctionsPlayer";
 
 // Modal code
 const closeButton = document.querySelector("[data-close-modal]");
@@ -8,21 +22,11 @@ closeButton.addEventListener("click", () => {
   modal.close();
 });
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-let currentQset = {};
 // Variables to keep track of the score
 let percentScore = 0,
   attempts = 0,
   scoreCount = 0;
-//have a set of guessed groups
-let guessedGroups = new Set();
+
 const AttemptsElement = document.getElementById("Attempts");
 AttemptsElement.innerHTML = attempts;
 let maxAttempts = 4;
@@ -34,7 +38,12 @@ function setupGame(qset) {
     return;
   }
 
-  currentQset = qset; // Update the current qset
+  setCurrentQset(qset); // Set the currentQset
+  resetGuessedGroups(); // Reset guessedGroups
+  resetSelectedWords(); // Reset selectedWords
+  // Get currentQset for logging
+  console.log("currentQset is: ", getCurrentQset());
+
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
   console.log("Descriptions:", descriptions);
   const questionIds = qset.items.map((item) => item.id); // Extract the ID so we can match them in the PHP
@@ -45,7 +54,7 @@ function setupGame(qset) {
   console.log("All words:", allWords);
   const shuffledWords = shuffleArray(allWords);
   wordsGrid.innerHTML = "";
-
+  //create the checkboxes
   shuffledWords.forEach((word, index) => {
     const wordElement = document.createElement("div");
     wordElement.className = "previewItem";
@@ -63,85 +72,9 @@ function setupGame(qset) {
       selectWord(word, wordElement, checkbox);
     });
   });
-
   // Adjust maxAttempts based on the number of items
   maxAttempts = qset.items.length;
   AttemptsElement.innerHTML = attempts;
-}
-
-let selectedWords = [];
-
-function selectWord(word, wordElement, checkbox) {
-  const wordIndex = selectedWords.indexOf(word);
-  if (wordIndex > -1) {
-    // Deselect word
-    selectedWords.splice(wordIndex, 1);
-  } else if (selectedWords.length < 16) {
-    // Select word
-    selectedWords.push(word);
-  }
-  console.log("Selected Words:", selectedWords);
-  updateSelectionStyles();
-}
-
-// This reduces a lot of redundant code in update selection styles
-function updateButtonStyles(buttonId, isEnabled) {
-  const button = document.getElementById(buttonId);
-  if (isEnabled) {
-    button.classList.remove("greyOutButton");
-    button.classList.add("styled-button");
-  } else {
-    button.classList.remove("styled-button");
-    button.classList.add("greyOutButton");
-  }
-}
-
-function updateSelectionStyles() {
-  const wordsGrid = document.querySelector(".wordsPreview");
-
-  wordsGrid.querySelectorAll(".previewItem").forEach((item) => {
-    item.classList.remove(
-      "selected-4",
-      "selected-8",
-      "selected-12",
-      "selected-16",
-    );
-  });
-
-  selectedWords.forEach((word, index) => {
-    const checkbox = [
-      ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
-    ].find((input) => input.nextElementSibling.textContent === word);
-    const item = checkbox.parentNode;
-    if (index < 4) item.classList.add("selected-4");
-    else if (index < 8) item.classList.add("selected-8");
-    else if (index < 12) item.classList.add("selected-12");
-    else item.classList.add("selected-16");
-  });
-
-  const selectionCount = selectedWords.length;
-  updateButtonStyles("check4", selectionCount === 4);
-  updateButtonStyles("check8", selectionCount === 8);
-  updateButtonStyles("check12", selectionCount === 12);
-  updateButtonStyles("check16", selectionCount === 16);
-}
-
-function createAnswerDiv(description, group, className) {
-  const answerDiv = document.createElement("div");
-  answerDiv.classList.add("AnswerDivBackground", className);
-
-  const strongDiv = document.createElement("div");
-  const strongElement = document.createElement("strong");
-  strongElement.textContent = description;
-  strongDiv.appendChild(strongElement);
-
-  const answerDivWords = document.createElement("div");
-  answerDivWords.textContent = group.join(", ");
-
-  answerDiv.appendChild(strongDiv);
-  answerDiv.appendChild(answerDivWords);
-
-  return answerDiv;
 }
 
 function checkSelection(count) {
@@ -154,20 +87,29 @@ function checkSelection(count) {
   let groupsToRemove = [];
 
   // Process selected words in groups of four
+  const selectedWords = getSelectedWords();
+  const currentQset = getCurrentQset();
+  console.log("current qset in checkSelection is: ", currentQset);
+
   for (let i = 0; i < selectedWords.length; i += 4) {
     console.log("inside the for loop");
     const currentGroup = selectedWords.slice(i, i + 4).sort(); // Sort the selected words
+    console.log(" current group is: ", currentGroup);
     let groupFound = false;
     currentQset.items.forEach((item, index) => {
-      if (guessedGroups.has(item.questions[0].text)) {
+      if (getGuessedGroups().has(item.questions[0].text)) {
         return; // Skip already guessed groups
       }
       console.log("checking inside a for each loop of currentQsetItems");
       const group = currentGroup.filter((word) =>
-        item.answers[0].text.split(",").includes(word),
+        item.answers[0].text.split(",").includes(word.trim()),
       );
+      console.log("group const after doing currentGroup filter is: ", group);
       if (group.length === 4) {
+        const guessedGroups = getGuessedGroups();
         guessedGroups.add(item.questions[0].text); // Add description to guessed set
+        setGuessedGroups(guessedGroups);
+
         console.log(item.questions[0].text);
         validGroupsCount++;
         validWordsCount += 4;
@@ -182,7 +124,6 @@ function checkSelection(count) {
           group.join(","),
           pointsPerCorrectGroup,
         );
-
         const className = `selected-${(index + 1) * 4}`;
         const answerDiv = createAnswerDiv(
           item.questions[0].text,
@@ -190,18 +131,19 @@ function checkSelection(count) {
           className,
         );
         correctAnswersDiv.appendChild(answerDiv);
-
         groupsToRemove.push(group);
         groupFound = true;
       }
     });
-
     if (!groupFound && currentGroup.length === 4) {
       const unguessedDescription = currentQset.items.find((item) => {
-        return !guessedGroups.has(item.questions[0].text);
+        return !getGuessedGroups().has(item.questions[0].text);
       });
       if (unguessedDescription) {
+        const guessedGroups = getGuessedGroups();
         guessedGroups.add(unguessedDescription.questions[0].text); // Add to guessed to avoid rechecking
+        setGuessedGroups(guessedGroups);
+
         Materia.Score.submitQuestionForScoring(
           unguessedDescription.id,
           currentGroup.join(","),
@@ -210,19 +152,20 @@ function checkSelection(count) {
       }
     }
   }
-
   // Only remove words from valid groups
   groupsToRemove.forEach((group) => {
     group.forEach((word) => {
       const checkbox = [
         ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
-      ].find((input) => input.nextElementSibling.textContent === word);
+      ].find(
+        (input) => input.nextElementSibling.textContent.trim() === word.trim(),
+      );
       const item = checkbox.parentNode;
       wordsGrid.removeChild(item);
     });
   });
-
   if (validWordsCount !== count) {
+    console.log("you got the answer wrong somehow. ");
     attempts++;
     AttemptsElement.innerHTML = attempts;
     document.getElementById("check4").classList.remove("styled-button");
@@ -235,9 +178,8 @@ function checkSelection(count) {
       disableGame();
     }
   }
-
   // Clear selectedWords after evaluation
-  selectedWords = [];
+  setSelectedWords([]);
   document
     .querySelectorAll('.previewItem input[type="checkbox"]:checked')
     .forEach((checkbox) => {
@@ -257,6 +199,7 @@ function showRemainingCorrectAnswers() {
     .map((div) => div.textContent.split(", "))
     .flat();
 
+  const currentQset = getCurrentQset();
   const groupWords = currentQset.items.map((item) =>
     item.answers
       .map((answer) => answer.text)
@@ -283,16 +226,10 @@ function showRemainingCorrectAnswers() {
 
 function disableGame() {
   const wordsGrid = document.querySelector(".wordsPreview");
-  const correctAnswersDiv = document.getElementById("correctAnswers");
-
-  const alreadyGuessedWords = Array.from(
-    correctAnswersDiv.querySelectorAll(".AnswerDivBackground div div"),
-  )
-    .map((div) => div.textContent.split(", "))
-    .flat();
+  const currentQset = getCurrentQset();
 
   const unguessedDescriptions = currentQset.items.filter((item) => {
-    return !guessedGroups.has(item.questions[0].text);
+    return !getGuessedGroups().has(item.questions[0].text);
   });
 
   unguessedDescriptions.forEach((item) => {
@@ -309,7 +246,6 @@ function disableGame() {
     .forEach((checkbox) => {
       checkbox.disabled = true;
     });
-
   //get the modal and show the results
   const resultsModal = document.getElementById("resultsModal");
   const finalResults = document.getElementById("finalResults");
