@@ -151,13 +151,13 @@ function checkSelection(count) {
       const unguessedDescription = currentQset.items.find((item) => {
         return !getGuessedGroups().has(item.questions[0].text);
       });
-      if (unguessedDescription) {
-        Materia.Score.submitQuestionForScoring(
-          unguessedDescription.id,
-          currentGroup.join(","),
-          0,
-        );
-      }
+      // if (unguessedDescription) {
+      //   Materia.Score.submitQuestionForScoring(
+      //     unguessedDescription.id,
+      //     currentGroup.join(","),
+      //     0,
+      //   );
+      // }
     }
   }
 
