@@ -83,28 +83,36 @@ function checkSelection(count) {
   let validGroupsCount = 0;
   let validWordsCount = 0;
   console.log("starting to check selection");
+
   // Track groups that should be removed
   let groupsToRemove = [];
 
   // Process selected words in groups of four
-  const selectedWords = getSelectedWords();
+  const selectedWords = getSelectedWords().map((word) => word.trim());
   const currentQset = getCurrentQset();
   console.log("current qset in checkSelection is: ", currentQset);
 
   for (let i = 0; i < selectedWords.length; i += 4) {
     console.log("inside the for loop");
-    const currentGroup = selectedWords.slice(i, i + 4).sort(); // Sort the selected words
+    const currentGroup = selectedWords.slice(i, i + 4).sort();
     console.log(" current group is: ", currentGroup);
     let groupFound = false;
+
     currentQset.items.forEach((item, index) => {
       if (getGuessedGroups().has(item.questions[0].text)) {
         return; // Skip already guessed groups
       }
+
       console.log("checking inside a for each loop of currentQsetItems");
-      const group = currentGroup.filter((word) =>
-        item.answers[0].text.split(",").includes(word.trim()),
-      );
+
+      const answerWords = item.answers[0].text
+        .split(",")
+        .map((word) => word.trim());
+      console.log("answer words: ", answerWords);
+
+      const group = currentGroup.filter((word) => answerWords.includes(word));
       console.log("group const after doing currentGroup filter is: ", group);
+
       if (group.length === 4) {
         const guessedGroups = getGuessedGroups();
         guessedGroups.add(item.questions[0].text); // Add description to guessed set
@@ -114,16 +122,19 @@ function checkSelection(count) {
         validGroupsCount++;
         validWordsCount += 4;
         console.log("valid groups count is ", validGroupsCount);
+
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
         console.log("Checking Groups again:" + group);
+
         // Submit the group as a single answer with the question ID and group of words
         Materia.Score.submitQuestionForScoring(
           item.id,
           group.join(","),
           pointsPerCorrectGroup,
         );
+
         const className = `selected-${(index + 1) * 4}`;
         const answerDiv = createAnswerDiv(
           item.questions[0].text,
@@ -135,15 +146,12 @@ function checkSelection(count) {
         groupFound = true;
       }
     });
+
     if (!groupFound && currentGroup.length === 4) {
       const unguessedDescription = currentQset.items.find((item) => {
         return !getGuessedGroups().has(item.questions[0].text);
       });
       if (unguessedDescription) {
-        const guessedGroups = getGuessedGroups();
-        guessedGroups.add(unguessedDescription.questions[0].text); // Add to guessed to avoid rechecking
-        setGuessedGroups(guessedGroups);
-
         Materia.Score.submitQuestionForScoring(
           unguessedDescription.id,
           currentGroup.join(","),
@@ -152,6 +160,7 @@ function checkSelection(count) {
       }
     }
   }
+
   // Only remove words from valid groups
   groupsToRemove.forEach((group) => {
     group.forEach((word) => {
@@ -160,12 +169,15 @@ function checkSelection(count) {
       ].find(
         (input) => input.nextElementSibling.textContent.trim() === word.trim(),
       );
-      const item = checkbox.parentNode;
-      wordsGrid.removeChild(item);
+      if (checkbox) {
+        const item = checkbox.parentNode;
+        wordsGrid.removeChild(item);
+      }
     });
   });
+
   if (validWordsCount !== count) {
-    console.log("you got the answer wrong somehow. ");
+    console.log("you got the answer wrong somehow.");
     attempts++;
     AttemptsElement.innerHTML = attempts;
     document.getElementById("check4").classList.remove("styled-button");
@@ -178,6 +190,7 @@ function checkSelection(count) {
       disableGame();
     }
   }
+
   // Clear selectedWords after evaluation
   setSelectedWords([]);
   document
@@ -186,6 +199,7 @@ function checkSelection(count) {
       checkbox.checked = false;
     });
   updateSelectionStyles();
+
   if (scoreCount >= maxAttempts) disableGame();
 }
 
