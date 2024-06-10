@@ -281,6 +281,7 @@ function disableGame() {
 }
 
 function fetchDemoData() {
+  console.log("FETCHING DEMO DATA BOOOO");
   fetch("demo.json")
     .then((response) => {
       if (!response.ok) {
