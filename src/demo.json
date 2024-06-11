@@ -1,6 +1,7 @@
 {
   "name": "Connections Widget Demo",
   "qset": {
+    "name": "Connections Widget Demo!!!",
     "version": 1,
     "data": {
       "items": [
@@ -8,13 +9,13 @@
           "materiaType": "question",
           "questions": [{ "text": "Names" }],
           "type": "connections",
-          "id": null,
+          "id": 1,
           "answers": [{ "text": "Sim Ho,Bed,Chris,Golden", "value": 25 }]
         },
         {
           "materiaType": "question",
           "type": "connections",
-          "id": null,
+          "id": 2,
           "questions": [{ "text": "Restaurants" }],
           "answers": [
             { "text": "BugerFi, TacoBell, Wawa,Lazy Moon", "value": 25 }
@@ -22,7 +23,7 @@
         },
         {
           "materiaType": "question",
-          "id": null,
+          "id": 3,
           "questions": [{ "text": "Magical Creatures" }],
           "type": "connections",
           "answers": [
@@ -31,7 +32,7 @@
         },
         {
           "materiaType": "question",
-          "id": null,
+          "id": 4,
           "questions": [{ "text": "Extinct Creatures" }],
           "type": "connections",
           "answers": [

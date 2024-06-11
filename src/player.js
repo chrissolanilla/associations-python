@@ -302,6 +302,9 @@ Materia.Engine.start({
   start: (instance, qset, qsetVersion) => {
     console.log("Starting game with qset:", qset);
     if (qset) {
+      const title = instance.name;
+      const TitleElement = document.getElementById("Title");
+      TitleElement.innerHTML = title;
       setupGame(qset);
     } else {
       fetchDemoData();

@@ -83,6 +83,9 @@ Materia.CreatorCore.start({
   },
   initExistingWidget: (widget, title, qset, qsetVersion, baseUrl, mediaUrl) => {
     widgetState._qset = qset;
+    console.log("title beofre is", title);
+    title = widgetState._title;
+    console.log("title after is", title);
     // Populate existing words and descriptions if editing
     document.getElementById("Words1").value =
       qset.data.items[0].answers[0].text;
@@ -125,8 +128,8 @@ Materia.CreatorCore.start({
   onSaveClicked: (mode = "save") => {
     // Save widget data
     const qset = {
-      name: widgetState._title,
       qset: {
+        name: widgetState._title,
         version: 1,
         data: {
           items: [

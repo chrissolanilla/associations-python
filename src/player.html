@@ -1,48 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="player.css">
-		<title>Connections</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="player.css" />
+    <title>Connections</title>
 
-		<script src="materia.enginecore.js"></script>
-	</head>
-	<body>
-		<dialog data-modal class="modal">
-			<div class="modalClass">
-				<h1>Welcome to the Connections Game!</h1>
-				<p>Select words in pairs of 4 that belong to a common category</p>
-				<button data-close-modal class="styled-button">Start Game</button>
-			</div>
-		</dialog>
-		<dialog id="resultsModal" class="modal">
-			<div class="modalClass">
-				<h1>Game Over</h1>
-				<div id="finalResults">
-					<!-- Final results will be inserted here -->
-				</div>
-				<button id="goToScoreScreen" class="styled-button">Go to Score Screen</button>
-			</div>
-		</dialog>
-		<main>
-			<h1>Connections Game!</h1>
-			<div class="CorrectAnswers" id="correctAnswers">
-				<!--correct words and descriptions will show up when you get some right-->
-			</div>
-			<div class="wordsPreview">
-				<!-- words will be dynamically inserted here -->
-			</div>
-			<div class="controls">
-				<button id="check4" class="greyOutButton">Check 4</button>
-				<button id="check8" class="greyOutButton">Check 8</button>
-				<button id="check12" class="greyOutButton">Check 12</button>
-				<button id="check16" class="greyOutButton">Check 16</button>
-				<span>Wrong Attempts: <span id="Attempts"> </span>  </span>
-			</div>
-		</main>
+    <script src="materia.enginecore.js"></script>
+  </head>
+  <body>
+    <dialog data-modal class="modal">
+      <div class="modalClass">
+        <h1>Welcome to the Connections Game!</h1>
+        <p>Select words in pairs of 4 that belong to a common category</p>
+        <button data-close-modal class="styled-button">Start Game</button>
+      </div>
+    </dialog>
+    <dialog id="resultsModal" class="modal">
+      <div class="modalClass">
+        <h1>Game Over</h1>
+        <div id="finalResults">
+          <!-- Final results will be inserted here -->
+        </div>
+        <button id="goToScoreScreen" class="styled-button">
+          Go to Score Screen
+        </button>
+      </div>
+    </dialog>
+    <main>
+      <!--the title will be inserted from the javascript: TODO-->
+      <h1 id="Title"></h1>
+      <div class="CorrectAnswers" id="correctAnswers">
+        <!--correct words and descriptions will show up when you get some right-->
+      </div>
+      <div class="wordsPreview">
+        <!-- words will be dynamically inserted here -->
+      </div>
+      <div class="controls">
+        <button id="check4" class="greyOutButton">Check 4</button>
+        <button id="check8" class="greyOutButton">Check 8</button>
+        <button id="check12" class="greyOutButton">Check 12</button>
+        <button id="check16" class="greyOutButton">Check 16</button>
+        <span>Wrong Attempts: <span id="Attempts"> </span> </span>
+      </div>
+    </main>
 
-		<script src="player.js"></script>
-	</body>
+    <script src="player.js"></script>
+  </body>
 </html>
