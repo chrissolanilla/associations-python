@@ -52,4 +52,18 @@ form {
 	margin: 0 0.5rem 0 0.5rem;
 }
 
-
+.Form-dimension-container {
+  display: grid;
+  grid-template-columns: repeat(10,20px);
+  grid-template-rows: repeat(10,20px);
+  margin-bottom: 10px;
+  grid-gap: 10px;
+}
+.Form-dimension-container .cell {
+  background: grey;
+  border-radius: 6px;
+  height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0 0.5rem 0 0.5rem;
+}

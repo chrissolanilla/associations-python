@@ -12,6 +12,8 @@ let widgetState = {
   description2: "",
   description3: "",
   description4: "",
+  dimensionX: "0",
+  dimensionY: "0",
   _title: "",
   _qset: {},
 };
@@ -76,7 +78,26 @@ document.querySelectorAll(".AnswerDescriptions input").forEach((input) => {
 document.querySelectorAll(".GameNameInput input").forEach((input) => {
   input.addEventListener("input", updateGameName);
 });
+//tring out the cool grid mouse selector
+const DimensionContainer = document.getElementById("DimensionContainer");
+// Create the grid cells
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 10; j++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cell.dataset.row = i + 1;
+    cell.dataset.col = j + 1;
+    DimensionContainer.appendChild(cell);
+  }
+}
+function updateDimensions() {
+  //create a new div for each column and row
+  for (let i = 0; i < widgetState.dimensionX; i++) {
+    for (let j = 0; j < widgetState.dimensionY; j++) {}
+  }
+}
 
+//
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
     // Setup for a new widget
