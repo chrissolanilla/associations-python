@@ -46,7 +46,6 @@ function setupGame(qset) {
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
   console.log("Descriptions:", descriptions);
-  const questionIds = qset.items.map((item) => item.id); // Extract the ID so we can match them in the PHP
   const wordsGrid = document.querySelector(".wordsPreview");
   const allWords = qset.items.flatMap((item) =>
     item.answers[0].text.split(","),
@@ -151,13 +150,6 @@ function checkSelection(count) {
       const unguessedDescription = currentQset.items.find((item) => {
         return !getGuessedGroups().has(item.questions[0].text);
       });
-      // if (unguessedDescription) {
-      //   Materia.Score.submitQuestionForScoring(
-      //     unguessedDescription.id,
-      //     currentGroup.join(","),
-      //     0,
-      //   );
-      // }
     }
   }
 
@@ -280,34 +272,17 @@ function disableGame() {
   });
 }
 
-function fetchDemoData() {
-  console.log("FETCHING DEMO DATA BOOOO");
-  fetch("demo.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Fetched demo data:", data);
-      setupGame(data.qset.data);
-    })
-    .catch((error) => {
-      console.error("Error loading demo data:", error);
-    });
-}
-
 Materia.Engine.start({
   start: (instance, qset, qsetVersion) => {
     console.log("Starting game with qset:", qset);
     if (qset) {
+      //instace is the entire demo.json object, qset is only the items array
       const title = instance.name;
       const TitleElement = document.getElementById("Title");
       TitleElement.innerHTML = title;
       setupGame(qset);
     } else {
-      fetchDemoData();
+      console.error("No qset found.");
     }
   },
 });
