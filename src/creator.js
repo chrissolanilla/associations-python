@@ -91,7 +91,6 @@ for (let i = 0; i < 6; i++) {
     DimensionContainer.appendChild(cell);
   }
 }
-
 //get the row and column of the mouse over
 DimensionContainer.addEventListener("mouseover", (event) => {
   if (event.target.classList.contains("cell")) {

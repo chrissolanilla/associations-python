@@ -52,6 +52,20 @@ form {
 	margin: 0 0.5rem 0 0.5rem;
 }
 
+.ContainerDimensionGroup{
+  display: flex;
+  flex-direction: column;
+  max-width:80%;
+}
+.ContainerDimensionInput {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width:40%;
+}
+.ChooseButton {
+  margin:0.3rem;
+}
 .Form-dimension-container {
   display: grid;
   grid-template-columns: repeat(6,20px);

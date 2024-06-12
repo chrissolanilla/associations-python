@@ -8,30 +8,32 @@
 
     <link rel="stylesheet" type="text/css" href="creator.css" />
     <script src="materia.creatorcore.js"></script>
-    <script src="http://localhost:8097"></script>
     <!-- for the standalone react-devtools app -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.9.0/umd/react.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.9.0/umd/react-dom.development.js"></script>
   </head>
   <body>
     <header>
       <h1>Create a Puzzle</h1>
-      <div class="GameNameInput">
-        <label for="GameName">Game Name</label>
-        <input
-          type="text"
-          name="GameName"
-          id="GameName"
-          oninput="updateGameName()"
-        />
-      </div>
+      <h2>Please enter a game name and Grid Size</h2>
     </header>
     <form>
       <div class="CreaterForm">
         <!-- tring out google form code -->
-        <!-- somehow dynamically create a div that updates when your mouse moves over squares -->
-        <div class="Form-dimension-container" id="DimensionContainer"></div>
-        <div class="dimension-status" id="DimensionStatus">0 x0</div>
+        <div class="ContainerDimensionGroup">
+          <div class="GameNameInput">
+            <label for="GameName">Game Name</label>
+            <input
+              type="text"
+              name="GameName"
+              id="GameName"
+              oninput="updateGameName()"
+            />
+          </div>
+          <div class="ContainerDimensionInput">
+            <button class="ChooseButton">Choose Grid Size</button>
+            <div class="Form-dimension-container" id="DimensionContainer"></div>
+            <div class="dimension-status" id="DimensionStatus">0 x0</div>
+          </div>
+        </div>
         <!-- end of google code -->
         <!--blue-->
         <div class="CreatorKVP Blue">
