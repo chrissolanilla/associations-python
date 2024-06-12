@@ -17,7 +17,6 @@ let widgetState = {
   _title: "",
   _qset: {},
 };
-console.log(widgetState._title);
 function updateGameName() {
   widgetState._title = document.getElementById("GameName").value;
 }
@@ -80,21 +79,48 @@ document.querySelectorAll(".GameNameInput input").forEach((input) => {
 });
 //tring out the cool grid mouse selector
 const DimensionContainer = document.getElementById("DimensionContainer");
-// Create the grid cells
-for (let i = 0; i < 10; i++) {
-  for (let j = 0; j < 10; j++) {
+const DimensionStatusElement = document.getElementById("DimensionStatus");
+// create the grid cells
+for (let i = 0; i < 6; i++) {
+  for (let j = 0; j < 6; j++) {
     const cell = document.createElement("div");
     cell.classList.add("cell");
+    cell.classList.add("cellbg");
     cell.dataset.row = i + 1;
     cell.dataset.col = j + 1;
     DimensionContainer.appendChild(cell);
   }
 }
-function updateDimensions() {
-  //create a new div for each column and row
-  for (let i = 0; i < widgetState.dimensionX; i++) {
-    for (let j = 0; j < widgetState.dimensionY; j++) {}
+
+//get the row and column of the mouse over
+DimensionContainer.addEventListener("mouseover", (event) => {
+  if (event.target.classList.contains("cell")) {
+    const row = event.target.dataset.row;
+    const col = event.target.dataset.col;
+    highlightGrid(row, col);
+    DimensionStatusElement.textContent = `${col} x ${row}`;
   }
+});
+DimensionContainer.addEventListener("click", (event) => {
+  if (event.target.classList.contains("cell")) {
+    widgetState.dimensionX = event.target.dataset.col;
+    widgetState.dimensionY = event.target.dataset.row;
+    DimensionContainer.classList.add("hidden");
+  }
+});
+function highlightGrid(rows, cols) {
+  const cells = DimensionContainer.querySelectorAll(".cell");
+  cells.forEach((cell) => {
+    const cellRow = cell.dataset.row;
+    const cellCol = cell.dataset.col;
+    if (cellRow <= rows && cellCol <= cols) {
+      cell.classList.remove("cellbg");
+      cell.classList.add("hovered");
+    } else {
+      cell.classList.remove("hovered");
+      cell.classList.add("cellbg");
+    }
+  });
 }
 
 //

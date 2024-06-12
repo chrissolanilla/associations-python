@@ -54,16 +54,25 @@ form {
 
 .Form-dimension-container {
   display: grid;
-  grid-template-columns: repeat(10,20px);
-  grid-template-rows: repeat(10,20px);
+  grid-template-columns: repeat(6,20px);
+  grid-template-rows: repeat(6,20px);
   margin-bottom: 10px;
   grid-gap: 10px;
 }
 .Form-dimension-container .cell {
-  background: grey;
   border-radius: 6px;
   height: 20px;
+  width: 20px;
   text-align: center;
   text-transform: uppercase;
   margin: 0 0.5rem 0 0.5rem;
+}
+.cellbg {
+  background: grey;
+}
+.hovered {
+  background: black;
+}
+.hidden {
+  display: none!important;
 }
