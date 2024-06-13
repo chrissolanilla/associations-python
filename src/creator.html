@@ -35,72 +35,8 @@
           </div>
         </div>
         <!-- end of google code -->
-        <!--blue-->
-        <div class="CreatorKVP Blue">
-          <div class="CreatorAnswers">
-            <label for="Words1"> Answers (Comma-separated)</label>
-            <input
-              type="text"
-              name="Words1"
-              id="Words1"
-              oninput="updatePreview()"
-            />
-          </div>
-
-          <div class="AnswerDescriptions">
-            <label for="Description1"> Description</label>
-            <input
-              type="text"
-              name="Description1"
-              id="Description1"
-              oninput="updateDescription()"
-            />
-          </div>
-        </div>
-        <!--green-->
-        <div class="CreatorKVP Green">
-          <div class="CreatorAnswers">
-            <label for="Words2"> Answers (Comma-separated)</label>
-            <input
-              type="text"
-              name="Words2"
-              id="Words2"
-              oninput="updatePreview()"
-            />
-          </div>
-
-          <div class="AnswerDescriptions">
-            <label for="Description2"> Description</label>
-            <input
-              type="text"
-              name="Description2"
-              id="Description2"
-              oninput="updateDescription()"
-            />
-          </div>
-        </div>
-        <!--yellow-->
-        <div class="CreatorKVP Yellow">
-          <div class="CreatorAnswers">
-            <label for="Words3"> Answers (Comma-separated)</label>
-            <input
-              type="text"
-              name="Words3"
-              id="Words3"
-              oninput="updatePreview()"
-            />
-          </div>
-
-          <div class="AnswerDescriptions">
-            <label for="Description3"> Description</label>
-            <input
-              type="text"
-              name="Description3"
-              id="Description3"
-              oninput="updateDescription()"
-            />
-          </div>
-        </div>
+        <!--Need to replace the hard coded divs to be dynamically created-->
+        <div id="dynamicInputs"></div>
         <!--pink-->
         <div class="CreatorKVP Pink">
           <div class="CreatorAnswers">
@@ -125,23 +61,23 @@
         </div>
       </div>
 
-      <div class="wordsPreview">
-        <div class="previewItem" id="preview1"></div>
-        <div class="previewItem" id="preview2"></div>
-        <div class="previewItem" id="preview3"></div>
-        <div class="previewItem" id="preview4"></div>
-        <div class="previewItem" id="preview5"></div>
-        <div class="previewItem" id="preview6"></div>
-        <div class="previewItem" id="preview7"></div>
-        <div class="previewItem" id="preview8"></div>
-        <div class="previewItem" id="preview9"></div>
-        <div class="previewItem" id="preview10"></div>
-        <div class="previewItem" id="preview11"></div>
-        <div class="previewItem" id="preview12"></div>
-        <div class="previewItem" id="preview13"></div>
-        <div class="previewItem" id="preview14"></div>
-        <div class="previewItem" id="preview15"></div>
-        <div class="previewItem" id="preview16"></div>
+      <div class="wordsPreview" id="wordsPreview">
+        <!-- <div class="previewItem" id="preview1"></div> -->
+        <!-- <div class="previewItem" id="preview2"></div> -->
+        <!-- <div class="previewItem" id="preview3"></div> -->
+        <!-- <div class="previewItem" id="preview4"></div> -->
+        <!-- <div class="previewItem" id="preview5"></div> -->
+        <!-- <div class="previewItem" id="preview6"></div> -->
+        <!-- <div class="previewItem" id="preview7"></div> -->
+        <!-- <div class="previewItem" id="preview8"></div> -->
+        <!-- <div class="previewItem" id="preview9"></div> -->
+        <!-- <div class="previewItem" id="preview10"></div> -->
+        <!-- <div class="previewItem" id="preview11"></div> -->
+        <!-- <div class="previewItem" id="preview12"></div> -->
+        <!-- <div class="previewItem" id="preview13"></div> -->
+        <!-- <div class="previewItem" id="preview14"></div> -->
+        <!-- <div class="previewItem" id="preview15"></div> -->
+        <!-- <div class="previewItem" id="preview16"></div> -->
       </div>
     </form>
 
