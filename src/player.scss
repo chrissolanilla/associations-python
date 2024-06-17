@@ -22,7 +22,7 @@ h1 {
 	cursor: pointer;
 	width: fit-content;
 	margin: 0 auto;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);	
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .styled-button {
 	background-color: black;
@@ -47,7 +47,7 @@ h1 {
 }
 .wordsPreview {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	// grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 .previewItem {
 	opacity: 1;
@@ -121,7 +121,7 @@ h1 {
     // color: white;
 	font-weight: bold;
 }
-.AnswerDivBackground {	
+.AnswerDivBackground {
 	padding: 2rem 2rem;
 	margin-bottom: 8px;
 	width: 90vw;

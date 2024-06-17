@@ -1,10 +1,11 @@
-// FunctionsPlayer.js
 let selectedWords = [];
 let currentQset;
 let guessedGroups = new Set();
+let dimensionX = 0;
 
 export function setCurrentQset(qset) {
   currentQset = qset;
+  dimensionX = qset.items[0].answers[0].text.split(",").length;
 }
 
 export function getCurrentQset() {
@@ -50,12 +51,9 @@ export function updateSelectionStyles() {
   const wordsGrid = document.querySelector(".wordsPreview");
 
   wordsGrid.querySelectorAll(".previewItem").forEach((item) => {
-    item.classList.remove(
-      "selected-4",
-      "selected-8",
-      "selected-12",
-      "selected-16",
-    );
+    for (let i = 1; i <= 16; i++) {
+      item.classList.remove(`selected-${i}`);
+    }
   });
 
   selectedWords.forEach((word, index) => {
@@ -63,17 +61,13 @@ export function updateSelectionStyles() {
       ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
     ].find((input) => input.nextElementSibling.textContent === word);
     const item = checkbox.parentNode;
-    if (index < 4) item.classList.add("selected-4");
-    else if (index < 8) item.classList.add("selected-8");
-    else if (index < 12) item.classList.add("selected-12");
-    else item.classList.add("selected-16");
+    item.classList.add(`selected-${index + 1}`);
   });
 
   const selectionCount = selectedWords.length;
-  updateButtonStyles("check4", selectionCount === 4);
-  updateButtonStyles("check8", selectionCount === 8);
-  updateButtonStyles("check12", selectionCount === 12);
-  updateButtonStyles("check16", selectionCount === 16);
+  for (let i = 1; i <= 16; i++) {
+    updateButtonStyles(`check${i}`, selectionCount === i);
+  }
 }
 
 export function createAnswerDiv(description, group, className) {

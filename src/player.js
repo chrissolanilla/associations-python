@@ -37,16 +37,24 @@ function setupGame(qset) {
     console.error("Invalid qset data", qset);
     return;
   }
-
   setCurrentQset(qset); // Set the currentQset
   resetGuessedGroups(); // Reset guessedGroups
   resetSelectedWords(); // Reset selectedWords
   // Get currentQset for logging
   console.log("currentQset is: ", getCurrentQset());
+  //get the dimmensions of the qset
+  const dimensionX = qset.items[0].answers[0].text.split(",").length;
+  const dimensionY = qset.items.length;
+  console.log("Dimensions are: ", dimensionX, dimensionY);
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
   console.log("Descriptions:", descriptions);
   const wordsGrid = document.querySelector(".wordsPreview");
+  let columnString = "";
+  for (let i = 0; i < dimensionX; i++) {
+    columnString += "1fr ";
+  }
+  wordsGrid.style.gridTemplateColumns = columnString;
   const allWords = qset.items.flatMap((item) =>
     item.answers[0].text.split(","),
   ); // Extract individual words from the concatenated answer strings
