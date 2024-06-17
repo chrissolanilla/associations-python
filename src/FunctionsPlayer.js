@@ -1,16 +1,30 @@
+// FunctionsPlayer.js
 let selectedWords = [];
 let currentQset;
 let guessedGroups = new Set();
 let dimensionX = 0;
+let dimensionY = 0;
 
 export function setCurrentQset(qset) {
   currentQset = qset;
-  dimensionX = qset.items[0].answers[0].text.split(",").length;
 }
 
 export function getCurrentQset() {
   return currentQset;
 }
+
+export function setDimensions(x, y) {
+  dimensionX = x;
+  dimensionY = y;
+}
+//i do not think i will need this tbh
+// export function getDimensionX() {
+//     return dimensionX;
+// }
+
+// export function getDimensionY() {
+//     return dimensionY;
+// }
 
 export function setSelectedWords(words) {
   selectedWords = words;
@@ -51,9 +65,12 @@ export function updateSelectionStyles() {
   const wordsGrid = document.querySelector(".wordsPreview");
 
   wordsGrid.querySelectorAll(".previewItem").forEach((item) => {
-    for (let i = 1; i <= 16; i++) {
-      item.classList.remove(`selected-${i}`);
-    }
+    item.classList.remove(
+      "selected-4",
+      "selected-8",
+      "selected-12",
+      "selected-16",
+    );
   });
 
   selectedWords.forEach((word, index) => {
@@ -61,13 +78,17 @@ export function updateSelectionStyles() {
       ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
     ].find((input) => input.nextElementSibling.textContent === word);
     const item = checkbox.parentNode;
-    item.classList.add(`selected-${index + 1}`);
+    if (index < 4) item.classList.add("selected-4");
+    else if (index < 8) item.classList.add("selected-8");
+    else if (index < 12) item.classList.add("selected-12");
+    else item.classList.add("selected-16");
   });
 
   const selectionCount = selectedWords.length;
-  for (let i = 1; i <= 16; i++) {
-    updateButtonStyles(`check${i}`, selectionCount === i);
-  }
+  updateButtonStyles("check4", selectionCount === 4);
+  updateButtonStyles("check8", selectionCount === 8);
+  updateButtonStyles("check12", selectionCount === 12);
+  updateButtonStyles("check16", selectionCount === 16);
 }
 
 export function createAnswerDiv(description, group, className) {
@@ -97,6 +118,7 @@ export function shuffleArray(array) {
 }
 
 export function selectWord(word, wordElement, checkbox) {
+  console.log("DIMENSION X AND Y ARE", dimensionX, dimensionY);
   const wordIndex = selectedWords.indexOf(word);
   if (wordIndex > -1) {
     // Deselect word

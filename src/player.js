@@ -12,6 +12,7 @@ import {
   getSelectedWords,
   resetSelectedWords,
   resetGuessedGroups,
+  setDimensions,
 } from "./FunctionsPlayer";
 
 // Modal code
@@ -45,6 +46,7 @@ function setupGame(qset) {
   //get the dimmensions of the qset
   const dimensionX = qset.items[0].answers[0].text.split(",").length;
   const dimensionY = qset.items.length;
+  setDimensions(dimensionX, dimensionY);
   console.log("Dimensions are: ", dimensionX, dimensionY);
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
