@@ -1,4 +1,4 @@
-import "./player.scss";
+import './player.scss';
 import {
   shuffleArray,
   createAnswerDiv,
@@ -13,13 +13,13 @@ import {
   resetSelectedWords,
   resetGuessedGroups,
   setDimensions,
-} from "./FunctionsPlayer";
+} from './FunctionsPlayer';
 
 // Modal code
-const closeButton = document.querySelector("[data-close-modal]");
-const modal = document.querySelector("[data-modal]");
+const closeButton = document.querySelector('[data-close-modal]');
+const modal = document.querySelector('[data-modal]');
 modal.showModal();
-closeButton.addEventListener("click", () => {
+closeButton.addEventListener('click', () => {
   modal.close();
 });
 
@@ -28,82 +28,100 @@ let percentScore = 0,
   attempts = 0,
   scoreCount = 0;
 
-const AttemptsElement = document.getElementById("Attempts");
+const AttemptsElement = document.getElementById('Attempts');
 AttemptsElement.innerHTML = attempts;
 let maxAttempts = 0; //change it to dimensionX later
 let dimensionXGlobal = 0;
 let dimensionYGlobal = 0;
 
 function setupGame(qset) {
-  console.log("Setting up game with qset:", qset);
+  console.log('Setting up game with qset:', qset);
   if (!qset || !qset.items) {
-    console.error("Invalid qset data", qset);
+    console.error('Invalid qset data', qset);
     return;
   }
   setCurrentQset(qset); // Set the currentQset
   resetGuessedGroups(); // Reset guessedGroups
   resetSelectedWords(); // Reset selectedWords
   // Get currentQset for logging
-  console.log("currentQset is: ", getCurrentQset());
+  console.log('currentQset is: ', getCurrentQset());
   //get the dimmensions of the qset
-  const dimensionX = qset.items[0].answers[0].text.split(",").length;
+  const dimensionX = qset.items[0].answers[0].text.split(',').length;
   const dimensionY = qset.items.length;
   setDimensions(dimensionX, dimensionY);
   dimensionXGlobal = dimensionX;
   dimensionYGlobal = dimensionY;
   maxAttempts = dimensionX;
-  console.log("Dimensions are: ", dimensionX, dimensionY);
+  console.log('Dimensions are: ', dimensionX, dimensionY);
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
-  console.log("Descriptions:", descriptions);
-  const wordsGrid = document.querySelector(".wordsPreview");
+  console.log('Descriptions:', descriptions);
+  const wordsGrid = document.querySelector('.wordsPreview');
   //this styles it based on the x dimensions
-  let columnString = "";
+  let columnString = '';
   for (let i = 0; i < dimensionX; i++) {
-    columnString += "1fr ";
+    columnString += '1fr ';
   }
   wordsGrid.style.gridTemplateColumns = columnString;
   const allWords = qset.items.flatMap((item) =>
-    item.answers[0].text.split(","),
+    item.answers[0].text.split(','),
   ); // Extract individual words from the concatenated answer strings
-  console.log("All words:", allWords);
+  console.log('All words:', allWords);
   const shuffledWords = shuffleArray(allWords);
-  wordsGrid.innerHTML = "";
+
+  const controlsElement = document.getElementById('controls');
+  for (let i = 0; i < dimensionY; i++) {
+    const button = document.createElement('button');
+    const count = dimensionX * (i + 1);
+    button.textContent = `check ${count}`;
+    button.id = `check${count}`;
+    button.classList.add('greyOutButton');
+    button.addEventListener('click', (event) => {
+      if (!event.target.classList.contains('styled-button')) {
+        event.preventDefault();
+        return;
+      }
+      checkSelection(count);
+    });
+    controlsElement.appendChild(button);
+  }
+  wordsGrid.innerHTML = '';
   //create the checkboxes
   shuffledWords.forEach((word, index) => {
-    const wordElement = document.createElement("div");
-    wordElement.className = "previewItem";
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
+    const wordElement = document.createElement('div');
+    wordElement.className = 'previewItem';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
     checkbox.id = `word${index}`;
-    const label = document.createElement("label");
+    const label = document.createElement('label');
     label.htmlFor = `word${index}`;
     label.textContent = word;
     wordElement.appendChild(checkbox);
     wordElement.appendChild(label);
     wordsGrid.appendChild(wordElement);
+    //dynamically create dimensionY number of buttons with text check {dimensionX}
 
-    checkbox.addEventListener("change", () => {
+    checkbox.addEventListener('change', () => {
       selectWord(word, wordElement, checkbox);
     });
-
-    checkbox.addEventListener("focus", (event) => {
-      const parentDiv = event.target.closest(".previewItem");
+    //gets the parent element and makes the div look it it's being focused
+    checkbox.addEventListener('focus', (event) => {
+      const parentDiv = event.target.closest('.previewItem');
       if (parentDiv) {
-        parentDiv.classList.add("focus-highlight");
+        parentDiv.classList.add('focus-highlight');
       }
     });
 
-    checkbox.addEventListener("blur", (event) => {
-      const parentDiv = event.target.closest(".previewItem");
+    checkbox.addEventListener('blur', (event) => {
+      const parentDiv = event.target.closest('.previewItem');
       if (parentDiv) {
-        parentDiv.classList.remove("focus-highlight");
+        parentDiv.classList.remove('focus-highlight');
       }
     });
     //prevent dfeault behavior of pressing enter so it can change the style of the word
-    checkbox.addEventListener("keypress", (event) => {
-      if (event.key === "Enter") {
-        console.log("KEY PRESS ENTER DETECTED");
+    checkbox.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        console.log('KEY PRESS ENTER DETECTED');
         event.preventDefault();
         checkbox.click();
       }
@@ -114,8 +132,8 @@ function setupGame(qset) {
 }
 
 function checkSelection(count) {
-  const wordsGrid = document.querySelector(".wordsPreview");
-  const correctAnswersDiv = document.getElementById("correctAnswers");
+  const wordsGrid = document.querySelector('.wordsPreview');
+  const correctAnswersDiv = document.getElementById('correctAnswers');
   let validGroupsCount = 0;
   let validWordsCount = 0;
   // console.log("starting to check selection");
@@ -142,7 +160,7 @@ function checkSelection(count) {
       // console.log("checking inside a for each loop of currentQsetItems");
 
       const answerWords = item.answers[0].text
-        .split(",")
+        .split(',')
         .map((word) => word.trim());
       // console.log("answer words: ", answerWords);
 
@@ -167,13 +185,13 @@ function checkSelection(count) {
         // Submit the group as a single answer with the question ID and group of words
         Materia.Score.submitQuestionForScoring(
           item.id,
-          group.join(","),
+          group.join(','),
           pointsPerCorrectGroup,
         );
         //this may be weird to refactor
         //i made tan and grey 20 and 24, may be best not to touch this
         const className = `selected-${(index + 1) * 4}`;
-        console.log("Giving the class name: ", className);
+        console.log('Giving the class name: ', className);
         const answerDiv = createAnswerDiv(
           item.questions[0].text,
           group,
@@ -208,14 +226,13 @@ function checkSelection(count) {
   });
 
   if (validWordsCount !== count) {
-    console.log("you got the answer wrong somehow.");
+    console.log('you got the answer wrong somehow.');
     attempts++;
     AttemptsElement.innerHTML = attempts;
-    document.getElementById("check4").classList.remove("styled-button");
-    document.getElementById("check8").classList.remove("styled-button");
-    document.getElementById("check12").classList.remove("styled-button");
-    document.getElementById("check16").classList.remove("styled-button");
-
+    for (let i = 1; i <= dimensionYGlobal; i++) {
+      const btn = document.getElementById(`check${dimensionXGlobal * i}`);
+      btn.classList.remove('styled-button');
+    }
     if (attempts >= maxAttempts) {
       showRemainingCorrectAnswers();
       disableGame();
@@ -234,13 +251,13 @@ function checkSelection(count) {
 }
 
 function showRemainingCorrectAnswers() {
-  const wordsGrid = document.querySelector(".wordsPreview");
-  const correctAnswersDiv = document.getElementById("correctAnswers");
+  const wordsGrid = document.querySelector('.wordsPreview');
+  const correctAnswersDiv = document.getElementById('correctAnswers');
 
   const alreadyGuessedWords = Array.from(
-    correctAnswersDiv.querySelectorAll(".AnswerDivBackground div div"),
+    correctAnswersDiv.querySelectorAll('.AnswerDivBackground div div'),
   )
-    .map((div) => div.textContent.split(", "))
+    .map((div) => div.textContent.split(', '))
     .flat();
 
   const currentQset = getCurrentQset();
@@ -265,11 +282,11 @@ function showRemainingCorrectAnswers() {
     }
   });
 
-  wordsGrid.innerHTML = "";
+  wordsGrid.innerHTML = '';
 }
 
 function disableGame() {
-  const wordsGrid = document.querySelector(".wordsPreview");
+  const wordsGrid = document.querySelector('.wordsPreview');
   const currentQset = getCurrentQset();
 
   const unguessedDescriptions = currentQset.items.filter((item) => {
@@ -277,10 +294,10 @@ function disableGame() {
   });
 
   unguessedDescriptions.forEach((item) => {
-    console.log("sending this question for scoring:\n ", item.id);
+    console.log('sending this question for scoring:\n ', item.id);
     Materia.Score.submitQuestionForScoring(
       item.id,
-      "Out of lives, Try again next time, best of luck, gg",
+      'Out of lives, Try again next time, best of luck, gg',
       0,
     );
   });
@@ -291,8 +308,8 @@ function disableGame() {
       checkbox.disabled = true;
     });
   //get the modal and show the results
-  const resultsModal = document.getElementById("resultsModal");
-  const finalResults = document.getElementById("finalResults");
+  const resultsModal = document.getElementById('resultsModal');
+  const finalResults = document.getElementById('finalResults');
   finalResults.innerHTML = `
         <p>Correct Selections: ${scoreCount}</p>
         <p>Wrong Attempts: ${attempts}</p>
@@ -302,7 +319,7 @@ function disableGame() {
   // Show the modal for the final score
   resultsModal.showModal();
   console.log(percentScore);
-  document.getElementById("goToScoreScreen").addEventListener("click", () => {
+  document.getElementById('goToScoreScreen').addEventListener('click', () => {
     // End the game and go to the score screen
     setTimeout(() => {
       Materia.Engine.end();
@@ -312,29 +329,17 @@ function disableGame() {
 
 Materia.Engine.start({
   start: (instance, qset, qsetVersion) => {
-    console.log("Starting game with qset:", qset);
+    console.log('Starting game with qset:', qset);
     if (qset) {
       //instace is the entire demo.json object, qset is only the items array
       const title = instance.name;
-      const TitleElement = document.getElementById("Title");
+      const TitleElement = document.getElementById('Title');
       TitleElement.innerHTML = title;
       setupGame(qset);
     } else {
-      console.error("No qset found.");
+      console.error('No qset found.');
     }
   },
 });
 
 // Add event listeners for check buttons
-document
-  .getElementById("check4")
-  .addEventListener("click", () => checkSelection(4));
-document
-  .getElementById("check8")
-  .addEventListener("click", () => checkSelection(8));
-document
-  .getElementById("check12")
-  .addEventListener("click", () => checkSelection(12));
-document
-  .getElementById("check16")
-  .addEventListener("click", () => checkSelection(16));

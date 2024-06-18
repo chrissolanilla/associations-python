@@ -42,7 +42,8 @@ h1 {
 }
 
 .styled-button:focus {
-	outline: none;
+	outline: 2px solid #3b82f6;
+    outline-offset: 2px;
 	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 .wordsPreview {
@@ -160,6 +161,6 @@ h1 {
 .Grey {background-color: #786e6d}
 .focus-highlight {
   outline: 2px solid #3b82f6; // Change the color to your preference
-  outline-offset: 4px;
+  outline-offset: 2px;
 }
 
