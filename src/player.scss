@@ -110,6 +110,12 @@ h1 {
 .previewItem.selected-16 input[type="checkbox"]:checked + label {
 	background-color: rgb(251, 212, 0);
 }
+.previewItem.selected-tan input[type="checkbox"]:checked + label {
+    background-color: #733934;
+}
+.previewItem.selected-grey input[type="checkbox"]:checked + label {
+    background-color: #786e6d;
+}
 .CorrectAnswers {
 	display: grid;
     justify-content: center;
@@ -139,3 +145,10 @@ h1 {
 .AnswerDivBackground.selected-16 {
 	background-color:rgb(251, 212, 0);
 }
+
+.Blue {background-color: rgb(84, 146, 255)}
+.Green{background-color: rgb(105, 227, 82);}
+.Yellow {background-color: rgb(251, 212, 0);}
+.Pink {background-color: rgb(223, 123, 234);}
+.Tan {background-color: #733934}
+.Grey {background-color: #786e6d}

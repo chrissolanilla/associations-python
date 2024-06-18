@@ -70,6 +70,8 @@ export function updateSelectionStyles() {
       "selected-8",
       "selected-12",
       "selected-16",
+      "selected-tan",
+      "selected-grey",
     );
   });
 
@@ -78,10 +80,15 @@ export function updateSelectionStyles() {
       ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
     ].find((input) => input.nextElementSibling.textContent === word);
     const item = checkbox.parentNode;
-    if (index < 4) item.classList.add("selected-4");
-    else if (index < 8) item.classList.add("selected-8");
-    else if (index < 12) item.classList.add("selected-12");
-    else item.classList.add("selected-16");
+    console.log("The index is ", index);
+    if (index < dimensionX) item.classList.add("selected-4");
+    else if (index < dimensionX * 2) item.classList.add("selected-8");
+    else if (index < dimensionX * 3) item.classList.add("selected-12");
+    else if (index < dimensionX * 4) item.classList.add("selected-16");
+    else if (index < dimensionX * 5) {
+      item.classList.add("selected-tan");
+      console.log("the index is", index, "and the tan index is", index % 5);
+    } else item.classList.add("selected-grey");
   });
 
   const selectionCount = selectedWords.length;
@@ -123,7 +130,7 @@ export function selectWord(word, wordElement, checkbox) {
   if (wordIndex > -1) {
     // Deselect word
     selectedWords.splice(wordIndex, 1);
-  } else if (selectedWords.length < 16) {
+  } else if (selectedWords.length < dimensionX * dimensionY) {
     // Select word
     selectedWords.push(word);
   }
