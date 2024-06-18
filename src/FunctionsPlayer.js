@@ -17,14 +17,6 @@ export function setDimensions(x, y) {
   dimensionX = x;
   dimensionY = y;
 }
-//i do not think i will need this tbh
-// export function getDimensionX() {
-//     return dimensionX;
-// }
-
-// export function getDimensionY() {
-//     return dimensionY;
-// }
 
 export function setSelectedWords(words) {
   selectedWords = words;
@@ -92,13 +84,14 @@ export function updateSelectionStyles() {
   });
 
   const selectionCount = selectedWords.length;
-  updateButtonStyles("check4", selectionCount === 4);
-  updateButtonStyles("check8", selectionCount === 8);
-  updateButtonStyles("check12", selectionCount === 12);
-  updateButtonStyles("check16", selectionCount === 16);
+  updateButtonStyles("check4", selectionCount === dimensionX);
+  updateButtonStyles("check8", selectionCount === dimensionX * 2);
+  updateButtonStyles("check12", selectionCount === dimensionX * 3);
+  updateButtonStyles("check16", selectionCount === dimensionX * 4);
 }
 
 export function createAnswerDiv(description, group, className) {
+  console.log("CREATING ANSWER DIV", description, group, className);
   const answerDiv = document.createElement("div");
   answerDiv.classList.add("AnswerDivBackground", className);
 

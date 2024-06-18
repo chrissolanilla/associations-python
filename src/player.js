@@ -30,7 +30,9 @@ let percentScore = 0,
 
 const AttemptsElement = document.getElementById("Attempts");
 AttemptsElement.innerHTML = attempts;
-let maxAttempts = 4;
+let maxAttempts = 0; //change it to dimensionX later
+let dimensionXGlobal = 0;
+let dimensionYGlobal = 0;
 
 function setupGame(qset) {
   console.log("Setting up game with qset:", qset);
@@ -47,11 +49,15 @@ function setupGame(qset) {
   const dimensionX = qset.items[0].answers[0].text.split(",").length;
   const dimensionY = qset.items.length;
   setDimensions(dimensionX, dimensionY);
+  dimensionXGlobal = dimensionX;
+  dimensionYGlobal = dimensionY;
+  maxAttempts = dimensionX;
   console.log("Dimensions are: ", dimensionX, dimensionY);
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
   console.log("Descriptions:", descriptions);
   const wordsGrid = document.querySelector(".wordsPreview");
+  //this styles it based on the x dimensions
   let columnString = "";
   for (let i = 0; i < dimensionX; i++) {
     columnString += "1fr ";
@@ -81,8 +87,6 @@ function setupGame(qset) {
       selectWord(word, wordElement, checkbox);
     });
   });
-  // Adjust maxAttempts based on the number of items
-  maxAttempts = qset.items.length;
   AttemptsElement.innerHTML = attempts;
 }
 
@@ -91,7 +95,7 @@ function checkSelection(count) {
   const correctAnswersDiv = document.getElementById("correctAnswers");
   let validGroupsCount = 0;
   let validWordsCount = 0;
-  console.log("starting to check selection");
+  // console.log("starting to check selection");
 
   // Track groups that should be removed
   let groupsToRemove = [];
@@ -99,12 +103,12 @@ function checkSelection(count) {
   // Process selected words in groups of four
   const selectedWords = getSelectedWords().map((word) => word.trim());
   const currentQset = getCurrentQset();
-  console.log("current qset in checkSelection is: ", currentQset);
-
-  for (let i = 0; i < selectedWords.length; i += 4) {
-    console.log("inside the for loop");
-    const currentGroup = selectedWords.slice(i, i + 4).sort();
-    console.log(" current group is: ", currentGroup);
+  // console.log("current qset in checkSelection is: ", currentQset);
+  //refacotr things to be by dimensionX instead of 4
+  for (let i = 0; i < selectedWords.length; i += dimensionXGlobal) {
+    // console.log("inside the for loop");
+    const currentGroup = selectedWords.slice(i, i + dimensionXGlobal).sort();
+    // console.log(" current group is: ", currentGroup);
     let groupFound = false;
 
     currentQset.items.forEach((item, index) => {
@@ -112,30 +116,30 @@ function checkSelection(count) {
         return; // Skip already guessed groups
       }
 
-      console.log("checking inside a for each loop of currentQsetItems");
+      // console.log("checking inside a for each loop of currentQsetItems");
 
       const answerWords = item.answers[0].text
         .split(",")
         .map((word) => word.trim());
-      console.log("answer words: ", answerWords);
+      // console.log("answer words: ", answerWords);
 
       const group = currentGroup.filter((word) => answerWords.includes(word));
-      console.log("group const after doing currentGroup filter is: ", group);
+      // console.log("group const after doing currentGroup filter is: ", group);
 
-      if (group.length === 4) {
+      if (group.length === dimensionXGlobal) {
         const guessedGroups = getGuessedGroups();
         guessedGroups.add(item.questions[0].text); // Add description to guessed set
         setGuessedGroups(guessedGroups);
 
-        console.log(item.questions[0].text);
+        // console.log(item.questions[0].text);
         validGroupsCount++;
-        validWordsCount += 4;
-        console.log("valid groups count is ", validGroupsCount);
+        validWordsCount += dimensionXGlobal;
+        // console.log("valid groups count is ", validGroupsCount);
 
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
-        console.log("Checking Groups again:" + group);
+        // console.log("Checking Groups again:" + group);
 
         // Submit the group as a single answer with the question ID and group of words
         Materia.Score.submitQuestionForScoring(
@@ -143,8 +147,10 @@ function checkSelection(count) {
           group.join(","),
           pointsPerCorrectGroup,
         );
-
+        //this may be weird to refactor
+        //i made tan and grey 20 and 24, may be best not to touch this
         const className = `selected-${(index + 1) * 4}`;
+        console.log("Giving the class name: ", className);
         const answerDiv = createAnswerDiv(
           item.questions[0].text,
           group,
@@ -156,7 +162,7 @@ function checkSelection(count) {
       }
     });
 
-    if (!groupFound && currentGroup.length === 4) {
+    if (!groupFound && currentGroup.length === dimensionXGlobal) {
       const unguessedDescription = currentQset.items.find((item) => {
         return !getGuessedGroups().has(item.questions[0].text);
       });
@@ -192,7 +198,6 @@ function checkSelection(count) {
       disableGame();
     }
   }
-
   // Clear selectedWords after evaluation
   setSelectedWords([]);
   document
@@ -202,7 +207,7 @@ function checkSelection(count) {
     });
   updateSelectionStyles();
 
-  if (scoreCount >= maxAttempts) disableGame();
+  if (scoreCount >= dimensionYGlobal) disableGame();
 }
 
 function showRemainingCorrectAnswers() {
@@ -224,7 +229,7 @@ function showRemainingCorrectAnswers() {
 
   groupWords.forEach((group, index) => {
     if (group.length > 0) {
-      const className = `selected-${(index + 1) * 4}`;
+      const className = `selected-${(index + 1) * dimensionXGlobal}`;
       // Check if the element with the class already exists
       if (!correctAnswersDiv.querySelector(`.${className}`)) {
         const answerDiv = createAnswerDiv(
