@@ -47,9 +47,11 @@ export function updateButtonStyles(buttonId, isEnabled) {
   if (isEnabled) {
     button.classList.remove("greyOutButton");
     button.classList.add("styled-button");
+    button.setAttribute("tabindex", "0");
   } else {
     button.classList.remove("styled-button");
     button.classList.add("greyOutButton");
+    button.setAttribute("tabindex", "-1");
   }
 }
 

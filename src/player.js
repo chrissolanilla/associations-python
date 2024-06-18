@@ -86,7 +86,30 @@ function setupGame(qset) {
     checkbox.addEventListener("change", () => {
       selectWord(word, wordElement, checkbox);
     });
+
+    checkbox.addEventListener("focus", (event) => {
+      const parentDiv = event.target.closest(".previewItem");
+      if (parentDiv) {
+        parentDiv.classList.add("focus-highlight");
+      }
+    });
+
+    checkbox.addEventListener("blur", (event) => {
+      const parentDiv = event.target.closest(".previewItem");
+      if (parentDiv) {
+        parentDiv.classList.remove("focus-highlight");
+      }
+    });
+    //prevent dfeault behavior of pressing enter so it can change the style of the word
+    checkbox.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        console.log("KEY PRESS ENTER DETECTED");
+        event.preventDefault();
+        checkbox.click();
+      }
+    });
   });
+
   AttemptsElement.innerHTML = attempts;
 }
 

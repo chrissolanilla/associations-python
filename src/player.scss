@@ -158,3 +158,8 @@ h1 {
 .Pink {background-color: rgb(223, 123, 234);}
 .Tan {background-color: #733934}
 .Grey {background-color: #786e6d}
+.focus-highlight {
+  outline: 2px solid #3b82f6; // Change the color to your preference
+  outline-offset: 4px;
+}
+
