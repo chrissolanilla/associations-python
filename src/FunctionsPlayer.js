@@ -4,7 +4,7 @@ let currentQset;
 let guessedGroups = new Set();
 let dimensionX = 0;
 let dimensionY = 0;
-
+let buttonIDs = [];
 export function setCurrentQset(qset) {
   currentQset = qset;
 }
@@ -42,30 +42,35 @@ export function resetGuessedGroups() {
   guessedGroups = new Set();
 }
 
+export function addCurrentButtons(buttonId) {
+  //add it to the list or array of buttons
+  buttonIDs.push(buttonId);
+}
 export function updateButtonStyles(buttonId, isEnabled) {
   const button = document.getElementById(buttonId);
   if (isEnabled) {
-    button.classList.remove("greyOutButton");
-    button.classList.add("styled-button");
-    button.setAttribute("tabindex", "0");
+    button.classList.remove('greyOutButton');
+    button.classList.add('styled-button');
+    button.setAttribute('tabindex', '0');
   } else {
-    button.classList.remove("styled-button");
-    button.classList.add("greyOutButton");
-    button.setAttribute("tabindex", "-1");
+    console.log('button is ', buttonId);
+    button.classList.remove('styled-button');
+    button.classList.add('greyOutButton');
+    button.setAttribute('tabindex', '-1');
   }
 }
 
 export function updateSelectionStyles() {
-  const wordsGrid = document.querySelector(".wordsPreview");
+  const wordsGrid = document.querySelector('.wordsPreview');
 
-  wordsGrid.querySelectorAll(".previewItem").forEach((item) => {
+  wordsGrid.querySelectorAll('.previewItem').forEach((item) => {
     item.classList.remove(
-      "selected-4",
-      "selected-8",
-      "selected-12",
-      "selected-16",
-      "selected-tan",
-      "selected-grey",
+      'selected-4',
+      'selected-8',
+      'selected-12',
+      'selected-16',
+      'selected-tan',
+      'selected-grey',
     );
   });
 
@@ -74,36 +79,41 @@ export function updateSelectionStyles() {
       ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
     ].find((input) => input.nextElementSibling.textContent === word);
     const item = checkbox.parentNode;
-    console.log("The index is ", index);
-    if (index < dimensionX) item.classList.add("selected-4");
-    else if (index < dimensionX * 2) item.classList.add("selected-8");
-    else if (index < dimensionX * 3) item.classList.add("selected-12");
-    else if (index < dimensionX * 4) item.classList.add("selected-16");
+    console.log('The index is ', index);
+    if (index < dimensionX) item.classList.add('selected-4');
+    else if (index < dimensionX * 2) item.classList.add('selected-8');
+    else if (index < dimensionX * 3) item.classList.add('selected-12');
+    else if (index < dimensionX * 4) item.classList.add('selected-16');
     else if (index < dimensionX * 5) {
-      item.classList.add("selected-tan");
-      console.log("the index is", index, "and the tan index is", index % 5);
-    } else item.classList.add("selected-grey");
+      item.classList.add('selected-tan');
+      console.log('the index is', index, 'and the tan index is', index % 5);
+    } else item.classList.add('selected-grey');
   });
 
   const selectionCount = selectedWords.length;
-  updateButtonStyles("check4", selectionCount === dimensionX);
-  updateButtonStyles("check8", selectionCount === dimensionX * 2);
-  updateButtonStyles("check12", selectionCount === dimensionX * 3);
-  updateButtonStyles("check16", selectionCount === dimensionX * 4);
+  //call the function dimensinoX times for the button ids that are dynamically created.
+  console.log('buttonIDs are ', buttonIDs);
+  for (let i = 0; i < dimensionX; i++) {
+    updateButtonStyles(buttonIDs[i], selectionCount === dimensionX * (i + 1));
+  }
+  // updateButtonStyles('check4', selectionCount === dimensionX);
+  // updateButtonStyles('check8', selectionCount === dimensionX * 2);
+  // updateButtonStyles('check12', selectionCount === dimensionX * 3);
+  // updateButtonStyles('check16', selectionCount === dimensionX * 4);
 }
 
 export function createAnswerDiv(description, group, className) {
-  console.log("CREATING ANSWER DIV", description, group, className);
-  const answerDiv = document.createElement("div");
-  answerDiv.classList.add("AnswerDivBackground", className);
+  console.log('CREATING ANSWER DIV', description, group, className);
+  const answerDiv = document.createElement('div');
+  answerDiv.classList.add('AnswerDivBackground', className);
 
-  const strongDiv = document.createElement("div");
-  const strongElement = document.createElement("strong");
+  const strongDiv = document.createElement('div');
+  const strongElement = document.createElement('strong');
   strongElement.textContent = description;
   strongDiv.appendChild(strongElement);
 
-  const answerDivWords = document.createElement("div");
-  answerDivWords.textContent = group.join(", ");
+  const answerDivWords = document.createElement('div');
+  answerDivWords.textContent = group.join(', ');
 
   answerDiv.appendChild(strongDiv);
   answerDiv.appendChild(answerDivWords);
@@ -120,7 +130,7 @@ export function shuffleArray(array) {
 }
 
 export function selectWord(word, wordElement, checkbox) {
-  console.log("DIMENSION X AND Y ARE", dimensionX, dimensionY);
+  console.log('DIMENSION X AND Y ARE', dimensionX, dimensionY);
   const wordIndex = selectedWords.indexOf(word);
   if (wordIndex > -1) {
     // Deselect word
@@ -129,6 +139,6 @@ export function selectWord(word, wordElement, checkbox) {
     // Select word
     selectedWords.push(word);
   }
-  console.log("Selected Words:", selectedWords);
+  console.log('Selected Words:', selectedWords);
   updateSelectionStyles();
 }

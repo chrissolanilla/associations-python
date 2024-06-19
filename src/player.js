@@ -13,6 +13,7 @@ import {
   resetSelectedWords,
   resetGuessedGroups,
   setDimensions,
+  addCurrentButtons,
 } from './FunctionsPlayer';
 
 // Modal code
@@ -84,6 +85,8 @@ function setupGame(qset) {
       checkSelection(count);
     });
     controlsElement.appendChild(button);
+    //send this button to a list of buttons in the functions page.
+    addCurrentButtons(button.id);
   }
   wordsGrid.innerHTML = '';
   //create the checkboxes
