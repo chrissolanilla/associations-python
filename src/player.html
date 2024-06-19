@@ -13,7 +13,8 @@
     <dialog data-modal class="modal">
       <div class="modalClass">
         <h1>Welcome to the Connections Game!</h1>
-        <p>Select words in pairs of 4 that belong to a common category</p>
+        <p id="instructionsModal"></p>
+        <p id="instructionsModal2"></p>
         <button data-close-modal class="styled-button">Start Game</button>
       </div>
     </dialog>
@@ -42,7 +43,10 @@
         <!-- <button id="check8" class="greyOutButton">Check 8</button> -->
         <!-- <button id="check12" class="greyOutButton">Check 12</button> -->
         <!-- <button id="check16" class="greyOutButton">Check 16</button> -->
-        <span>Wrong Attempts: <span id="Attempts"> </span> </span>
+        <span id="span"
+          >Wrong Attempts: <span id="Attempts"></span>
+          <span class="parenthesis" id="maxWrongAttempts"></span
+        ></span>
       </div>
     </main>
 

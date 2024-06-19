@@ -23,7 +23,7 @@ modal.showModal();
 closeButton.addEventListener('click', () => {
   modal.close();
 });
-
+const instructionDescription = document.getElementById('instructionsModal');
 // Variables to keep track of the score
 let percentScore = 0,
   attempts = 0,
@@ -32,6 +32,7 @@ let percentScore = 0,
 const AttemptsElement = document.getElementById('Attempts');
 AttemptsElement.innerHTML = attempts;
 let maxAttempts = 0; //change it to dimensionX later
+let maxWrongAttemptsElement = document.getElementById('maxWrongAttempts');
 let dimensionXGlobal = 0;
 let dimensionYGlobal = 0;
 
@@ -53,6 +54,11 @@ function setupGame(qset) {
   dimensionXGlobal = dimensionX;
   dimensionYGlobal = dimensionY;
   maxAttempts = dimensionX;
+  maxWrongAttemptsElement.textContent = `(${maxAttempts - attempts} left)`;
+  instructionDescription.textContent = `Select words in groups of  ${dimensionXGlobal} that belong to a common category.`;
+  const instructoinDescriptions2 =
+    document.getElementById('instructionsModal2');
+  instructoinDescriptions2.textContent = `Do this ${dimensionYGlobal} times to win!`;
   console.log('Dimensions are: ', dimensionX, dimensionY);
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
@@ -71,6 +77,7 @@ function setupGame(qset) {
   const shuffledWords = shuffleArray(allWords);
 
   const controlsElement = document.getElementById('controls');
+  const attemptsSpan = document.getElementById('span');
   for (let i = 0; i < dimensionY; i++) {
     const button = document.createElement('button');
     const count = dimensionX * (i + 1);
@@ -84,7 +91,8 @@ function setupGame(qset) {
       }
       checkSelection(count);
     });
-    controlsElement.appendChild(button);
+    // controlsElement.appendChild(button);
+    controlsElement.insertBefore(button, attemptsSpan);
     //send this button to a list of buttons in the functions page.
     addCurrentButtons(button.id);
   }
@@ -132,6 +140,7 @@ function setupGame(qset) {
   });
 
   AttemptsElement.innerHTML = attempts;
+  console.log('CHANGING THE REACTIVE CODE');
 }
 
 function checkSelection(count) {
@@ -232,6 +241,7 @@ function checkSelection(count) {
     console.log('you got the answer wrong somehow.');
     attempts++;
     AttemptsElement.innerHTML = attempts;
+    maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} left)`;
     for (let i = 1; i <= dimensionYGlobal; i++) {
       const btn = document.getElementById(`check${dimensionXGlobal * i}`);
       btn.classList.remove('styled-button');
