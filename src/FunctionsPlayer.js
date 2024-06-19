@@ -93,7 +93,7 @@ export function updateSelectionStyles() {
   const selectionCount = selectedWords.length;
   //call the function dimensinoX times for the button ids that are dynamically created.
   console.log('buttonIDs are ', buttonIDs);
-  for (let i = 0; i < dimensionX; i++) {
+  for (let i = 0; i < dimensionY; i++) {
     updateButtonStyles(buttonIDs[i], selectionCount === dimensionX * (i + 1));
   }
   // updateButtonStyles('check4', selectionCount === dimensionX);

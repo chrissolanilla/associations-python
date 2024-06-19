@@ -249,7 +249,12 @@ function checkSelection(count) {
       checkbox.checked = false;
     });
   updateSelectionStyles();
-
+  console.log(
+    'score count is: ',
+    scoreCount,
+    'dimensionYGlobal is: ',
+    dimensionYGlobal,
+  );
   if (scoreCount >= dimensionYGlobal) disableGame();
 }
 
