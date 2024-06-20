@@ -21,48 +21,50 @@ let widgetState = {
   _title: '',
   _qset: {},
 };
+
 function updateGameName() {
   widgetState._title = document.getElementById('GameName').value;
+  console.log('Game name updated:', widgetState._title);
 }
+
 function updatePreview() {
   const allWords = [];
-  if (widgetState.dimensionY > widgetState.dimensionX) {
-    for (let i = 1; i <= widgetState.dimensionY; i++) {
-      console.log('iteration ', i);
-      const words = document
-        .getElementById(`Words${i}`)
-        .value.split(',')
-        .map((word) => word.trim());
-      allWords.push(...words);
-      console.log('SUCSS');
-    }
-  } else
-    for (let i = 1; i <= widgetState.dimensionY; i++) {
-      console.log('iteration ', i);
-      const words = document
-        .getElementById(`Words${i}`)
-        .value.split(',')
-        .map((word) => word.trim());
-      allWords.push(...words);
-      console.log('SUCSS');
-    }
+  for (let i = 1; i <= widgetState.dimensionY; i++) {
+    console.log('iteration ', i);
+    const words = document
+      .getElementById(`Words${i}`)
+      .value.split(',')
+      .map((word) => word.trim());
+    allWords.push(...words);
+    console.log('SUCSS');
+  }
 
   const previewItems = document.querySelectorAll('.previewItem');
   previewItems.forEach((item, index) => {
     item.textContent = allWords[index] || '';
   });
 }
-//event listeners for the description and words input and the title too
-document.querySelectorAll('.CreatorAnswers input').forEach((input) => {
-  input.addEventListener('input', updatePreview);
+
+// Add event listeners when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.CreatorAnswers input').forEach((input) => {
+    input.addEventListener('input', updatePreview);
+  });
+
+  document.querySelectorAll('.GameNameInput input').forEach((input) => {
+    console.log('UPDATING GAME NAME');
+    input.addEventListener('input', updateGameName);
+  });
+
+  // Attach event listener to GameName input
+  document.getElementById('GameName').addEventListener('input', updateGameName);
 });
-document.querySelectorAll('.GameNameInput input').forEach((input) => {
-  input.addEventListener('input', updateGameName);
-});
-//tring out the cool grid mouse selector
+
+// Trying out the cool grid mouse selector
 const DimensionContainer = document.getElementById('DimensionContainer');
 const DimensionStatusElement = document.getElementById('DimensionStatus');
-// create the grid cells
+
+// Create the grid cells
 for (let i = 0; i < 6; i++) {
   for (let j = 0; j < 6; j++) {
     const cell = document.createElement('div');
@@ -73,7 +75,8 @@ for (let i = 0; i < 6; i++) {
     DimensionContainer.appendChild(cell);
   }
 }
-//get the row and column of the mouse over
+
+// Get the row and column of the mouse over
 DimensionContainer.addEventListener('mouseover', (event) => {
   if (event.target.classList.contains('cell')) {
     const row = event.target.dataset.row;
@@ -86,6 +89,7 @@ DimensionContainer.addEventListener('mouseover', (event) => {
     // createPreviewGrid();
   }
 });
+
 DimensionContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('cell')) {
     widgetState.dimensionX = event.target.dataset.col;
@@ -95,6 +99,7 @@ DimensionContainer.addEventListener('click', (event) => {
     // createPreviewGrid();
   }
 });
+
 function highlightGrid(rows, cols) {
   const cells = DimensionContainer.querySelectorAll('.cell');
   cells.forEach((cell) => {
@@ -113,67 +118,61 @@ function highlightGrid(rows, cols) {
 function createDynamicInputs() {
   const colors = ['Blue', 'Green', 'Yellow', 'Pink', 'Tan', 'Grey'];
   const dynamicInputs = document.getElementById('dynamicInputs');
-  dynamicInputs.innerHTML = ''; //this makes it so that we can do the function on highlight
-  let i = 1;
+  dynamicInputs.innerHTML = ''; // Clear previous inputs
+
   for (let j = 0; j < widgetState.dimensionY; j++) {
     const inputContainer = document.createElement('div');
     inputContainer.classList.add('CreatorKVP', colors[j]);
+
     const creatorAnswersDiv = document.createElement('div');
     creatorAnswersDiv.classList.add('CreatorAnswers');
-    const answerLabel = document.createElement('label');
-    answerLabel.textContent = `Please enter ${widgetState.dimensionX} words (Comma-separated)`;
-    const answerInput = document.createElement('input');
-    answerInput.type = 'text';
-    answerInput.name = `Words${i * widgetState.dimensionX + j + 1}`;
-    answerInput.id = `Words${j + 1}`;
-    console.log(answerInput.id);
-    answerInput.oninput = updatePreview;
 
     const descriptionLabel = document.createElement('label');
-    descriptionLabel.textContent = `Please enter a Description that describes the words above`;
+    descriptionLabel.textContent = `Description for Group ${j + 1}`;
     const descriptionInput = document.createElement('input');
     descriptionInput.type = 'text';
     descriptionInput.name = `Description${j + 1}`;
     descriptionInput.id = `Description${j + 1}`;
-    // descriptionInput.oninput = updateDescription;
-    creatorAnswersDiv.appendChild(answerLabel);
-    creatorAnswersDiv.appendChild(answerInput);
     creatorAnswersDiv.appendChild(descriptionLabel);
     creatorAnswersDiv.appendChild(descriptionInput);
+
+    const wordsGrid = document.createElement('div');
+    wordsGrid.classList.add('wordsGrid');
+    wordsGrid.style.gridTemplateColumns = `repeat(${widgetState.dimensionX}, 1fr)`;
+
+    for (let i = 0; i < widgetState.dimensionX; i++) {
+      const wordCell = document.createElement('div');
+      wordCell.classList.add('previewItem');
+      wordCell.id = `Word${j + 1}-${i + 1}`;
+
+      const wordInput = document.createElement('input');
+      wordInput.type = 'text';
+      wordInput.classList.add('grid-input');
+      wordInput.name = `Word${j + 1}-${i + 1}`;
+      wordInput.id = `Word${j + 1}-${i + 1}`;
+      wordInput.addEventListener('input', () => {
+        updateWidgetState(j + 1, i + 1, wordInput.value);
+      });
+      wordCell.appendChild(wordInput);
+
+      wordsGrid.appendChild(wordCell);
+    }
+
+    creatorAnswersDiv.appendChild(wordsGrid);
     inputContainer.appendChild(creatorAnswersDiv);
     dynamicInputs.appendChild(inputContainer);
   }
 }
-//make a preview grid but inside the dynamic input now with only 1 row and X columns Y times.
-// function createPreviewGrid() {
-//   const wordsPreview = document.getElementById('wordsPreview');
-//   if (wordsPreview === null) {
-//     console.log('no words preview');
-//   }
-//   wordsPreview.innerHTML = ''; // Clear previous preview items
-//   let columnString = '';
-//   for (let i = 0; i < widgetState.dimensionX; i++) {
-//     columnString += '1fr ';
-//   }
-//   wordsPreview.style.gridTemplateColumns = columnString;
 
-//   const totalCells = widgetState.dimensionX * widgetState.dimensionY;
-//   console.log('total cells: ', totalCells);
-//   for (let i = 0; i < totalCells; i++) {
-//     const previewItem = document.createElement('div');
-//     previewItem.classList.add('previewItem');
-//     previewItem.id = `preview${i + 1}`;
-//     wordsPreview.appendChild(previewItem);
-//     let isClicked = false;
-//     previewItem.addEventListener('click', () => {
-//       if (isClicked) return;
-//       const previewClickInput = document.createElement('input');
-//       previewItem.appendChild(previewClickInput);
-//       isClicked = true;
-//     });
-//   }
-// }
-//
+function updateWidgetState(group, position, value) {
+  widgetState[`words${group}`][position - 1] = value;
+  console.log(
+    `Updated widgetState.words${group}:`,
+    widgetState[`words${group}`],
+  );
+}
+
+// Save widget data
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
     // Setup for a new widget
@@ -184,16 +183,9 @@ Materia.CreatorCore.start({
   onSaveClicked: (mode = 'save') => {
     const items = [];
     for (let i = 1; i <= widgetState.dimensionY; i++) {
-      // if (previewItem.previewClickInput) {
-      //   console.log('THERE EXISTS A PREVIEW CLICK INPUT');
-      // }
       console.log('getting words' + i);
-      const words = document
-        .getElementById(`Words${i}`)
-        .value.split(',')
-        .map((word) => word.trim())
-        .join(',');
-      console.log(words);
+      const words = widgetState[`words${i}`].join(',');
+      console.log('WORDS IS', words);
       console.log('getting description' + i);
       const description = document
         .getElementById(`Description${i}`)
@@ -209,7 +201,6 @@ Materia.CreatorCore.start({
       console.log('items are', items);
     }
 
-    // Save widget data
     const qset = {
       qset: {
         name: widgetState._title,
@@ -220,7 +211,7 @@ Materia.CreatorCore.start({
       },
     };
     console.log(qset);
-    console.log(widgetState._title);
+    console.log('THE TITLE OF THE WIDGET IS ', widgetState._title);
     Materia.CreatorCore.save(widgetState._title, qset.qset.data);
   },
 });

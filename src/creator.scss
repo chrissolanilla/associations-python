@@ -95,3 +95,28 @@ form {
 .hidden {
   display: none!important;
 }
+.wordsGrid {
+  display: grid;
+  gap: 10px; /* Space between grid cells */
+}
+
+.wordsGrid .previewItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efefe6;
+  border-radius: 6px;
+  height: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wordsGrid .grid-input {
+  background: transparent;
+  border: none;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  outline: none;
+}

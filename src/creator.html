@@ -14,17 +14,12 @@
       <h1>Create a Puzzle</h1>
       <h2>Please enter a game name and Grid Size</h2>
     </header>
-    <form>
+    <form id="fromDisable">
       <div class="CreaterForm">
         <!-- tring out google form code -->
         <div class="ContainerDimensionGroup">
           <label for="GameName">Game Name</label>
-          <input
-            type="text"
-            name="GameName"
-            id="GameName"
-            oninput="updateGameName()"
-          />
+          <input type="text" name="GameName" id="GameName" />
           <div class="ContainerDimensionInput">
             <button class="ChooseButton">Choose Grid Size</button>
             <div class="Form-dimension-container" id="DimensionContainer"></div>
