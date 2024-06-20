@@ -8,7 +8,6 @@
 
     <link rel="stylesheet" type="text/css" href="creator.css" />
     <script src="materia.creatorcore.js"></script>
-    <!-- for the standalone react-devtools app -->
   </head>
   <body>
     <header>
@@ -19,66 +18,23 @@
       <div class="CreaterForm">
         <!-- tring out google form code -->
         <div class="ContainerDimensionGroup">
-          <div class="GameNameInput">
-            <label for="GameName">Game Name</label>
-            <input
-              type="text"
-              name="GameName"
-              id="GameName"
-              oninput="updateGameName()"
-            />
-          </div>
+          <label for="GameName">Game Name</label>
+          <input
+            type="text"
+            name="GameName"
+            id="GameName"
+            oninput="updateGameName()"
+          />
           <div class="ContainerDimensionInput">
             <button class="ChooseButton">Choose Grid Size</button>
             <div class="Form-dimension-container" id="DimensionContainer"></div>
             <div class="dimension-status" id="DimensionStatus">0 x0</div>
           </div>
         </div>
-        <!-- end of google code -->
-        <!--Need to replace the hard coded divs to be dynamically created-->
         <div id="dynamicInputs"></div>
-        <!--pink-->
-        <!-- <div class="CreatorKVP Pink"> -->
-        <!--   <div class="CreatorAnswers"> -->
-        <!--     <label for="Words4"> Answers (Comma-separated)</label> -->
-        <!--     <input -->
-        <!--       type="text" -->
-        <!--       name="Words4" -->
-        <!--       id="Words4" -->
-        <!--       oninput="updatePreview()" -->
-        <!--     /> -->
-        <!--   </div> -->
-        <!---->
-        <!--   <div class="AnswerDescriptions"> -->
-        <!--     <label for="Description4"> Description</label> -->
-        <!--     <input -->
-        <!--       type="text" -->
-        <!--       name="Description4" -->
-        <!--       id="Description4" -->
-        <!--       oninput="updateDescription()" -->
-        <!--     /> -->
-        <!--   </div> -->
-        <!-- </div> -->
       </div>
 
-      <div class="wordsPreview" id="wordsPreview">
-        <!-- <div class="previewItem" id="preview1"></div> -->
-        <!-- <div class="previewItem" id="preview2"></div> -->
-        <!-- <div class="previewItem" id="preview3"></div> -->
-        <!-- <div class="previewItem" id="preview4"></div> -->
-        <!-- <div class="previewItem" id="preview5"></div> -->
-        <!-- <div class="previewItem" id="preview6"></div> -->
-        <!-- <div class="previewItem" id="preview7"></div> -->
-        <!-- <div class="previewItem" id="preview8"></div> -->
-        <!-- <div class="previewItem" id="preview9"></div> -->
-        <!-- <div class="previewItem" id="preview10"></div> -->
-        <!-- <div class="previewItem" id="preview11"></div> -->
-        <!-- <div class="previewItem" id="preview12"></div> -->
-        <!-- <div class="previewItem" id="preview13"></div> -->
-        <!-- <div class="previewItem" id="preview14"></div> -->
-        <!-- <div class="previewItem" id="preview15"></div> -->
-        <!-- <div class="previewItem" id="preview16"></div> -->
-      </div>
+      <!-- <div class="wordsPreview" id="wordsPreview"></div> -->
     </form>
 
     <script src="creator.js"></script>

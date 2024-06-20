@@ -53,7 +53,11 @@ function setupGame(qset) {
   setDimensions(dimensionX, dimensionY);
   dimensionXGlobal = dimensionX;
   dimensionYGlobal = dimensionY;
-  maxAttempts = dimensionX;
+  if (dimensionXGlobal >= dimensionYGlobal) {
+    maxAttempts = dimensionX;
+  } else {
+    maxAttempts = dimensionYGlobal;
+  }
   maxWrongAttemptsElement.textContent = `(${maxAttempts - attempts} left)`;
   instructionDescription.textContent = `Select words in groups of  ${dimensionXGlobal} that belong to a common category.`;
   const instructoinDescriptions2 =
