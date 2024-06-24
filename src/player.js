@@ -95,6 +95,10 @@ function setupGame(qset) {
       }
       checkSelection(count);
     });
+    //disable or hide the extra buttons
+    if (i !== 0) {
+      button.style.display = 'none';
+    }
     // controlsElement.appendChild(button);
     controlsElement.insertBefore(button, attemptsSpan);
     //send this button to a list of buttons in the functions page.
@@ -292,12 +296,12 @@ function showRemainingCorrectAnswers() {
   groupWords.forEach((group, index) => {
     if (group.length > 0) {
       const className = `selected-${(index + 1) * 4}`;
-      if (className === 'selected-24') {
-        className = 'selected-grey';
-      }
-      if (className === 'selected-20') {
-        className = 'selected-tan';
-      }
+      // if (className === 'selected-24') {
+      //   className = 'selected-grey';
+      // }
+      // if (className === 'selected-20') {
+      //   className = 'selected-tan';
+      // }
       // Check if the element with the class already exists
       if (!correctAnswersDiv.querySelector(`.${className}`)) {
         const answerDiv = createAnswerDiv(
@@ -338,6 +342,7 @@ function disableGame() {
   //get the modal and show the results
   const resultsModal = document.getElementById('resultsModal');
   const finalResults = document.getElementById('finalResults');
+  percentScore = percentScore.toFixed(2);
   finalResults.innerHTML = `
         <p>Correct Selections: ${scoreCount}</p>
         <p>Wrong Attempts: ${attempts}</p>

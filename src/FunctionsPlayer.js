@@ -81,6 +81,7 @@ export function updateSelectionStyles() {
     const item = checkbox.parentNode;
     console.log('The index is ', index);
     if (index < dimensionX) item.classList.add('selected-4');
+    // if (index < dimensionX) item.classList.add('singleSelectionBlue');
     else if (index < dimensionX * 2) item.classList.add('selected-8');
     else if (index < dimensionX * 3) item.classList.add('selected-12');
     else if (index < dimensionX * 4) item.classList.add('selected-16');
@@ -96,10 +97,7 @@ export function updateSelectionStyles() {
   for (let i = 0; i < dimensionY; i++) {
     updateButtonStyles(buttonIDs[i], selectionCount === dimensionX * (i + 1));
   }
-  // updateButtonStyles('check4', selectionCount === dimensionX);
-  // updateButtonStyles('check8', selectionCount === dimensionX * 2);
-  // updateButtonStyles('check12', selectionCount === dimensionX * 3);
-  // updateButtonStyles('check16', selectionCount === dimensionX * 4);
+  toggleCheckbox();
 }
 
 export function createAnswerDiv(description, group, className) {
@@ -135,10 +133,25 @@ export function selectWord(word, wordElement, checkbox) {
   if (wordIndex > -1) {
     // Deselect word
     selectedWords.splice(wordIndex, 1);
-  } else if (selectedWords.length < dimensionX * dimensionY) {
+    //don't let them select more than X amonut of words sadly
+  } else if (selectedWords.length < dimensionX) {
     // Select word
     selectedWords.push(word);
   }
   console.log('Selected Words:', selectedWords);
   updateSelectionStyles();
+  toggleCheckbox();
+}
+
+function toggleCheckbox() {
+  const checkboxes = document.querySelectorAll(
+    '.previewItem input[type="checkbox"]',
+  );
+  checkboxes.forEach((checkbox) => {
+    if (!checkbox.checked && selectedWords.length >= dimensionX) {
+      checkbox.disabled = true;
+    } else {
+      checkbox.disabled = false;
+    }
+  });
 }
