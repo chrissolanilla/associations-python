@@ -291,7 +291,13 @@ function showRemainingCorrectAnswers() {
 
   groupWords.forEach((group, index) => {
     if (group.length > 0) {
-      const className = `selected-${(index + 1) * dimensionXGlobal}`;
+      const className = `selected-${(index + 1) * 4}`;
+      if (className === 'selected-24') {
+        className = 'selected-grey';
+      }
+      if (className === 'selected-20') {
+        className = 'selected-tan';
+      }
       // Check if the element with the class already exists
       if (!correctAnswersDiv.querySelector(`.${className}`)) {
         const answerDiv = createAnswerDiv(
