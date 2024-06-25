@@ -1,10 +1,24 @@
 /* my creator scss */
 body {
-	font-family: Georgia, serif;
+	// font-family: Comic Sans MS, sans-serif;
+    font-family: American Typewriter, serif;
+    /* I kind of like this orange color bth */
+    // background: #c41;
+    background: #ffa891;
+    background: #b9aeee;
 }
 form {
 	display: flex;
     justify-content: center;
+}
+label {
+  font-size: 2rem;
+  font-weight: bold;
+}
+#GameName {
+  border-radius: 6px;
+  padding:0.5rem 0.1rem;
+  text-align: center;
 }
 .CreatorKVP {
 	padding: 1rem;
@@ -69,7 +83,12 @@ form {
   text-align: center;
 }
 .ChooseButton {
-  margin:0.3rem;
+  max-width: fit-content;
+  margin:0.3rem auto;
+  font-size: 1rem;
+  padding:0.5rem 1rem;
+  border-radius: 2rem;
+  border: none;
 }
 .Form-dimension-container {
   display: grid;
@@ -120,3 +139,4 @@ form {
   font-size: 1rem;
   outline: none;
 }
+
