@@ -176,3 +176,51 @@ span {
 .singleSelectionBlue {
   background-color: #25d6f5;
 }
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.toast {
+  display: block;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  animation: slidein 0.5s, fadeout 0.5s 4.5s;
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+

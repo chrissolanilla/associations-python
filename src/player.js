@@ -14,6 +14,7 @@ import {
   resetGuessedGroups,
   setDimensions,
   addCurrentButtons,
+  showToast,
 } from './FunctionsPlayer';
 
 // Modal code
@@ -30,7 +31,7 @@ let percentScore = 0,
   scoreCount = 0;
 
 const AttemptsElement = document.getElementById('Attempts');
-AttemptsElement.innerHTML = attempts;
+AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
 let maxAttempts = 0; //change it to dimensionX later
 let maxWrongAttemptsElement = document.getElementById('maxWrongAttempts');
 let dimensionXGlobal = 0;
@@ -88,6 +89,10 @@ function setupGame(qset) {
     button.textContent = `check ${count}`;
     button.id = `check${count}`;
     button.classList.add('greyOutButton');
+    button.setAttribute(
+      'aria-label',
+      `Check your selection of ${count} words.`,
+    );
     button.addEventListener('click', (event) => {
       if (!event.target.classList.contains('styled-button')) {
         event.preventDefault();
@@ -147,7 +152,7 @@ function setupGame(qset) {
     });
   });
 
-  AttemptsElement.innerHTML = attempts;
+  AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
   console.log('CHANGING THE REACTIVE CODE');
 }
 
@@ -200,6 +205,7 @@ function checkSelection(count) {
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
+        showToast('Correct! Nice job!', 'success');
         // console.log("Checking Groups again:" + group);
 
         // Submit the group as a single answer with the question ID and group of words
@@ -247,8 +253,9 @@ function checkSelection(count) {
 
   if (validWordsCount !== count) {
     console.log('you got the answer wrong somehow.');
+    showToast('Sorry, that was not correct', 'error');
     attempts++;
-    AttemptsElement.innerHTML = attempts;
+    AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
     maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} left)`;
     for (let i = 1; i <= dimensionYGlobal; i++) {
       const btn = document.getElementById(`check${dimensionXGlobal * i}`);

@@ -39,7 +39,22 @@
         </button>
       </div>
     </dialog>
+
     <main>
+      <div
+        id="toastContainer"
+        class="toast-container"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <div
+          id="srAnnouncer"
+          class="sr-only"
+          aria-live="polite"
+          aria-atomic="true"
+        ></div>
+      </div>
+
       <!--the title will be inserted from the javascript: TODO-->
       <h1 id="Title"></h1>
       <div class="CorrectAnswers" id="correctAnswers">
@@ -53,8 +68,8 @@
         <!-- <button id="check8" class="greyOutButton">Check 8</button> -->
         <!-- <button id="check12" class="greyOutButton">Check 12</button> -->
         <!-- <button id="check16" class="greyOutButton">Check 16</button> -->
-        <span id="span"
-          >Wrong Attempts: <span id="Attempts"></span>
+        <span id="span" aria-live="polite">
+          <span id="Attempts"></span>
           <span class="parenthesis" id="maxWrongAttempts"></span
         ></span>
       </div>

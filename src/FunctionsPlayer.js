@@ -155,3 +155,23 @@ function toggleCheckbox() {
     }
   });
 }
+
+export function showToast(message, type) {
+  const srAnnouncer = document.getElementById('srAnnouncer');
+  const toastContainer = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.className = 'toast';
+
+  if (type === 'success') {
+    toast.style.backgroundColor = 'green';
+  } else if (type === 'error') {
+    toast.style.backgroundColor = 'red';
+  }
+  //for some reason the screen reader only reads the error message and not the success message
+  srAnnouncer.textContent = message;
+  toastContainer.appendChild(toast);
+  setTimeout(() => {
+    toastContainer.removeChild(toast);
+  }, 5000);
+}
