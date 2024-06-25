@@ -12,19 +12,29 @@
   <body>
     <dialog data-modal class="modal">
       <div class="modalClass">
-        <h1>Welcome to the Connections Game!</h1>
+        <h1 id="welcomeModalTitle"></h1>
         <p id="instructionsModal"></p>
         <p id="instructionsModal2"></p>
-        <button data-close-modal class="styled-button">Start Game</button>
+        <button
+          data-close-modal
+          class="styled-button"
+          aria-labelledby="welcomeModalTitle instructionsModal instructionsModal2"
+        >
+          Start Game
+        </button>
       </div>
     </dialog>
     <dialog id="resultsModal" class="modal">
       <div class="modalClass">
-        <h1>Game Over</h1>
+        <h1 id="gameOverAria">Game Over</h1>
         <div id="finalResults">
           <!-- Final results will be inserted here -->
         </div>
-        <button id="goToScoreScreen" class="styled-button">
+        <button
+          id="goToScoreScreen"
+          class="styled-button"
+          aria-labelledby="gameOverAria finalResults"
+        >
           Go to Score Screen
         </button>
       </div>

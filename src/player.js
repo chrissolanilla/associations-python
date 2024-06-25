@@ -368,6 +368,8 @@ Materia.Engine.start({
       const title = instance.name;
       const TitleElement = document.getElementById('Title');
       TitleElement.innerHTML = title;
+      const modalH1 = document.getElementById('welcomeModalTitle');
+      modalH1.textContent = 'Welcome to the ' + title + ' Game!';
       setupGame(qset);
     } else {
       console.error('No qset found.');
