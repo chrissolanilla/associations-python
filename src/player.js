@@ -86,7 +86,7 @@ function setupGame(qset) {
   for (let i = 0; i < dimensionY; i++) {
     const button = document.createElement('button');
     const count = dimensionX * (i + 1);
-    button.textContent = `check ${count}`;
+    button.textContent = `Check ${count}`;
     button.id = `check${count}`;
     button.classList.add('greyOutButton');
     button.setAttribute(

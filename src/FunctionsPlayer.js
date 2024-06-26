@@ -155,23 +155,25 @@ function toggleCheckbox() {
     }
   });
 }
-
 export function showToast(message, type) {
-  const srAnnouncer = document.getElementById('srAnnouncer');
   const toastContainer = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
+  toastContainer.classList.add('show');
+  const toast = document.querySelector('.toast');
   toast.textContent = message;
   toast.className = 'toast';
-
   if (type === 'success') {
     toast.style.backgroundColor = 'green';
   } else if (type === 'error') {
     toast.style.backgroundColor = 'red';
   }
-  //for some reason the screen reader only reads the error message and not the success message
-  srAnnouncer.textContent = message;
-  toastContainer.appendChild(toast);
+  toast.style.display = 'none';
+  toast.offsetHeight; // This forces a reflow and allows error messages to be read
+  toast.style.display = 'block';
   setTimeout(() => {
-    toastContainer.removeChild(toast);
+    toastContainer.classList.remove('show');
+    toast.classList.add('hide');
+    // if (!toastContainer.hasChildNodes()) {
+    //   toastContainer.classList.remove('show');
+    // }
   }, 5000);
 }

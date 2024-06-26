@@ -1,6 +1,6 @@
 /* my player scss */
 body{
-	font-family: Georgia, serif;
+      font-family: 'Lato',  serif;
 }
 h1 {
 	text-align: center;
@@ -181,6 +181,11 @@ span {
   top: 20px;
   right: 20px;
   z-index: 1000;
+  display: none; /* Initially hidden */
+}
+
+.toast-container.show {
+  display: block; /* Show when needed */
 }
 
 .toast {
