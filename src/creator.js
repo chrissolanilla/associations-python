@@ -22,6 +22,22 @@ let widgetState = {
   _qset: {},
 };
 
+const placeholders = [
+  [
+    'Restaurants',
+    "McDonald's",
+    'Taco Bell',
+    'Burger King',
+    "Wendy's",
+    'Pizza Hut',
+    'Dairy Queen',
+  ],
+  ['Names', 'Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank'],
+  ['Foods', 'Pizza', 'Burger', 'Salad', 'Steak', 'Pasta', 'Fish'],
+  ['Fruits', 'Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig'],
+  ['Animals', 'Cat', 'Dog', 'Elephant', 'Frog', 'Giraffe', 'Horse'],
+  ['Colors', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo'],
+];
 function updateGameName() {
   widgetState._title = document.getElementById('GameName').value;
   console.log('Game name updated:', widgetState._title);
@@ -133,7 +149,8 @@ function createDynamicInputs() {
     descriptionInput.type = 'text';
     descriptionInput.name = `Description${j + 1}`;
     descriptionInput.id = `Description${j + 1}`;
-    descriptionInput.placeholder = 'Enter a description here';
+    // descriptionInput.placeholder = 'Enter a description here';
+    descriptionInput.placeholder = `Enter a description for a group of words, E.g. ,  ${placeholders[j][0]}`;
     creatorAnswersDiv.appendChild(descriptionLabel);
     creatorAnswersDiv.appendChild(descriptionInput);
 
@@ -151,7 +168,8 @@ function createDynamicInputs() {
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
       wordInput.id = `Word${j + 1}-${i + 1}`;
-      wordInput.placeholder = 'Enter a word here';
+      // wordInput.placeholder = 'Enter a word here';
+      wordInput.placeholder = placeholders[j][i];
       wordInput.addEventListener('input', () => {
         updateWidgetState(j + 1, i + 1, wordInput.value);
       });
