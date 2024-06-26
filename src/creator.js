@@ -144,7 +144,7 @@ function createDynamicInputs() {
     creatorAnswersDiv.classList.add('CreatorAnswers');
 
     const descriptionLabel = document.createElement('label');
-    descriptionLabel.textContent = `Description for Group ${j + 1}`;
+    descriptionLabel.textContent = `Group ${j + 1}`;
     const descriptionInput = document.createElement('input');
     descriptionInput.type = 'text';
     descriptionInput.name = `Description${j + 1}`;
