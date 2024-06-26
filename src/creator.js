@@ -133,6 +133,7 @@ function createDynamicInputs() {
     descriptionInput.type = 'text';
     descriptionInput.name = `Description${j + 1}`;
     descriptionInput.id = `Description${j + 1}`;
+    descriptionInput.placeholder = 'Enter a description here';
     creatorAnswersDiv.appendChild(descriptionLabel);
     creatorAnswersDiv.appendChild(descriptionInput);
 
@@ -150,6 +151,7 @@ function createDynamicInputs() {
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
       wordInput.id = `Word${j + 1}-${i + 1}`;
+      wordInput.placeholder = 'Enter a word here';
       wordInput.addEventListener('input', () => {
         updateWidgetState(j + 1, i + 1, wordInput.value);
       });

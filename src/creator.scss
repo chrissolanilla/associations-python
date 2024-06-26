@@ -1,11 +1,12 @@
 /* my creator scss */
 body {
 	// font-family: Comic Sans MS, sans-serif;
-    font-family: American Typewriter, serif;
+    font-family: 'Lato',  serif;
+    // font-family: American Typewriter, serif;
     /* I kind of like this orange color bth */
     // background: #c41;
     background: #ffa891;
-    background: #b9aeee;
+    // background: #b9aeee;
 }
 form {
 	display: flex;
@@ -14,6 +15,9 @@ form {
 label {
   font-size: 2rem;
   font-weight: bold;
+}
+.headings {
+  text-align: center;
 }
 #GameName {
   border-radius: 6px;
