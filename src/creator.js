@@ -16,8 +16,8 @@ let widgetState = {
   description4: '',
   description5: '',
   description6: '',
-  dimensionX: '0',
-  dimensionY: '0',
+  dimensionX: '4',
+  dimensionY: '4',
   _title: '',
   _qset: {},
 };
@@ -38,6 +38,13 @@ const placeholders = [
   ['Animals', 'Cat', 'Dog', 'Elephant', 'Frog', 'Giraffe', 'Horse'],
   ['Colors', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo'],
 ];
+const formElement = document.getElementById('fromDisable');
+formElement.addEventListener('submit', (event) => {
+  event.preventDefault();
+});
+const chooseButton = document.getElementById('chooseButton');
+//do it on page load first time;
+createDynamicInputs();
 function updateGameName() {
   widgetState._title = document.getElementById('GameName').value;
   console.log('Game name updated:', widgetState._title);
@@ -116,6 +123,9 @@ DimensionContainer.addEventListener('click', (event) => {
   }
 });
 
+chooseButton.addEventListener('click', (event) => {
+  DimensionContainer.classList.remove('hidden');
+});
 function highlightGrid(rows, cols) {
   const cells = DimensionContainer.querySelectorAll('.cell');
   cells.forEach((cell) => {
