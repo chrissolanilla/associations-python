@@ -43,6 +43,8 @@ formElement.addEventListener('submit', (event) => {
   event.preventDefault();
 });
 const chooseButton = document.getElementById('chooseButton');
+const modal = document.querySelector('[data-modal]');
+modal.showModal();
 //do it on page load first time;
 createDynamicInputs();
 function updateGameName() {
@@ -83,9 +85,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('GameName').addEventListener('input', updateGameName);
 });
 
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    modal.close();
+    modal.classList.add('hidden');
+  }
+});
+
 // Trying out the cool grid mouse selector
 const DimensionContainer = document.getElementById('DimensionContainer');
 const DimensionStatusElement = document.getElementById('DimensionStatus');
+const DimensionStatusElement2 = document.getElementById('DimensionStatus2');
 
 // Create the grid cells
 for (let i = 0; i < 6; i++) {
@@ -106,6 +116,7 @@ DimensionContainer.addEventListener('mouseover', (event) => {
     const col = event.target.dataset.col;
     highlightGrid(row, col);
     DimensionStatusElement.textContent = `${col} x ${row}`;
+    DimensionStatusElement2.textContent = `${col} x ${row}`;
     console.log('attempting to highlight create preview grid');
     widgetState.dimensionX = event.target.dataset.col;
     widgetState.dimensionY = event.target.dataset.row;
@@ -117,14 +128,18 @@ DimensionContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('cell')) {
     widgetState.dimensionX = event.target.dataset.col;
     widgetState.dimensionY = event.target.dataset.row;
-    DimensionContainer.classList.add('hidden');
+    // DimensionContainer.classList.add('hidden');
+    modal.close();
+    modal.classList.add('hidden');
     createDynamicInputs();
     // createPreviewGrid();
   }
 });
 
 chooseButton.addEventListener('click', (event) => {
-  DimensionContainer.classList.remove('hidden');
+  modal.showModal();
+  // DimensionContainer.classList.remove('hidden');
+  modal.classList.remove('hidden');
 });
 function highlightGrid(rows, cols) {
   const cells = DimensionContainer.querySelectorAll('.cell');

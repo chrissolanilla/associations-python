@@ -16,28 +16,33 @@
   </head>
   <body>
     <header>
+      <div class="logo"></div>
       <h1 class="headings">Create a Puzzle</h1>
-      <h2 class="headings">Please enter a game name and Grid Size</h2>
+      <h2 id="EnterGameName" class="headings">
+        Please Enter a Game Name and Grid Size
+      </h2>
+      <div class="ContainerDimensionGroup">
+        <label for="GameName">Game Name</label>
+        <input
+          type="text"
+          name="GameName"
+          id="GameName"
+          placeholder="E.g. My Trivia Game"
+        />
+      </div>
+      <div class="ContainerDimensionInput">
+        <button class="ChooseButton" id="chooseButton">Choose Grid Size</button>
+        <div class="dimension-status" id="DimensionStatus">0x0</div>
+        <dialog data-modal>
+          <h1>Please choose a grid size</h1>
+          <div class="Form-dimension-container" id="DimensionContainer"></div>
+          <div class="dimension-status" id="DimensionStatus2">0x0</div>
+        </dialog>
+      </div>
     </header>
     <form id="fromDisable">
       <div class="CreaterForm">
         <!-- tring out google form code -->
-        <div class="ContainerDimensionGroup">
-          <label for="GameName">Game Name</label>
-          <input
-            type="text"
-            name="GameName"
-            id="GameName"
-            placeholder="E.g. My Trivia Game"
-          />
-          <div class="ContainerDimensionInput">
-            <button class="ChooseButton" id="chooseButton">
-              Choose Grid Size
-            </button>
-            <div class="Form-dimension-container" id="DimensionContainer"></div>
-            <div class="dimension-status" id="DimensionStatus">0 x0</div>
-          </div>
-        </div>
         <div id="dynamicInputs"></div>
       </div>
 
