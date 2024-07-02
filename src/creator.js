@@ -44,8 +44,18 @@ formElement.addEventListener('submit', (event) => {
   event.preventDefault();
 });
 const chooseButton = document.getElementById('chooseButton');
+const introModal = document.getElementById('introModal');
+introModal.showModal();
+const closeIntroButton = document.getElementById('closeIntro');
 const modal = document.querySelector('[data-modal]');
-modal.showModal();
+modal.classList.add('hidden');
+closeIntroButton.addEventListener('click', () => {
+  introModal.close();
+  introModal.classList.add('hidden');
+  modal.showModal();
+  modal.classList.remove('hidden');
+});
+// modal.showModal();
 //do it on page load first time;
 createDynamicInputs();
 function updateGameName() {
@@ -84,6 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Attach event listener to GameName input
   document.getElementById('GameName').addEventListener('input', updateGameName);
+  //make it so that the input in the intro modal refelcts it in the header too
+  document.getElementById('GameName2').addEventListener('input', (event) => {
+    document.getElementById('GameName').value = event.target.value;
+  });
 });
 
 document.addEventListener('keydown', (event) => {

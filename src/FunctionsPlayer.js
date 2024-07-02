@@ -155,8 +155,10 @@ function toggleCheckbox() {
     }
   });
 }
+
 export function showToast(message, type) {
   const toastContainer = document.getElementById('toastContainer');
+  setTimeout(() => {}, 500);
   toastContainer.classList.add('show');
   const toast = document.querySelector('.toast');
   toast.textContent = message;
@@ -167,13 +169,11 @@ export function showToast(message, type) {
     toast.style.backgroundColor = 'red';
   }
   toast.style.display = 'none';
-  toast.offsetHeight; // This forces a reflow and allows error messages to be read
+  console.log(toast.offsetHeight); // This forces a reflow and allows error messages to be read
   toast.style.display = 'block';
+  //after 5 seconds get rid of the toast
   setTimeout(() => {
     toastContainer.classList.remove('show');
     toast.classList.add('hide');
-    // if (!toastContainer.hasChildNodes()) {
-    //   toastContainer.classList.remove('show');
-    // }
   }, 5000);
 }

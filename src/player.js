@@ -32,6 +32,8 @@ let percentScore = 0,
 
 const AttemptsElement = document.getElementById('Attempts');
 AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
+//screenreader element
+const ScreenReaderElement = document.getElementById('screenReader');
 let maxAttempts = 0; //change it to dimensionX later
 let maxWrongAttemptsElement = document.getElementById('maxWrongAttempts');
 let dimensionXGlobal = 0;
@@ -206,6 +208,13 @@ function checkSelection(count) {
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
         showToast('Correct! Nice job!', 'success');
+        //update the hidden screen reader element to tell them the answer audibly
+        // Force DOM reflow by temporarily removing and re-adding the element
+
+        setTimeout(() => {
+          ScreenReaderElement.textContent =
+            item.questions[0].text + ' was the correct answer';
+        }, 1000);
         // console.log("Checking Groups again:" + group);
 
         // Submit the group as a single answer with the question ID and group of words

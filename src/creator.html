@@ -15,6 +15,22 @@
     <script src="materia.creatorcore.js"></script>
   </head>
   <body>
+    <!--quick little intro modal that has them enter a game name and explain-->
+    <dialog id="introModal">
+      <h1>Welcome to the Connections Widget Creator</h1>
+      <p>To get started, please enter a game name and grid size.</p>
+      <p>You can change both of these at any time later on.</p>
+      <label for="GameName2"> Game Name</label>
+      <input
+        placeholder="E.g. My Trivia Game"
+        type="text"
+        name="GameName2"
+        id="GameName2"
+        class="GameName"
+        required
+      />
+      <button id="closeIntro" class="ChooseButton">Move on to grid size</button>
+    </dialog>
     <header>
       <div class="logo"></div>
       <h1 class="headings">Create a Puzzle</h1>
@@ -22,12 +38,14 @@
         Please Enter a Game Name and Grid Size
       </h2>
       <div class="ContainerDimensionGroup">
-        <label for="GameName">Game Name</label>
+        <label for="GameName" class="headings">Game Name</label>
         <input
           type="text"
           name="GameName"
           id="GameName"
+          class="GameName"
           placeholder="E.g. My Trivia Game"
+          required
         />
       </div>
       <div class="ContainerDimensionInput">

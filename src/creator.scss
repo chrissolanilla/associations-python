@@ -43,6 +43,11 @@ dialog {
   width:620px;
 }
 
+dialog::backdrop {
+  background: black;
+  opacity: 0.5;
+}
+
 form {
 	display: flex;
     justify-content: center;
@@ -58,10 +63,16 @@ label {
   // margin-left: auto;
   // margin-right: auto;
 }
-#GameName {
+.GameName {
   border-radius: 6px;
   padding:0.5rem 0.1rem;
   text-align: center;
+}
+.GameName:valid {
+    border: 2px solid green;
+}
+.GameName:invalid {
+  border: 2px solid red;
 }
 .CreatorKVP {
 	padding: 1rem;
@@ -240,7 +251,7 @@ label {
     background: #fbf767;
     border: 2px solid #fbf767;
     left: 53%;
-    top: 50%;
+    top: 48%;
     color: #151515;
     font-weight: 400;
     padding: 5px;
@@ -287,5 +298,37 @@ label {
 @keyframes pounce {
     0%, 100% { transform: translateX(0); }
     50% { transform: translateX(-10px); }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1650px) {
+    .headings  {
+        font-size: 1.5rem;
+    }
+    #EnterGameName {
+        font-size: 1.2rem;
+    }
+    header label{
+      font-size: 1.2rem;
+    }
+    #chooseButton {
+      font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 1440px) {
+      .headings  {
+        font-size: 1.2rem;
+    }
+    #EnterGameName {
+        font-size: 0.8rem;
+    }
+    header label{
+      font-size: 0.8rem;
+    }
+    .GameName {
+      max-width: 50%;
+    }
+
 }
 
