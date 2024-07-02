@@ -7,11 +7,18 @@ body{
 h1 {
 	text-align: center;
 }
+dialog {
+  background: #3E363F;
+  border-width:5px;
+  border-radius: 5px;
+}
 .modalClass {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
+    background: #3E363F;
+    color: #fff;
 }
 .greyOutButton {
 	pointer-events: none;

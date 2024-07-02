@@ -1,4 +1,5 @@
 //needed for scss
+import { showToast } from './FunctionsPlayer';
 import './creator.scss';
 
 let widgetState = {
@@ -128,11 +129,16 @@ DimensionContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('cell')) {
     widgetState.dimensionX = event.target.dataset.col;
     widgetState.dimensionY = event.target.dataset.row;
-    // DimensionContainer.classList.add('hidden');
-    modal.close();
-    modal.classList.add('hidden');
-    createDynamicInputs();
-    // createPreviewGrid();
+    //if the grid is not valid tell them
+    if (widgetState.dimensionX <= 1 || widgetState.dimensionY <= 1) {
+      showToast('The grid must be at least 2x2', 'error');
+    } else {
+      // DimensionContainer.classList.add('hidden');
+      modal.close();
+      modal.classList.add('hidden');
+      createDynamicInputs();
+      // createPreviewGrid();
+    }
   }
 });
 
