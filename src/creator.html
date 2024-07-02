@@ -18,8 +18,10 @@
     <!--quick little intro modal that has them enter a game name and explain-->
     <dialog id="introModal">
       <h1>Welcome to the Connections Widget Creator</h1>
-      <p>To get started, please enter a game name and grid size.</p>
-      <p>You can change both of these at any time later on.</p>
+      <p id="introP1">
+        To get started, please enter a game name and grid size.
+      </p>
+      <p id="introP2">You can change both of these at any time later on.</p>
       <label for="GameName2"> Game Name</label>
       <input
         placeholder="E.g. My Trivia Game"
@@ -30,6 +32,7 @@
         required
       />
       <button id="closeIntro" class="ChooseButton">Move on to grid size</button>
+      <div class="arrow_box_left"><span> Please Enter a Title</span></div>
     </dialog>
     <header>
       <div class="logo"></div>

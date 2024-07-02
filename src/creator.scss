@@ -25,6 +25,12 @@ header {
   z-index: 100;
   color: #fff;
 }
+#introP1 {
+  margin-bottom: 0;
+}
+#introP2 {
+  margin-top: 0;
+}
 .logo {
   background: url('./assets/materia-logo.svg') no-repeat;
   display: block;
@@ -33,6 +39,7 @@ header {
   margin-left: 1em;
 }
 dialog {
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -298,6 +305,60 @@ label {
 @keyframes pounce {
     0%, 100% { transform: translateX(0); }
     50% { transform: translateX(-10px); }
+}
+/* New smaller left-facing arrow */
+.arrow_box_left {
+    position: absolute;
+    background: #fbf767;
+    border: 2px solid #fbf767;
+    right: 51%; /* Adjust the position as needed */
+    top: 70%;
+    color: #151515;
+    font-weight: 400;
+    padding: 5px;
+    height: 30px; /* Reduce height */
+    width: 120px; /* Reduce width */
+    margin-right: 140px; /* Adjust the margin */
+    animation: pounce_left 1s infinite;
+}
+
+.arrow_box_left span {
+    display: inline-block;
+    width: 110px; /* Reduce width */
+    float: left; /* Change float to left */
+    margin-top: -5px;
+    margin-left: 12px; /* Adjust margin */
+    text-align: center;
+}
+
+.arrow_box_left:after, .arrow_box_left:before {
+    left: 100%; /* Change from right to left */
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow_box_left:after {
+    border-color: rgba(251, 247, 103, 0);
+    border-left-color: #fbf767; /* Change border-right-color to border-left-color */
+    border-width: 30px; /* Reduce border width */
+    margin-top: -30px; /* Adjust to match the reduced border width */
+}
+
+.arrow_box_left:before {
+    border-color: rgba(251, 247, 103, 0);
+    border-left-color: #fbf767; /* Change border-right-color to border-left-color */
+    border-width: 33px; /* Reduce border width */
+    margin-top: -33px; /* Adjust to match the reduced border width */
+}
+
+@keyframes pounce_left {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); } /* Reverse the direction of the pounce */
 }
 
 /* Media queries for responsiveness */
