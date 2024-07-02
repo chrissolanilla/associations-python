@@ -40,6 +40,7 @@ dialog {
   background: #3E363F;
   color: #fff;
   border-color:black;
+  width:620px;
 }
 
 form {
@@ -233,5 +234,58 @@ label {
   to {
     opacity: 0;
   }
+}
+.arrow_box {
+    position: absolute;
+    background: #fbf767;
+    border: 2px solid #fbf767;
+    left: 53%;
+    top: 50%;
+    color: #151515;
+    font-weight: 400;
+    padding: 5px;
+    height: 50px;
+    width: 150px;
+    margin-left: 140px;
+    animation: pounce 1s infinite;
+}
+
+.arrow_box span {
+    display: inline-block;
+    width: 140px;
+    float: right;
+    margin-top: 5px;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.arrow_box:after, .arrow_box:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow_box:after {
+    border-color: rgba(251, 247, 103, 0);
+    border-right-color: #fbf767;
+    border-width: 60px;
+    margin-top: -60px;
+}
+
+.arrow_box:before {
+    border-color: rgba(251, 247, 103, 0);
+    border-right-color: #fbf767;
+    border-width: 63px;
+    margin-top: -63px;
+}
+
+@keyframes pounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-10px); }
 }
 
