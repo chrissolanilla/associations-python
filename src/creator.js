@@ -46,15 +46,15 @@ formElement.addEventListener('submit', (event) => {
 const chooseButton = document.getElementById('chooseButton');
 const introModal = document.getElementById('introModal');
 introModal.showModal();
-const closeIntroButton = document.getElementById('closeIntro');
+// const closeIntroButton = document.getElementById('closeIntro');
 const modal = document.querySelector('[data-modal]');
 modal.classList.add('hidden');
-closeIntroButton.addEventListener('click', () => {
-  introModal.close();
-  introModal.classList.add('hidden');
-  modal.showModal();
-  modal.classList.remove('hidden');
-});
+// closeIntroButton.addEventListener('click', () => {
+//   introModal.close();
+//   introModal.classList.add('hidden');
+//   modal.showModal();
+//   modal.classList.remove('hidden');
+// });
 // modal.showModal();
 //do it on page load first time;
 createDynamicInputs();
@@ -91,12 +91,37 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('UPDATING GAME NAME');
     input.addEventListener('input', updateGameName);
   });
+  const gameName2Input = document.getElementById('GameName2');
+  const closeIntroButton = document.getElementById('closeIntro');
+  const arrowBoxLeft = document.getElementById('arrow_box_left');
 
+  // Function to check if the input is valid
+  const checkInputValidity = () => {
+    if (gameName2Input.value.trim() !== '') {
+      closeIntroButton.disabled = false;
+      arrowBoxLeft.style.display = 'none'; // Hide the arrow
+    } else {
+      closeIntroButton.disabled = true;
+      arrowBoxLeft.style.display = 'block'; // Show the arrow
+    }
+  };
+
+  // Initial check on page load
+  checkInputValidity();
+
+  // Add input event listener to gameName2Input
+  gameName2Input.addEventListener('input', checkInputValidity);
   // Attach event listener to GameName input
   document.getElementById('GameName').addEventListener('input', updateGameName);
   //make it so that the input in the intro modal refelcts it in the header too
   document.getElementById('GameName2').addEventListener('input', (event) => {
     document.getElementById('GameName').value = event.target.value;
+  });
+  closeIntroButton.addEventListener('click', () => {
+    introModal.close();
+    introModal.classList.add('hidden');
+    modal.showModal();
+    modal.classList.remove('hidden');
   });
 });
 
