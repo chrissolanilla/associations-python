@@ -7,9 +7,12 @@ body {
     // background: #c41;
     // background: #ffa891;
     // background: #b9aeee;
-    background: #545f62;
+    // background: #545f62;
+    background: #4E444F;
+    // background: #323B3E;
 }
 header {
+  background: #3E363F;
   display: flex;
   gap:5rem;
   justify-content: flex-start;
@@ -20,7 +23,6 @@ header {
   left: 0px;
   right: 0px;
   height: 40px;
-  background: #3E363F;
   padding: 13px 8px;
   z-index: 100;
   color: #fff;
@@ -136,7 +138,7 @@ label {
 }
 
 .ContainerDimensionGroup{
-  display: flex;
+    display: flex;
 	flex-direction: row;
 	align-items: center; /* Center items horizontally */
 	justify-content: center; /* Center items vertically */
@@ -149,6 +151,8 @@ label {
   text-align: center;
   gap:1rem;
   align-items: center;
+  margin-left: auto;
+  margin-right:2rem;
 }
 .ChooseButton {
   max-width: fit-content;

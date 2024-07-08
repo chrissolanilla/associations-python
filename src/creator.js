@@ -49,17 +49,16 @@ introModal.showModal();
 // const closeIntroButton = document.getElementById('closeIntro');
 const modal = document.querySelector('[data-modal]');
 modal.classList.add('hidden');
-// closeIntroButton.addEventListener('click', () => {
-//   introModal.close();
-//   introModal.classList.add('hidden');
-//   modal.showModal();
-//   modal.classList.remove('hidden');
-// });
-// modal.showModal();
-//do it on page load first time;
+//have a some inputs craeted already on page load
 createDynamicInputs();
 function updateGameName() {
-  widgetState._title = document.getElementById('GameName').value;
+  const gamename2 = document.getElementById('GameName2').value;
+  const gamename1 = document.getElementById('GameName').value;
+  if (gamename1 === '') {
+    widgetState._title = gamename2;
+  } else {
+    widgetState._title = gamename1;
+  }
   console.log('Game name updated:', widgetState._title);
 }
 
@@ -99,24 +98,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const checkInputValidity = () => {
     if (gameName2Input.value.trim() !== '') {
       closeIntroButton.disabled = false;
-      arrowBoxLeft.style.display = 'none'; // Hide the arrow
+      arrowBoxLeft.style.display = 'none'; // hide the arrow
     } else {
       closeIntroButton.disabled = true;
-      arrowBoxLeft.style.display = 'block'; // Show the arrow
+      arrowBoxLeft.style.display = 'block'; // show the arrow
     }
   };
 
-  // Initial check on page load
+  // initial check on page load
   checkInputValidity();
 
   // Add input event listener to gameName2Input
   gameName2Input.addEventListener('input', checkInputValidity);
   // Attach event listener to GameName input
   document.getElementById('GameName').addEventListener('input', updateGameName);
-  //make it so that the input in the intro modal refelcts it in the header too
+  //this one does not show up in the console.log when i enter in the second character, but when i press the third character it shows the one i pressed before.
   document.getElementById('GameName2').addEventListener('input', (event) => {
-    document.getElementById('GameName').value = event.target.value;
+    const value = event.target.value;
+    document.getElementById('GameName').value = value;
+    updateGameName();
   });
+
   closeIntroButton.addEventListener('click', () => {
     introModal.close();
     introModal.classList.add('hidden');
@@ -129,15 +131,19 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     modal.close();
     modal.classList.add('hidden');
+    if (!introModal.classList.contains('hidden')) {
+      event.preventDefault();
+      return;
+    }
   }
 });
 
-// Trying out the cool grid mouse selector
+// trying out the cool grid mouse selector
 const DimensionContainer = document.getElementById('DimensionContainer');
 const DimensionStatusElement = document.getElementById('DimensionStatus');
 const DimensionStatusElement2 = document.getElementById('DimensionStatus2');
 
-// Create the grid cells
+// create the grid cells
 for (let i = 0; i < 6; i++) {
   for (let j = 0; j < 6; j++) {
     const cell = document.createElement('div');
@@ -149,7 +155,7 @@ for (let i = 0; i < 6; i++) {
   }
 }
 
-// Get the row and column of the mouse over
+// get the row and column of the mouse over
 DimensionContainer.addEventListener('mouseover', (event) => {
   if (event.target.classList.contains('cell')) {
     const row = event.target.dataset.row;
@@ -172,7 +178,7 @@ DimensionContainer.addEventListener('click', (event) => {
     if (widgetState.dimensionX <= 1 || widgetState.dimensionY <= 1) {
       showToast('The grid must be at least 2x2', 'error');
     } else {
-      // DimensionContainer.classList.add('hidden');
+      // dimensionContainer.classList.add('hidden');
       modal.close();
       modal.classList.add('hidden');
       createDynamicInputs();
@@ -238,7 +244,7 @@ function createDynamicInputs() {
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
       wordInput.id = `Word${j + 1}-${i + 1}`;
-      // wordInput.placeholder = 'Enter a word here';
+      // wordInput.placeholder = 'enter a word here';
       wordInput.placeholder = placeholders[j][i];
       wordInput.addEventListener('input', () => {
         updateWidgetState(j + 1, i + 1, wordInput.value);
@@ -265,10 +271,10 @@ function updateWidgetState(group, position, value) {
 // Save widget data
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
-    // Setup for a new widget
+    // setup for a new widget
   },
   initExistingWidget: (widget, title, qset, qsetVersion, baseUrl, mediaUrl) => {
-    updatePreview();
+    // updatePreview();
   },
   onSaveClicked: (mode = 'save') => {
     const items = [];

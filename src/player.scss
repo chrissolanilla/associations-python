@@ -1,7 +1,9 @@
 /* my player scss */
 body{
       font-family: 'Lato',  serif;
-      background: #545f62;
+      // background: #545f62;
+      // background: #3E363F;
+      background: #323B3E;
       color:#fff;
 }
 h1 {
@@ -11,6 +13,10 @@ dialog {
   background: #3E363F;
   border-width:5px;
   border-radius: 5px;
+}
+dialog::backdrop {
+  background: black;
+  opacity: 0.5;
 }
 .modalClass {
 	display: flex;
@@ -173,7 +179,7 @@ dialog {
 .Tan {background-color: #914943;}
 .Grey {background-color: #786e6d}
 .focus-highlight {
-  outline: 2px solid #3b82f6; // Change the color to your preference
+  outline: 4px solid #3b82f6; // Change the color to your preference
   outline-offset: 2px;
 }
 
@@ -243,6 +249,8 @@ span {
 }
 #screenReader {
   display: inline;
+  // top: -100%;
+  font-size: 0;
 }
 
 

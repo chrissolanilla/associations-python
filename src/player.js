@@ -213,7 +213,10 @@ function checkSelection(count) {
 
         setTimeout(() => {
           ScreenReaderElement.textContent =
-            item.questions[0].text + ' was the correct answer';
+            'Correct!' +
+            item.questions[0].text +
+            ' was the description for the group of words: ' +
+            answerWords;
         }, 1000);
         // console.log("Checking Groups again:" + group);
 
@@ -343,11 +346,7 @@ function disableGame() {
 
   unguessedDescriptions.forEach((item) => {
     console.log('sending this question for scoring:\n ', item.id);
-    Materia.Score.submitQuestionForScoring(
-      item.id,
-      'Out of lives, Try again next time, best of luck, gg',
-      0,
-    );
+    Materia.Score.submitQuestionForScoring(item.id, 'Ran out of Lives', 0);
   });
 
   wordsGrid
