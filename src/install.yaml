@@ -19,7 +19,7 @@ files:
 score:
   is_scorable: Yes
   score_module: Connections
-  # score_screen: scoreScreen.html
+  score_screen: scoreScreen.html
 meta_data:
   features:
     - Customizable

@@ -23,6 +23,15 @@ let widgetState = {
   _qset: {},
 };
 
+let savedWidgetState = {
+  words1: [],
+  words2: [],
+  words3: [],
+  words4: [],
+  words5: [],
+  words6: [],
+};
+
 const placeholders = [
   [
     'Restaurants',
@@ -206,7 +215,6 @@ function highlightGrid(rows, cols) {
     }
   });
 }
-
 function createDynamicInputs() {
   const colors = ['Blue', 'Green', 'Yellow', 'Pink', 'Tan', 'Grey'];
   const dynamicInputs = document.getElementById('dynamicInputs');
@@ -225,8 +233,12 @@ function createDynamicInputs() {
     descriptionInput.type = 'text';
     descriptionInput.name = `Description${j + 1}`;
     descriptionInput.id = `Description${j + 1}`;
-    // descriptionInput.placeholder = 'Enter a description here';
-    descriptionInput.placeholder = `Enter a description for a group of words, E.g. ,  ${placeholders[j][0]}`;
+    descriptionInput.placeholder = `Enter a description for a group of words, e.g., ${placeholders[j][0]}`;
+    descriptionInput.value = widgetState[`description${j + 1}`] || '';
+    console.log(
+      'The widget state for description is:',
+      widgetState[`description${j + 1}`],
+    );
     creatorAnswersDiv.appendChild(descriptionLabel);
     creatorAnswersDiv.appendChild(descriptionInput);
 
@@ -244,8 +256,8 @@ function createDynamicInputs() {
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
       wordInput.id = `Word${j + 1}-${i + 1}`;
-      // wordInput.placeholder = 'enter a word here';
       wordInput.placeholder = placeholders[j][i];
+      wordInput.value = widgetState[`words${j + 1}`][i] || '';
       wordInput.addEventListener('input', () => {
         updateWidgetState(j + 1, i + 1, wordInput.value);
       });
@@ -268,6 +280,15 @@ function updateWidgetState(group, position, value) {
   );
 }
 
+function trunkcadeWords(widgetState, savedWidgetState) {
+  const trunkcateArray = (words, x) => words.slice(0, x);
+  for (let i = 1; i <= 6; i++) {
+    savedWidgetState[`words${i}`] = trunkcateArray(
+      widgetState[`words${i}`],
+      parseInt(widgetState.dimensionX),
+    );
+  }
+}
 // Save widget data
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
@@ -277,10 +298,13 @@ Materia.CreatorCore.start({
     // updatePreview();
   },
   onSaveClicked: (mode = 'save') => {
+    trunkcadeWords(widgetState, savedWidgetState);
     const items = [];
+    //this will succesffully trunkcade groups but not extra words.
     for (let i = 1; i <= widgetState.dimensionY; i++) {
       console.log('getting words' + i);
-      const words = widgetState[`words${i}`].join(',');
+      // const words = widgetState[`words${i}`].join(',');
+      const words = savedWidgetState[`words${i}`].join(',');
       console.log('WORDS IS', words);
       console.log('getting description' + i);
       const description = document

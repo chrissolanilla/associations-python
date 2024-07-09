@@ -36,7 +36,10 @@
           "questions": [{ "text": "Extinct Creatures" }],
           "type": "connections",
           "answers": [
-            { "text": "Mammoths, Pandas, Saber Tooth,Dinosaurs", "value": 25 }
+            {
+              "text": "Mammoths, Black Rhino, Saber Tooth,Dinosaurs",
+              "value": 25
+            }
           ]
         }
       ]
