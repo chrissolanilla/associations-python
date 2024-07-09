@@ -22,7 +22,7 @@
         To get started, please enter a game name and grid size.
       </p>
       <p id="introP2">You can change both of these at any time later on.</p>
-      <label for="GameName2"> Game Name</label>
+      <label for="GameName2">Game Name</label>
       <input
         placeholder="E.g. My Trivia Game"
         type="text"
@@ -33,7 +33,7 @@
       />
       <button id="closeIntro" class="ChooseButton">Move on to grid size</button>
       <div id="arrow_box_left" class="arrow_box_left">
-        <span> Please Enter a Title</span>
+        <span>Please Enter a Title</span>
       </div>
     </dialog>
     <header>
@@ -53,6 +53,15 @@
           required
         />
       </div>
+      <div class="ShowAnswersBoolean">
+        <label for="ShowAnswersCheckbox">Show Answers</label>
+        <input
+          type="checkbox"
+          id="ShowAnswersCheckbox"
+          name="ShowAnswersCheckbox"
+        />
+      </div>
+
       <div class="ContainerDimensionInput">
         <button class="ChooseButton" id="chooseButton">Choose Grid Size</button>
         <div class="dimension-status" id="DimensionStatus">0x0</div>
@@ -61,7 +70,7 @@
           <div class="Form-dimension-container" id="DimensionContainer"></div>
           <div class="dimension-status" id="DimensionStatus2">0x0</div>
           <div class="arrow_box" id="arrow_box">
-            <span> Click here to Choose a grid size</span>
+            <span>Click here to Choose a grid size</span>
           </div>
         </dialog>
       </div>

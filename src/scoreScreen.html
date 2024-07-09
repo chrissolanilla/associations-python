@@ -1,13 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Connections Score Screen</title>
-	</head>
-	<body>
-		<h1>Hello world!</h1>
-		<script src="scoreScreen.js"></script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="materia.scorecore.js"></script>
+    <link rel="stylesheet" type="text/css" href="scoreScreen.css" />
+    <title>Connections Score Screen</title>
+  </head>
+  <body>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Question Score</th>
+          <th>The Question</th>
+          <th>Your Response</th>
+          <th>Correct Answer</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <!--dynamically allocate these rows from the -->
+        <!-- <tr id="row1"> -->
+        <!--   <td></td> -->
+        <!--   <td></td> -->
+        <!--   <td></td> -->
+        <!--   <td></td> -->
+        <!-- </tr> -->
+      </tbody>
+    </table>
+    <script src="scoreScreen.js"></script>
+  </body>
 </html>

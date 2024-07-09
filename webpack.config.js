@@ -54,4 +54,3 @@ const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig(options);
 // }
 
 module.exports = buildConfig;
-

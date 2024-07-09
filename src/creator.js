@@ -21,6 +21,7 @@ let widgetState = {
   dimensionY: '4',
   _title: '',
   _qset: {},
+  showanswers: false,
 };
 
 let savedWidgetState = {
@@ -95,6 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', updatePreview);
   });
 
+  //set if the checkbox is checked or not
+  const ShowAnswersCheckbox = document.getElementById('ShowAnswersCheckbox');
+  ShowAnswersCheckbox.addEventListener('input', (event) => {
+    if (ShowAnswersCheckbox.checked) {
+      widgetState.showanswers = true;
+    } else {
+      widgetState.showanswers = false;
+    }
+  });
   document.querySelectorAll('.GameNameInput input').forEach((input) => {
     console.log('UPDATING GAME NAME');
     input.addEventListener('input', updateGameName);
@@ -289,7 +299,7 @@ function trunkcadeWords(widgetState, savedWidgetState) {
     );
   }
 }
-// Save widget data
+
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
     // setup for a new widget
@@ -325,6 +335,7 @@ Materia.CreatorCore.start({
       qset: {
         name: widgetState._title,
         version: 1,
+        showAnswers: widgetState.showanswers,
         data: {
           items,
         },
@@ -332,6 +343,6 @@ Materia.CreatorCore.start({
     };
     console.log(qset);
     console.log('THE TITLE OF THE WIDGET IS ', widgetState._title);
-    Materia.CreatorCore.save(widgetState._title, qset.qset.data);
+    Materia.CreatorCore.save(widgetState._title, qset.qset);
   },
 });

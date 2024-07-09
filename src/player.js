@@ -378,15 +378,24 @@ function disableGame() {
 Materia.Engine.start({
   start: (instance, qset, qsetVersion) => {
     console.log('Starting game with qset:', qset);
-    if (qset) {
+    console.log('The instance is:', instance);
+    if (qset.data) {
       //instace is the entire demo.json object, qset is only the items array
       const title = instance.name;
       const TitleElement = document.getElementById('Title');
       TitleElement.innerHTML = title;
       const modalH1 = document.getElementById('welcomeModalTitle');
       modalH1.textContent = 'Welcome to the ' + title + ' Game!';
+      setupGame(qset.data);
+    }
+    //
+    else {
+      const title = instance.name;
+      const TitleElement = document.getElementById('Title');
+      TitleElement.innerHTML = title;
+      const modalH1 = document.getElementById('welcomeModalTitle');
+      modalH1.textContent = 'Welcome to the ' + title + ' Game!';
       setupGame(qset);
-    } else {
       console.error('No qset found.');
     }
   },
