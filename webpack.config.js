@@ -37,6 +37,10 @@ const customRules = [
   rules.loadAndPrefixSASS,
   rules.copyImages,
   rules.reactLoader,
+  {
+    test: /\.svg$/,
+    use: 'raw-loader',
+  },
 ];
 
 const options = {

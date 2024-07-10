@@ -2,5 +2,19 @@ body {
 
 }
 h1 {
+  text-align: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
 
+.correct {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.wrong {
+  background-color: #d9534f;
+  color: white;
 }
