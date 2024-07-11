@@ -1,5 +1,6 @@
 body {
-
+  background: #3E363F;
+  color: #fff;
 }
 h1 {
   text-align: center;
@@ -7,6 +8,7 @@ h1 {
 .container {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .correct {
@@ -17,4 +19,19 @@ h1 {
 .wrong {
   background-color: #d9534f;
   color: white;
+}
+table {
+  border: 1px solid #ccc;
+}
+th, td {
+  border: 1px solid #555;
+}
+
+thead tr {
+    background-color: #444;
+    color: #fff;
+}
+
+tbody td {
+    background-color: #595959;
 }

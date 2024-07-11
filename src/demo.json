@@ -3,8 +3,8 @@
   "qset": {
     "name": "Connections Widget Demo!!!",
     "version": 1,
-    "showAnswers": true,
     "data": {
+      "showAnswers": true,
       "items": [
         {
           "materiaType": "question",

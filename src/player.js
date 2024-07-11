@@ -24,6 +24,8 @@ modal.showModal();
 closeButton.addEventListener('click', () => {
   modal.close();
 });
+//this will decide if our function will display the answers or not which will be updated by the instance
+let showAnswersBoolean = false;
 const instructionDescription = document.getElementById('instructionsModal');
 // Variables to keep track of the score
 let percentScore = 0,
@@ -274,7 +276,7 @@ function checkSelection(count) {
       btn.classList.remove('styled-button');
     }
     if (attempts >= maxAttempts) {
-      showRemainingCorrectAnswers();
+      // showRemainingCorrectAnswers();
       disableGame();
     }
   }
@@ -315,13 +317,6 @@ function showRemainingCorrectAnswers() {
   groupWords.forEach((group, index) => {
     if (group.length > 0) {
       const className = `selected-${(index + 1) * 4}`;
-      // if (className === 'selected-24') {
-      //   className = 'selected-grey';
-      // }
-      // if (className === 'selected-20') {
-      //   className = 'selected-tan';
-      // }
-      // Check if the element with the class already exists
       if (!correctAnswersDiv.querySelector(`.${className}`)) {
         const answerDiv = createAnswerDiv(
           currentQset.items[index].questions[0].text,
@@ -363,7 +358,16 @@ function disableGame() {
         <p>Wrong Attempts: ${attempts}</p>
         <p>Grade : ${percentScore} </p>
     `;
-  showRemainingCorrectAnswers();
+  if (showAnswersBoolean) {
+    showRemainingCorrectAnswers();
+  } //
+  else {
+    // showRemainingCorrectAnswers();
+    alert(
+      `Your instructor has turned off the option to see correct answers for wrong
+        questions you answered`,
+    );
+  }
   // Show the modal for the final score
   resultsModal.showModal();
   console.log(percentScore);
@@ -378,7 +382,10 @@ function disableGame() {
 Materia.Engine.start({
   start: (instance, qset, qsetVersion) => {
     console.log('Starting game with qset:', qset);
-    console.log('The instance is:', instance);
+    console.log('The instance is:', instance.qset);
+    showAnswersBoolean = instance.qset.data.showAnswers;
+    console.log('the boolean of show answers boolean is ', showAnswersBoolean);
+
     if (qset.data) {
       //instace is the entire demo.json object, qset is only the items array
       const title = instance.name;

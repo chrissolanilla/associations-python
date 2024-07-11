@@ -85,6 +85,8 @@ Materia.ScoreCore.start({
     } //
     else {
       console.log('there is no qset.showAnswers? waht is going on here?');
+      ShowScore(false);
+      populateTable(scoreTable);
     }
     console.log('the instance is', instance);
     console.log('the qset is', qset);
