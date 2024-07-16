@@ -226,7 +226,7 @@ function highlightGrid(rows, cols) {
   });
 }
 function createDynamicInputs() {
-  const colors = ['Blue', 'Green', 'Yellow', 'Pink', 'Tan', 'Grey'];
+  const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Grey', 'Yellow'];
   const dynamicInputs = document.getElementById('dynamicInputs');
   dynamicInputs.innerHTML = ''; // Clear previous inputs
 

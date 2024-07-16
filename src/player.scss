@@ -153,31 +153,37 @@ dialog::backdrop {
     font-size: larger;
 	// how do i make the colors correspond to the groups like red blue and green?
 }
-.AnswerDivBackground.selected-4 {
-	background-color:rgb(223, 123, 234);
-}
 .AnswerDivBackground.selected-8 {
-	background-color:rgb(84, 146, 255);
+	background-color:#6BA0C9;
 }
 .AnswerDivBackground.selected-12 {
-	background-color:rgb(105, 227, 82);
+	background-color:#85BE64;
 }
-.AnswerDivBackground.selected-16 {
-	background-color:rgb(251, 212, 0);
-}
-.AnswerDivBackground.selected-20 {
-    background-color: #914943;
+.AnswerDivBackground.selected-4 {
+	background-color:#94579C;
 }
 .AnswerDivBackground.selected-24 {
+	background-color:rgb(251, 212, 0);
+}
+.AnswerDivBackground.selected-16 {
+    background-color: #E28757;
+}
+.AnswerDivBackground.selected-20 {
     background-color: #786e6d;
 }
 
-.Blue {background-color: rgb(84, 146, 255)}
-.Green{background-color: rgb(105, 227, 82);}
+/*colors for the blocks */
+// .Blue {background-color: rgb(84, 146, 255)}
+.Blue {background-color: #6BA0C9;}
+// .Green{background-color: rgb(105, 227, 82);}
+.Green {background-color: #85BE64;}
 .Yellow {background-color: rgb(251, 212, 0);}
-.Pink {background-color: rgb(223, 123, 234);}
-.Tan {background-color: #914943;}
+// .Pink {background-color: rgb(223, 123, 234);}
+.Pink {background-color: #94579C;}
+// .Tan {background-color: #914943;}
+.Tan {background-color: #E28757;}
 .Grey {background-color: #786e6d}
+
 .focus-highlight {
   outline: 4px solid #3b82f6; // Change the color to your preference
   outline-offset: 2px;
