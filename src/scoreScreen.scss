@@ -67,3 +67,10 @@ thead tr {
 tbody td {
     background-color: #595959;
 }
+
+.screenReader {
+  // display: none; this does not get paresed by the screen reader if dispaly is none
+  position: absolute;
+  left: -999em;
+  top: -999em;
+}
