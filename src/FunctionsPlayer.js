@@ -53,7 +53,7 @@ export function updateButtonStyles(buttonId, isEnabled) {
     button.classList.add('styled-button');
     button.setAttribute('tabindex', '0');
   } else {
-    console.log('button is ', buttonId);
+    // console.log('button is ', buttonId);
     button.classList.remove('styled-button');
     button.classList.add('greyOutButton');
     button.setAttribute('tabindex', '-1');
@@ -93,7 +93,7 @@ export function updateSelectionStyles() {
 
   const selectionCount = selectedWords.length;
   //call the function dimensinoX times for the button ids that are dynamically created.
-  console.log('buttonIDs are ', buttonIDs);
+  // console.log('buttonIDs are ', buttonIDs);
   for (let i = 0; i < dimensionY; i++) {
     updateButtonStyles(buttonIDs[i], selectionCount === dimensionX * (i + 1));
   }

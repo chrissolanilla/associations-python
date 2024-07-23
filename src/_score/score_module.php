@@ -20,35 +20,39 @@ class Score_Modules_Connections extends Score_Module
     if (isset($this->questions[$questionID])) {
       trace("question has been found");
       trace("checking if we have seen this question before");
+        // Exit if question has been seen
       if (in_array($questionID, $seenAnswers)) {
         trace("we have seen this question before");
-        return; // Exit if question has been seen
+        return;
       }
       trace("adding it to the seen answers array");
-      $seenAnswers[] = $questionID; // Add question ID to seen list
+        // Add question ID to seen list
+      $seenAnswers[] = $questionID;
 
       $question = $this->questions[$questionID];
-      $userAnswerArray = array_map('trim', explode(',', $userAnswer)); // Trim whitespace
+        // Trim whitespace
+      $userAnswerArray = array_map('trim', explode(',', $userAnswer));
 
       foreach ($question->answers as $answer) {
-        $correctAnswerArray = array_map('trim', explode(',', $answer['text'])); // Convert correct answer text to array and trim whitespace
+        $correctAnswerArray = array_map('trim', explode(',', $answer['text'])); // convert correct answer text to array and trim whitespace
         if ($this->contains_all($correctAnswerArray, $userAnswerArray)) {
+            // exit  after finding a correct answer
           trace("Match found successfully for question ID: $questionID");
           $isCorrect = true;
-          break; // Exit the loop after finding a correct answer
+          break;
         }
       }
 
       if ($isCorrect) {
         return 100;
       } else {
-        $seen_wrong_answers[$questionID] = $userAnswer; // Assuming you want to track wrong answers (uncomment if needed)
-        // trace("never seen this wrong answer before"); // Uncomment if using seen_wrong_answers
+        $seen_wrong_answers[$questionID] = $userAnswer;
+        // trace("never seen this wrong answer before");
         return 0;
       }
     } else {
       trace("SORRY Question ID: $questionID not found in questions array");
-      trace("why are we here");
+      trace("why are we here, just to suffer...");
     }
   }
 

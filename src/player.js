@@ -16,6 +16,25 @@ import {
   addCurrentButtons,
   showToast,
 } from './FunctionsPlayer';
+/** type object array comma separated list of words */
+/**
+ * @typedef {Object} GuessedGroupsState
+ * @property {string[]} group1 - Group 1 guessed words.
+ * @property {string[]} group2 - Group 2 guessed words.
+ * @property {string[]} group3 - Group 3 guessed words.
+ * @property {string[]} group4 - Group 4 guessed words.
+ * @property {string[]} group5 - Group 5 guessed words.
+ * @property {string[]} group6 - Group 6 guessed words.
+ */
+/** @type GuessedGroupsState */
+const guessedGroupsState = {
+  group1: [],
+  group2: [],
+  group3: [],
+  group4: [],
+  group5: [],
+  group6: [],
+};
 
 // Modal code
 const closeButton = document.querySelector('[data-close-modal]');
@@ -161,19 +180,17 @@ function setupGame(qset) {
 }
 
 function checkSelection(count) {
+  let highestGroupLength = 0;
   const wordsGrid = document.querySelector('.wordsPreview');
   const correctAnswersDiv = document.getElementById('correctAnswers');
   let validGroupsCount = 0;
   let validWordsCount = 0;
   // console.log("starting to check selection");
-
   // Track groups that should be removed
   let groupsToRemove = [];
-
   // Process selected words in groups of four
   const selectedWords = getSelectedWords().map((word) => word.trim());
   const currentQset = getCurrentQset();
-  // console.log("current qset in checkSelection is: ", currentQset);
   //refacotr things to be by dimensionX instead of 4
   for (let i = 0; i < selectedWords.length; i += dimensionXGlobal) {
     // console.log("inside the for loop");
@@ -183,29 +200,30 @@ function checkSelection(count) {
 
     currentQset.items.forEach((item, index) => {
       if (getGuessedGroups().has(item.questions[0].text)) {
+        console.log('Skipping this group because it was already guessed');
         return; // Skip already guessed groups
       }
-
-      // console.log("checking inside a for each loop of currentQsetItems");
-
       const answerWords = item.answers[0].text
         .split(',')
         .map((word) => word.trim());
       // console.log("answer words: ", answerWords);
-
       const group = currentGroup.filter((word) => answerWords.includes(word));
       // console.log("group const after doing currentGroup filter is: ", group);
-
+      if (group.length > highestGroupLength) {
+        highestGroupLength = group.length;
+        console.log('the item for this group is ', item);
+      }
+      //the item has all our data of what the question is and the answer.
+      console.log('the index is ', index);
+      console.log('Group length is ', highestGroupLength);
       if (group.length === dimensionXGlobal) {
         const guessedGroups = getGuessedGroups();
         guessedGroups.add(item.questions[0].text); // Add description to guessed set
         setGuessedGroups(guessedGroups);
-
         // console.log(item.questions[0].text);
         validGroupsCount++;
         validWordsCount += dimensionXGlobal;
         // console.log("valid groups count is ", validGroupsCount);
-
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
@@ -220,8 +238,7 @@ function checkSelection(count) {
             ' was the description for the group of words: ' +
             answerWords;
         }, 1000);
-        // console.log("Checking Groups again:" + group);
-
+        console.log('Checking Groups again:' + group);
         // Submit the group as a single answer with the question ID and group of words
         Materia.Score.submitQuestionForScoring(
           item.id,
@@ -244,12 +261,22 @@ function checkSelection(count) {
     });
 
     if (!groupFound && currentGroup.length === dimensionXGlobal) {
-      const unguessedDescription = currentQset.items.find((item) => {
-        return !getGuessedGroups().has(item.questions[0].text);
+      // const unguessedDescription = currentQset.items.find((item) => {
+      //   return !getGuessedGroups().has(item.questions[0].text);
+      // });
+      // Find the correct index for the group
+      currentQset.items.forEach((item, index) => {
+        const answerWords = item.answers[0].text
+          .split(',')
+          .map((word) => word.trim());
+        const group = currentGroup.filter((word) => answerWords.includes(word));
+        if (group.length > 0) {
+          guessedGroupsState[`group${index + 1}`] = currentGroup;
+        }
       });
+      console.log('DOES THIS RUN HAHAHAH');
     }
   }
-
   // Only remove words from valid groups
   groupsToRemove.forEach((group) => {
     group.forEach((word) => {
@@ -267,7 +294,16 @@ function checkSelection(count) {
 
   if (validWordsCount !== count) {
     console.log('you got the answer wrong somehow.');
-    showToast('Sorry, that was not correct', 'error');
+    console.log('the valid words count was ', validWordsCount);
+    if (highestGroupLength + 1 === dimensionXGlobal) {
+      console.log('showing the toast');
+      console.log('the highest group length was: ', highestGroupLength);
+      showToast('one away...', 'error');
+      //have it so that we say that we put this mark for this question
+    } //
+    else {
+      showToast('Sorry, that was not correct', 'error');
+    }
     attempts++;
     AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
     maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} left)`;
@@ -339,9 +375,19 @@ function disableGame() {
     return !getGuessedGroups().has(item.questions[0].text);
   });
 
-  unguessedDescriptions.forEach((item) => {
-    console.log('sending this question for scoring:\n ', item.id);
-    Materia.Score.submitQuestionForScoring(item.id, 'Ran out of Lives', 0);
+  unguessedDescriptions.forEach((item, index) => {
+    const incorrectGroup = guessedGroupsState[`group${index + 1}`].join(',');
+    Materia.Score.submitQuestionForScoring(
+      item.id,
+      incorrectGroup || 'Ran out of Lives',
+      0,
+    );
+    console.log(
+      'Submitted question for scoring:',
+      item.id,
+      incorrectGroup || 'Ran out of Lives',
+      0,
+    );
   });
 
   wordsGrid

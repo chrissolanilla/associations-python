@@ -4,40 +4,57 @@ Materia.ScoreCore.hideResultsTable();
 
 const tbodyElement = document.getElementById('tbody');
 const screenReaderTbodyElement = document.getElementById('screenReaderTbody');
-function createFancyAnswer(words, containerId) {
+
+function createFancyAnswer(userAnswer, words, containerId) {
   const FancyContainer = document.querySelector(
     `[data-container-id='${containerId}']`,
   );
   console.log('function words is ', words);
-  const wordsArray = words.split(',');
-  wordsArray.forEach((word, index) => {
-    console.log('WORD IN THE FUNCTION FOR EACH IS ', word);
-    console.log('index in the function is ', index);
+  console.log('userAnswer is ', userAnswer);
+  const userWordsArray = userAnswer.split(',').map((word) => word.trim());
+  const correctWordsArray = words.split(',').map((word) => word.trim());
+  // const wordsArray = words.split(',');
+  userWordsArray.forEach((word, index) => {
+    // console.log('WORD IN THE FUNCTION FOR EACH IS ', word);
+    // console.log('index in the function is ', index);
     const previewItem = document.createElement('div');
-    previewItem.innerHTML = `<label> ${word}</label>`;
-    previewItem.classList.add('preview-item');
+    console.log('THE WORD IS: ', word);
+    if (word === 'Ran out of Lives') {
+      previewItem.innerHTML = `<h1> You ran out of lives</h1>`;
+    } //
+    else {
+      previewItem.innerHTML = `<label> ${word}</label>`;
+      previewItem.classList.add('preview-item');
+      if (correctWordsArray.includes(word)) {
+        previewItem.classList.add('correct-word'); // Add class for correct word
+      } //
+      else {
+        previewItem.classList.add('incorrect-word'); // Add class for incorrect word
+      }
+    }
     FancyContainer.appendChild(previewItem);
+    //make it correct or incorrect if it contains the correct answer array
   });
 }
+
 function populateTable(scoreTable, showAnswers) {
   tbodyElement.innerHTML = '';
   screenReaderTbodyElement.innerHTML = '';
 
   scoreTable.forEach((entry, entryIndex) => {
+    let isAllRight = false;
     const row1 = document.createElement('tr');
 
     const scoreCell = document.createElement('td');
     if (entry.score === 100) {
-      console.log('adding in our svg');
       scoreCell.innerHTML = checkmark;
       scoreCell.classList.add('correct');
+      isAllRight = true;
     } //
     else {
-      console.log('wrong, adding in our svg');
       scoreCell.innerHTML = xmark;
       scoreCell.classList.add('wrong');
     }
-    console.log('Making the row span 2');
     scoreCell.rowSpan = 2;
     row1.appendChild(scoreCell);
     //make the row for the top part of the row span
@@ -46,13 +63,14 @@ function populateTable(scoreTable, showAnswers) {
     FancyCell.colSpan = 4;
     FancyCell.innerHTML = `
        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-          <h1>${entry.data[0]}</h1>
+          <h1 style="margin-bottom: 0;">${entry.data[0]}</h1>
+          ${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
           <div data-container-id="${containerId}" style="display:flex;"></div>
         </div>
       `;
     row1.appendChild(FancyCell);
     tbodyElement.appendChild(row1);
-    createFancyAnswer(entry.data[2], containerId);
+    createFancyAnswer(entry.data[1], entry.data[2], containerId);
     const row2 = document.createElement('tr');
     tbodyElement.appendChild(row2);
     // Populate screen reader table
