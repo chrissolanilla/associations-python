@@ -15,6 +15,8 @@ import {
   setDimensions,
   addCurrentButtons,
   showToast,
+  animateSelectionToTop,
+  sleep,
 } from './FunctionsPlayer';
 /** type object array comma separated list of words */
 /**
@@ -142,14 +144,14 @@ function setupGame(qset) {
     checkbox.id = `word${index}`;
     const label = document.createElement('label');
     label.htmlFor = `word${index}`;
-    label.textContent = word;
+    label.textContent = word.trim();
     wordElement.appendChild(checkbox);
     wordElement.appendChild(label);
     wordsGrid.appendChild(wordElement);
     //dynamically create dimensionY number of buttons with text check {dimensionX}
 
     checkbox.addEventListener('change', () => {
-      selectWord(word, wordElement, checkbox);
+      selectWord(word.trim(), wordElement, checkbox);
     });
     //gets the parent element and makes the div look it it's being focused
     checkbox.addEventListener('focus', (event) => {
@@ -179,7 +181,7 @@ function setupGame(qset) {
   console.log('CHANGING THE REACTIVE CODE');
 }
 
-function checkSelection(count) {
+async function checkSelection(count) {
   let highestGroupLength = 0;
   const wordsGrid = document.querySelector('.wordsPreview');
   const correctAnswersDiv = document.getElementById('correctAnswers');
@@ -227,7 +229,9 @@ function checkSelection(count) {
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
-        showToast('Correct! Nice job!', 'success');
+        setTimeout(() => {
+          showToast('Correct! Nice job!', 'success');
+        }, 1000);
         //update the hidden screen reader element to tell them the answer audibly
         // Force DOM reflow by temporarily removing and re-adding the element
 
@@ -237,7 +241,7 @@ function checkSelection(count) {
             item.questions[0].text +
             ' was the description for the group of words: ' +
             answerWords;
-        }, 1000);
+        }, 2000);
         console.log('Checking Groups again:' + group);
         // Submit the group as a single answer with the question ID and group of words
         Materia.Score.submitQuestionForScoring(
@@ -249,14 +253,17 @@ function checkSelection(count) {
         //i made tan and grey 20 and 24, may be best not to touch this
         const className = `selected-${(index + 1) * 4}`;
         console.log('Giving the class name: ', className);
-        const answerDiv = createAnswerDiv(
-          item.questions[0].text,
-          group,
-          className,
-        );
-        correctAnswersDiv.appendChild(answerDiv);
-        groupsToRemove.push(group);
-        groupFound = true;
+        setTimeout(() => {
+          const answerDiv = createAnswerDiv(
+            item.questions[0].text,
+            group,
+            className,
+          );
+          correctAnswersDiv.appendChild(answerDiv);
+          groupsToRemove.push(group);
+          groupFound = true;
+        }, 1000);
+        animateSelectionToTop(group);
       }
     });
 
@@ -278,6 +285,7 @@ function checkSelection(count) {
     }
   }
   // Only remove words from valid groups
+  await sleep(1000);
   groupsToRemove.forEach((group) => {
     group.forEach((word) => {
       const checkbox = [

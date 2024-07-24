@@ -44,8 +44,10 @@ function populateTable(scoreTable, showAnswers) {
   scoreTable.forEach((entry, entryIndex) => {
     let isAllRight = false;
     const row1 = document.createElement('tr');
+    row1.setAttribute('role', 'row');
 
     const scoreCell = document.createElement('td');
+    scoreCell.setAttribute('role', 'cell');
     if (entry.score === 100) {
       scoreCell.innerHTML = checkmark;
       scoreCell.classList.add('correct');
@@ -61,6 +63,7 @@ function populateTable(scoreTable, showAnswers) {
     const containerId = `fancyContainer-${entryIndex}`;
     const FancyCell = document.createElement('td');
     FancyCell.colSpan = 4;
+    FancyCell.setAttribute('role', 'cell');
     FancyCell.innerHTML = `
        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
           <h1 style="margin-bottom: 0;">${entry.data[0]}</h1>
@@ -75,7 +78,9 @@ function populateTable(scoreTable, showAnswers) {
     tbodyElement.appendChild(row2);
     // Populate screen reader table
     const srRow = document.createElement('tr');
+    srRow.setAttribute('role', 'row');
     const srScoreCell = document.createElement('td');
+    srScoreCell.setAttribute('role', 'cell');
     srScoreCell.textContent = entry.score === 100 ? 'Correct' : 'Incorrect';
     srRow.appendChild(srScoreCell);
 

@@ -65,6 +65,7 @@ dialog::backdrop {
 	display: grid;
 	// grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
 .previewItem {
 	opacity: 1;
     color:black;
@@ -79,8 +80,10 @@ dialog::backdrop {
 	text-align: center;
 	text-transform: uppercase;
 	margin: 0.5rem;
-	transition: .2s ease-in-out 0s;
+	// transition: .2s ease-in-out 0s;
+    transition: transform 0.2s, opacity 0.5s;
 }
+
 .previewItem input {
 	clip: rect(0 0 0 0);
 	-webkit-clip-path: inset(50%);
@@ -110,6 +113,33 @@ dialog::backdrop {
 }
 .previewItem.selected {
 	background-color: rgb(219, 154, 154);
+}
+
+.previewItem.staggered-jump {
+  animation: jump 1s forwards;
+}
+
+.previewItem.correct-move {
+  animation: moveToTop 1s forwards;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes moveToTop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
 }
 
 .previewItem input[type="checkbox"]:checked + label {
@@ -171,6 +201,25 @@ dialog::backdrop {
 .AnswerDivBackground.selected-20 {
     background-color: #786e6d;
 }
+
+@keyframes growFromCenter {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.answerDiv-grow {
+  animation: growFromCenter 0.5s ease-out forwards;
+}
+
 
 /*colors for the blocks */
 // .Blue {background-color: rgb(84, 146, 255)}

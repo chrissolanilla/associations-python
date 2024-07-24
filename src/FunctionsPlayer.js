@@ -103,7 +103,7 @@ export function updateSelectionStyles() {
 export function createAnswerDiv(description, group, className) {
   console.log('CREATING ANSWER DIV', description, group, className);
   const answerDiv = document.createElement('div');
-  answerDiv.classList.add('AnswerDivBackground', className);
+  answerDiv.classList.add('AnswerDivBackground', className, 'answerDiv-grow');
 
   const strongDiv = document.createElement('div');
   const strongElement = document.createElement('strong');
@@ -176,4 +176,51 @@ export function showToast(message, type) {
     toastContainer.classList.remove('show');
     toast.classList.add('hide');
   }, 5000);
+}
+
+export function animateSelectionToTop() {
+  const selectedWords = getSelectedWords();
+  const wordsGrid = document.querySelector('.wordsPreview');
+
+  selectedWords.forEach((word, index) => {
+    const checkbox = [
+      ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
+    ].find(
+      (input) => input.nextElementSibling.textContent.trim() === word.trim(),
+    );
+
+    if (checkbox) {
+      const wordElement = checkbox.parentNode;
+      wordElement.classList.add('staggered-jump');
+      setTimeout(
+        () => {
+          wordElement.classList.add('correct-move');
+        },
+        500 + index * 100,
+      );
+    } else {
+      console.error(`Checkbox for word "${word.trim()}" not found`);
+    }
+  });
+
+  setTimeout(() => {
+    selectedWords.forEach((word) => {
+      const checkbox = [
+        ...document.querySelectorAll('.previewItem input[type="checkbox"]'),
+      ].find(
+        (input) => input.nextElementSibling.textContent.trim() === word.trim(),
+      );
+
+      if (checkbox) {
+        const wordElement = checkbox.parentNode;
+        wordsGrid.removeChild(wordElement);
+      } else {
+        console.error(`Checkbox for word "${word.trim()}" not found`);
+      }
+    });
+  }, 2000);
+}
+
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
