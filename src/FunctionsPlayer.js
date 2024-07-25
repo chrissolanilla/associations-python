@@ -5,6 +5,11 @@ let guessedGroups = new Set();
 let dimensionX = 0;
 let dimensionY = 0;
 let buttonIDs = [];
+
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function setCurrentQset(qset) {
   currentQset = qset;
 }
@@ -177,8 +182,9 @@ export function showToast(message, type) {
     toast.classList.add('hide');
   }, 5000);
 }
-
-export function animateSelectionToTop() {
+/** @param {boolean} isCorrect */
+export function animateSelectionToTop(isCorrect) {
+  console.log('------THE BOOLEAN IS : ', isCorrect);
   const selectedWords = getSelectedWords();
   const wordsGrid = document.querySelector('.wordsPreview');
 
@@ -194,10 +200,20 @@ export function animateSelectionToTop() {
       wordElement.classList.add('staggered-jump');
       setTimeout(
         () => {
-          wordElement.classList.add('correct-move');
+          if (isCorrect) {
+            wordElement.classList.add('correct-move');
+          } //
+          else {
+            wordElement.classList.add('incorrect-move');
+          }
         },
         500 + index * 100,
       );
+      setTimeout(() => {
+        // so we can see the animatino again on these words if wrong
+        wordElement.classList.remove('staggered-jump');
+        wordElement.classList.remove('incorrect-move');
+      }, 3000);
     } else {
       console.error(`Checkbox for word "${word.trim()}" not found`);
     }
@@ -211,7 +227,7 @@ export function animateSelectionToTop() {
         (input) => input.nextElementSibling.textContent.trim() === word.trim(),
       );
 
-      if (checkbox) {
+      if (checkbox && isCorrect) {
         const wordElement = checkbox.parentNode;
         wordsGrid.removeChild(wordElement);
       } else {
@@ -219,8 +235,4 @@ export function animateSelectionToTop() {
       }
     });
   }, 2000);
-}
-
-export function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

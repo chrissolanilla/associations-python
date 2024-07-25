@@ -183,6 +183,7 @@ function setupGame(qset) {
 
 async function checkSelection(count) {
   let highestGroupLength = 0;
+  let isCorrect = false;
   const wordsGrid = document.querySelector('.wordsPreview');
   const correctAnswersDiv = document.getElementById('correctAnswers');
   let validGroupsCount = 0;
@@ -263,7 +264,8 @@ async function checkSelection(count) {
           groupsToRemove.push(group);
           groupFound = true;
         }, 1000);
-        animateSelectionToTop(group);
+        // animateSelectionToTop(true);
+        isCorrect = true;
       }
     });
 
@@ -282,6 +284,7 @@ async function checkSelection(count) {
         }
       });
       console.log('DOES THIS RUN HAHAHAH');
+      animateSelectionToTop(isCorrect);
     }
   }
   // Only remove words from valid groups
