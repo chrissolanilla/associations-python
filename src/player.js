@@ -17,6 +17,7 @@ import {
   showToast,
   animateSelectionToTop,
   sleep,
+  setCorrectGuesses,
 } from './FunctionsPlayer';
 /** type object array comma separated list of words */
 /**
@@ -265,6 +266,7 @@ async function checkSelection(count) {
           groupFound = true;
         }, 1000);
         // animateSelectionToTop(true);
+        setCorrectGuesses(1);
         isCorrect = true;
       }
     });

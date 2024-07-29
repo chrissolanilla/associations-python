@@ -5,6 +5,7 @@ let guessedGroups = new Set();
 let dimensionX = 0;
 let dimensionY = 0;
 let buttonIDs = [];
+let correctGuesses = 0;
 
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -33,6 +34,10 @@ export function getSelectedWords() {
 
 export function setGuessedGroups(groups) {
   guessedGroups = groups;
+}
+
+export function setCorrectGuesses(count) {
+  correctGuesses += count;
 }
 
 export function getGuessedGroups() {
@@ -85,12 +90,12 @@ export function updateSelectionStyles() {
     ].find((input) => input.nextElementSibling.textContent === word);
     const item = checkbox.parentNode;
     console.log('The index is ', index);
-    if (index < dimensionX) item.classList.add('selected-4');
+    if (correctGuesses < 1) item.classList.add('selected-4');
     // if (index < dimensionX) item.classList.add('singleSelectionBlue');
-    else if (index < dimensionX * 2) item.classList.add('selected-8');
-    else if (index < dimensionX * 3) item.classList.add('selected-12');
-    else if (index < dimensionX * 4) item.classList.add('selected-16');
-    else if (index < dimensionX * 5) {
+    else if (correctGuesses < 2) item.classList.add('selected-8');
+    else if (correctGuesses < 3) item.classList.add('selected-12');
+    else if (correctGuesses < 4) item.classList.add('selected-16');
+    else if (correctGuesses < 5) {
       item.classList.add('selected-tan');
       console.log('the index is', index, 'and the tan index is', index % 5);
     } else item.classList.add('selected-grey');
@@ -108,6 +113,24 @@ export function updateSelectionStyles() {
 export function createAnswerDiv(description, group, className) {
   console.log('CREATING ANSWER DIV', description, group, className);
   const answerDiv = document.createElement('div');
+  if (correctGuesses === 1) {
+    className = 'selected-4';
+  } //
+  else if (correctGuesses === 2) {
+    className = 'selected-8';
+  } //
+  else if (correctGuesses === 3) {
+    className = 'selected-12';
+  } //
+  else if (correctGuesses === 4) {
+    className = 'selected-16';
+  } //
+  else if (correctGuesses === 5) {
+    className = 'selected-tan';
+  } //
+  else {
+    className = 'selected-grey';
+  }
   answerDiv.classList.add('AnswerDivBackground', className, 'answerDiv-grow');
 
   const strongDiv = document.createElement('div');
