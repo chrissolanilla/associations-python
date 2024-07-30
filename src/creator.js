@@ -254,6 +254,7 @@ function createDynamicInputs() {
     console.log(`DescriptionInput.id is ${descriptionInput.id}`);
     descriptionInput.placeholder = `Enter a description for a group of words, e.g., ${placeholders[j][0]}`;
     descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
+    descriptionInput.classList.add('dInput');
     descriptionInput.addEventListener('input', () => {
       console.log(
         `updating savedWidgetState.description${j + 1} to be event.target.value:`,
