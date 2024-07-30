@@ -62,6 +62,7 @@ function populateTable(scoreTable, showAnswers) {
     //make the row for the top part of the row span
     const containerId = `fancyContainer-${entryIndex}`;
     const FancyCell = document.createElement('td');
+    console.log('Creating the fancy cell show answer is ', entry.data[2]);
     FancyCell.colSpan = 4;
     FancyCell.setAttribute('role', 'cell');
     FancyCell.innerHTML = `

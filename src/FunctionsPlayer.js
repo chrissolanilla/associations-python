@@ -110,26 +110,32 @@ export function updateSelectionStyles() {
   toggleCheckbox();
 }
 
-export function createAnswerDiv(description, group, className) {
+/** @param {String} description @param {Array<string>} group @param {String} className @param {boolean} override */
+export function createAnswerDiv(description, group, className, override) {
   console.log('CREATING ANSWER DIV', description, group, className);
   const answerDiv = document.createElement('div');
-  if (correctGuesses === 1) {
-    className = 'selected-4';
-  } //
-  else if (correctGuesses === 2) {
-    className = 'selected-8';
-  } //
-  else if (correctGuesses === 3) {
-    className = 'selected-12';
-  } //
-  else if (correctGuesses === 4) {
-    className = 'selected-16';
-  } //
-  else if (correctGuesses === 5) {
-    className = 'selected-tan';
+  if (override) {
+    console.log('continueing');
   } //
   else {
-    className = 'selected-grey';
+    if (correctGuesses === 1) {
+      className = 'selected-4';
+    } //
+    else if (correctGuesses === 2) {
+      className = 'selected-8';
+    } //
+    else if (correctGuesses === 3) {
+      className = 'selected-12';
+    } //
+    else if (correctGuesses === 4) {
+      className = 'selected-16';
+    } //
+    else if (correctGuesses === 5) {
+      className = 'selected-tan';
+    } //
+    else {
+      className = 'selected-grey';
+    }
   }
   answerDiv.classList.add('AnswerDivBackground', className, 'answerDiv-grow');
 

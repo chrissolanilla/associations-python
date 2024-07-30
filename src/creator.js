@@ -288,7 +288,12 @@ function createDynamicInputs() {
       wordInput.value = widgetState[`words${j + 1}`][i] || '';
       wordCell.appendChild(wordInput);
       const wordParent = wordInput.parentNode;
-      wordParent.classList.add('invalid');
+      if (!wordInput.value) {
+        wordParent.classList.add('invalid');
+      } //
+      else {
+        wordParent.classList.add('valid');
+      }
       wordInput.addEventListener('input', () => {
         if (wordParent) {
           if (wordInput.value) {
@@ -360,6 +365,8 @@ Materia.CreatorCore.start({
       //check if words and description are empty
       if (words === '' || description === '') {
         console.log('empty words or description');
+        //show a toast module that says to complete all fields
+        showToast('Please complete all fields', 'error');
         return;
       }
       items.push({
@@ -384,6 +391,7 @@ Materia.CreatorCore.start({
     };
     console.log(qset);
     console.log('THE TITLE OF THE WIDGET IS ', widgetState._title);
+    showToast('Game saved successfully', 'success');
     Materia.CreatorCore.save(widgetState._title, qset.qset);
   },
 });

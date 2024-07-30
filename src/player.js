@@ -259,6 +259,7 @@ async function checkSelection(count) {
             item.questions[0].text,
             group,
             className,
+            false,
           );
           correctAnswersDiv.appendChild(answerDiv);
           groupsToRemove.push(group);
@@ -365,6 +366,7 @@ function showRemainingCorrectAnswers() {
           currentQset.items[index].questions[0].text,
           group,
           className,
+          true,
         );
         correctAnswersDiv.appendChild(answerDiv);
       }
