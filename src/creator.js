@@ -31,6 +31,12 @@ let savedWidgetState = {
   words4: [],
   words5: [],
   words6: [],
+  description1: '',
+  description2: '',
+  description3: '',
+  description4: '',
+  description5: '',
+  description6: '',
 };
 
 const placeholders = [
@@ -229,6 +235,7 @@ function createDynamicInputs() {
   const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Grey', 'Yellow'];
   const dynamicInputs = document.getElementById('dynamicInputs');
   dynamicInputs.innerHTML = ''; // Clear previous inputs
+  console.log('HELLO HELP');
 
   for (let j = 0; j < widgetState.dimensionY; j++) {
     const inputContainer = document.createElement('div');
@@ -243,12 +250,21 @@ function createDynamicInputs() {
     descriptionInput.type = 'text';
     descriptionInput.name = `Description${j + 1}`;
     descriptionInput.id = `Description${j + 1}`;
+    descriptionInput.required = true;
+    console.log(`DescriptionInput.id is ${descriptionInput.id}`);
     descriptionInput.placeholder = `Enter a description for a group of words, e.g., ${placeholders[j][0]}`;
-    descriptionInput.value = widgetState[`description${j + 1}`] || '';
-    console.log(
-      'The widget state for description is:',
-      widgetState[`description${j + 1}`],
-    );
+    descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
+    descriptionInput.addEventListener('input', () => {
+      console.log(
+        `updating savedWidgetState.description${j + 1} to be event.target.value:`,
+        descriptionInput.value,
+      );
+      updateDescriptionState(j + 1, descriptionInput.value);
+      console.log(
+        'The widget state for description is:',
+        widgetState[`description${j + 1}`],
+      );
+    });
     creatorAnswersDiv.appendChild(descriptionLabel);
     creatorAnswersDiv.appendChild(descriptionInput);
 
@@ -266,12 +282,23 @@ function createDynamicInputs() {
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
       wordInput.id = `Word${j + 1}-${i + 1}`;
+      wordInput.required = true;
       wordInput.placeholder = placeholders[j][i];
       wordInput.value = widgetState[`words${j + 1}`][i] || '';
+      wordCell.appendChild(wordInput);
+      const wordParent = wordInput.parentNode;
+      wordParent.classList.add('invalid');
       wordInput.addEventListener('input', () => {
+        if (wordParent) {
+          if (wordInput.value) {
+            wordParent.classList.add('valid');
+            wordParent.classList.remove('invalid');
+          } else {
+            wordParent.classList.add('invalid');
+          }
+        }
         updateWidgetState(j + 1, i + 1, wordInput.value);
       });
-      wordCell.appendChild(wordInput);
 
       wordsGrid.appendChild(wordCell);
     }
@@ -287,6 +314,14 @@ function updateWidgetState(group, position, value) {
   console.log(
     `Updated widgetState.words${group}:`,
     widgetState[`words${group}`],
+  );
+}
+
+function updateDescriptionState(group, value) {
+  savedWidgetState[`description${group}`] = value;
+  console.log(
+    `Updated widgetState.description${group}:`,
+    savedWidgetState[`description${group}`],
   );
 }
 
@@ -321,6 +356,11 @@ Materia.CreatorCore.start({
         .getElementById(`Description${i}`)
         .value.trim();
       console.log(description);
+      //check if words and description are empty
+      if (words === '' || description === '') {
+        console.log('empty words or description');
+        return;
+      }
       items.push({
         materiaType: 'question',
         type: 'connections',

@@ -251,8 +251,7 @@ async function checkSelection(count) {
           group.join(','),
           pointsPerCorrectGroup,
         );
-        //this may be weird to refactor
-        //i made tan and grey 20 and 24, may be best not to touch this
+        //this dosent actually matter anymore to be honest but its nice to remember how to do this weird string thing.
         const className = `selected-${(index + 1) * 4}`;
         console.log('Giving the class name: ', className);
         setTimeout(() => {
@@ -265,16 +264,12 @@ async function checkSelection(count) {
           groupsToRemove.push(group);
           groupFound = true;
         }, 1000);
-        // animateSelectionToTop(true);
-        setCorrectGuesses(1);
+        setCorrectGuesses(1); // for the styling selection update
         isCorrect = true;
       }
     });
 
     if (!groupFound && currentGroup.length === dimensionXGlobal) {
-      // const unguessedDescription = currentQset.items.find((item) => {
-      //   return !getGuessedGroups().has(item.questions[0].text);
-      // });
       // Find the correct index for the group
       currentQset.items.forEach((item, index) => {
         const answerWords = item.answers[0].text
@@ -325,7 +320,6 @@ async function checkSelection(count) {
       btn.classList.remove('styled-button');
     }
     if (attempts >= maxAttempts) {
-      // showRemainingCorrectAnswers();
       disableGame();
     }
   }
