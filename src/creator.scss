@@ -444,3 +444,21 @@ border: 2px solid red;
 
 }
 
+@keyframes flashRed {
+  0%, 25% {
+    background-color: red;
+  }
+  25%, 50% {
+    background-color: white;
+  }
+  50%, 75% {
+    background-color: red;
+  }
+  75%, 100% {
+    background-color: white;
+  }
+}
+
+.flash-red {
+  animation: flashRed 1.5s ease-in-out;
+}

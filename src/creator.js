@@ -341,6 +341,41 @@ function trunkcadeWords(widgetState, savedWidgetState) {
   }
 }
 
+function flashInvalidInputs() {
+  // Flashing effect for description inputs
+  const descriptionInputs = document.querySelectorAll('.dInput');
+  descriptionInputs.forEach((input) => {
+    if (input.value.trim() === '') {
+      input.classList.add('flash-red');
+      setTimeout(() => {
+        input.classList.remove('flash-red');
+      }, 1000);
+    }
+  });
+  //flashing effect for title input
+  const titleInput = document.getElementById('GameName');
+  if (titleInput.value.trim() === '') {
+    titleInput.classList.add('flash-red');
+    setTimeout(() => {
+      titleInput.classList.remove('flash-red');
+    }, 1000);
+  }
+
+  // Flashing effect for word inputs' parent divs
+  const wordInputs = document.querySelectorAll('.grid-input');
+  wordInputs.forEach((input) => {
+    if (input.value.trim() === '') {
+      const parentDiv = input.closest('.previewItem');
+      if (parentDiv) {
+        parentDiv.classList.add('flash-red');
+        setTimeout(() => {
+          parentDiv.classList.remove('flash-red');
+        }, 1000);
+      }
+    }
+  });
+}
+
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
     // setup for a new widget
@@ -363,10 +398,21 @@ Materia.CreatorCore.start({
         .value.trim();
       console.log(description);
       //check if words and description are empty
-      if (words === '' || description === '') {
+      // if (words === '' || description === '') better way to check i think
+      if (document.getElementById('GameName').value === '') {
+        console.log('empty game name');
+        document.getElementById('GameName').classList.add('invalid');
+      } //
+      else {
+        document.getElementById('GameName').classList.remove('invalid');
+      }
+      const invalidElements = document.querySelectorAll('.invalid');
+      if (invalidElements.length > 0) {
         console.log('empty words or description');
         //show a toast module that says to complete all fields
         showToast('Please complete all fields', 'error');
+        //TODO? fill the input fields with red
+        flashInvalidInputs();
         return;
       }
       items.push({
