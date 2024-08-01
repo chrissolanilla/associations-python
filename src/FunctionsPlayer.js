@@ -79,8 +79,8 @@ export function updateSelectionStyles() {
       'selected-8',
       'selected-12',
       'selected-16',
-      'selected-tan',
-      'selected-grey',
+      'selected-20',
+      'selected-24',
     );
   });
 
@@ -96,9 +96,9 @@ export function updateSelectionStyles() {
     else if (correctGuesses < 3) item.classList.add('selected-12');
     else if (correctGuesses < 4) item.classList.add('selected-16');
     else if (correctGuesses < 5) {
-      item.classList.add('selected-tan');
+      item.classList.add('selected-20');
       console.log('the index is', index, 'and the tan index is', index % 5);
-    } else item.classList.add('selected-grey');
+    } else item.classList.add('selected-24');
   });
 
   const selectionCount = selectedWords.length;
@@ -131,10 +131,10 @@ export function createAnswerDiv(description, group, className, override) {
       className = 'selected-16';
     } //
     else if (correctGuesses === 5) {
-      className = 'selected-tan';
+      className = 'selected-20';
     } //
     else {
-      className = 'selected-grey';
+      className = 'selected-24';
     }
   }
   answerDiv.classList.add('AnswerDivBackground', className, 'answerDiv-grow');

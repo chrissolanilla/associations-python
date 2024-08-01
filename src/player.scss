@@ -162,7 +162,7 @@ dialog::backdrop {
 }
 
 .previewItem input[type="checkbox"]:checked + label {
-	background-color: red;
+	// background-color: red;
 }
 .previewItem.selected-4 input[type="checkbox"]:checked + label {
 	background-color: rgb(223, 123, 234);;
@@ -174,7 +174,7 @@ dialog::backdrop {
 	background-color: rgb(105, 227, 82);
 }
 .previewItem.selected-16 input[type="checkbox"]:checked + label {
-	background-color: rgb(251, 212, 0);
+	background-color: #E28757;
 }
 .previewItem.selected-tan input[type="checkbox"]:checked + label {
     background-color: #733934;
@@ -219,6 +219,19 @@ dialog::backdrop {
 }
 .AnswerDivBackground.selected-20 {
     background-color: #786e6d;
+}
+
+.selected-24 {
+	background-color:rgb(251, 212, 0);
+}
+
+.selected-20 {
+    background-color: #786e6d;
+}
+
+
+.AnswerDivBackground.selected-tan {
+    background-color: #733934;
 }
 
 @keyframes growFromCenter {
