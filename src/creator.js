@@ -1,4 +1,5 @@
 //needed for scss
+import { createRef } from 'react';
 import { showToast } from './FunctionsPlayer';
 import './creator.scss';
 
@@ -379,9 +380,49 @@ function flashInvalidInputs() {
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {
     // setup for a new widget
+    console.log(
+      ` The widget is ${widget} and th base url is ${baseUrl} and the media url is ${mediaUrl}`,
+    );
   },
   initExistingWidget: (widget, title, qset, qsetVersion, baseUrl, mediaUrl) => {
     // updatePreview();
+    console.log(
+      `In INIT EXISTING WIDGET method, The widget is ${widget} and th base url is ${baseUrl} and the media url is ${mediaUrl}`,
+    );
+    console.log(
+      `AFTER INIT EXISTING WIDGET method, The title is ${title} and the qset.items is ${qset.data.items} and the qset version is ${qsetVersion}`,
+    );
+    console.log(
+      'dimensionX is : ',
+      qset.data.items[0].answers[0].text.split(',').length,
+    );
+    console.log(
+      'dimensionY is :',
+      (widgetState.dimensionY = qset.data.items.length),
+    );
+    //if widget exists, close the intro modal and update our state and create the dynamic inputs
+    if (widget) {
+      introModal.close();
+      introModal.classList.add('hidden');
+
+      widgetState.dimensionX =
+        qset.data.items[0].answers[0].text.split(',').length;
+      widgetState.dimensionY = qset.data.items.length;
+      //for some reason the title is widget
+      widgetState._title = widget;
+      for (let i = 1; i <= widgetState.dimensionY; i++) {
+        widgetState[`words${i}`] =
+          qset.data.items[i - 1].answers[0].text.split(',');
+        widgetState[`description${i}`] =
+          qset.data.items[i - 1].questions[0].text;
+        savedWidgetState[`words${i}`] = widgetState[`words${i}`];
+        savedWidgetState[`description${i}`] = widgetState[`description${i}`];
+      }
+      console.log(
+        `After everything the saved widget state is ${savedWidgetState}`,
+      );
+      createDynamicInputs();
+    }
   },
   onSaveClicked: (mode = 'save') => {
     trunkcadeWords(widgetState, savedWidgetState);
