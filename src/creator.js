@@ -422,6 +422,10 @@ Materia.CreatorCore.start({
         `After everything the saved widget state is ${savedWidgetState}`,
       );
       createDynamicInputs();
+      if (document.getElementById('GameName').value === '') {
+        console.log('adding the game name to the input');
+        GameName.value = widget;
+      }
     }
   },
   onSaveClicked: (mode = 'save') => {
