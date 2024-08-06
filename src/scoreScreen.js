@@ -4,6 +4,7 @@ Materia.ScoreCore.hideResultsTable();
 
 const tbodyElement = document.getElementById('tbody');
 const screenReaderTbodyElement = document.getElementById('screenReaderTbody');
+const message = document.getElementById('message');
 
 function createFancyAnswer(userAnswer, words, containerId) {
   const FancyContainer = document.querySelector(
@@ -69,7 +70,7 @@ function populateTable(scoreTable, showAnswers) {
        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
           <h1 style="margin-bottom: 0;">${entry.data[0]}</h1>
           ${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
-            <label>Your selection:</label>
+            <label>Your choice:</label>
           <div data-container-id="${containerId}" style="display:flex;"></div>
         </div>
       `;
@@ -103,6 +104,10 @@ function populateTable(scoreTable, showAnswers) {
 Materia.ScoreCore.start({
   start: (instance, qset, scoreTable, isPreview, qsetVersion) => {
     const showAnswersBoolean = qset.showAnswers;
+    if (!showAnswersBoolean) {
+      message.textContent =
+        'The widget creator has disabled viewing of answers for wrong questions.';
+    }
     populateTable(scoreTable, showAnswersBoolean);
     console.log('the instance is', instance);
     console.log('the qset is', qset);

@@ -391,10 +391,11 @@ function disableGame() {
   } //
   else {
     // showRemainingCorrectAnswers();
-    alert(
-      `Your instructor has turned off the option to see correct answers for wrong
-        questions you answered`,
-    );
+    // alert on the player is not necessary
+    // alert(
+    //   `Your instructor has turned off the option to see correct answers for wrong
+    //     questions you answered`,
+    // );
   }
   // Show the modal for the final score
   resultsModal.classList.remove('hidden');
