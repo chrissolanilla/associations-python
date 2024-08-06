@@ -18,8 +18,8 @@ import {
   animateSelectionToTop,
   sleep,
   setCorrectGuesses,
+  dragElement,
 } from './FunctionsPlayer';
-/** type object array comma separated list of words */
 /**
  * @typedef {Object} GuessedGroupsState
  * @property {string[]} group1 - Group 1 guessed words.
@@ -171,7 +171,6 @@ function setupGame(qset) {
     //prevent dfeault behavior of pressing enter so it can change the style of the word
     checkbox.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
-        console.log('KEY PRESS ENTER DETECTED');
         event.preventDefault();
         checkbox.click();
       }
@@ -179,7 +178,6 @@ function setupGame(qset) {
   });
 
   AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
-  console.log('CHANGING THE REACTIVE CODE');
 }
 
 async function checkSelection(count) {
@@ -189,17 +187,13 @@ async function checkSelection(count) {
   const correctAnswersDiv = document.getElementById('correctAnswers');
   let validGroupsCount = 0;
   let validWordsCount = 0;
-  // console.log("starting to check selection");
   // Track groups that should be removed
   let groupsToRemove = [];
-  // Process selected words in groups of four
   const selectedWords = getSelectedWords().map((word) => word.trim());
   const currentQset = getCurrentQset();
   //refacotr things to be by dimensionX instead of 4
   for (let i = 0; i < selectedWords.length; i += dimensionXGlobal) {
-    // console.log("inside the for loop");
     const currentGroup = selectedWords.slice(i, i + dimensionXGlobal).sort();
-    // console.log(" current group is: ", currentGroup);
     let groupFound = false;
 
     currentQset.items.forEach((item, index) => {
@@ -210,24 +204,17 @@ async function checkSelection(count) {
       const answerWords = item.answers[0].text
         .split(',')
         .map((word) => word.trim());
-      // console.log("answer words: ", answerWords);
       const group = currentGroup.filter((word) => answerWords.includes(word));
-      // console.log("group const after doing currentGroup filter is: ", group);
       if (group.length > highestGroupLength) {
         highestGroupLength = group.length;
-        console.log('the item for this group is ', item);
       }
       //the item has all our data of what the question is and the answer.
-      console.log('the index is ', index);
-      console.log('Group length is ', highestGroupLength);
       if (group.length === dimensionXGlobal) {
         const guessedGroups = getGuessedGroups();
         guessedGroups.add(item.questions[0].text); // Add description to guessed set
         setGuessedGroups(guessedGroups);
-        // console.log(item.questions[0].text);
         validGroupsCount++;
         validWordsCount += dimensionXGlobal;
-        // console.log("valid groups count is ", validGroupsCount);
         const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
         percentScore += pointsPerCorrectGroup;
         scoreCount++;
@@ -244,7 +231,6 @@ async function checkSelection(count) {
             ' was the description for the group of words: ' +
             answerWords;
         }, 2000);
-        console.log('Checking Groups again:' + group);
         // Submit the group as a single answer with the question ID and group of words
         Materia.Score.submitQuestionForScoring(
           item.id,
@@ -253,7 +239,6 @@ async function checkSelection(count) {
         );
         //this dosent actually matter anymore to be honest but its nice to remember how to do this weird string thing.
         const className = `selected-${(index + 1) * 4}`;
-        console.log('Giving the class name: ', className);
         setTimeout(() => {
           const answerDiv = createAnswerDiv(
             item.questions[0].text,
@@ -281,7 +266,6 @@ async function checkSelection(count) {
           guessedGroupsState[`group${index + 1}`] = currentGroup;
         }
       });
-      console.log('DOES THIS RUN HAHAHAH');
       animateSelectionToTop(isCorrect);
     }
   }
@@ -302,13 +286,8 @@ async function checkSelection(count) {
   });
 
   if (validWordsCount !== count) {
-    console.log('you got the answer wrong somehow.');
-    console.log('the valid words count was ', validWordsCount);
     if (highestGroupLength + 1 === dimensionXGlobal) {
-      console.log('showing the toast');
-      console.log('the highest group length was: ', highestGroupLength);
       showToast('one away...', 'error');
-      //have it so that we say that we put this mark for this question
     } //
     else {
       showToast('Sorry, that was not correct', 'error');
@@ -332,12 +311,6 @@ async function checkSelection(count) {
       checkbox.checked = false;
     });
   updateSelectionStyles();
-  console.log(
-    'score count is: ',
-    scoreCount,
-    'dimensionYGlobal is: ',
-    dimensionYGlobal,
-  );
   if (scoreCount >= dimensionYGlobal) disableGame();
 }
 
@@ -424,8 +397,14 @@ function disableGame() {
     );
   }
   // Show the modal for the final score
-  resultsModal.showModal();
-  console.log(percentScore);
+  resultsModal.classList.remove('hidden');
+  //stupid way of centering it but iFrame
+  const rect = resultsModal.getBoundingClientRect();
+  resultsModal.style.top = `calc(50% - ${rect.height / 2}px)`;
+  resultsModal.style.left = `calc(51% - ${rect.height / 2}px)`;
+  const darkenBody = document.createElement('div');
+  darkenBody.classList.add('darkenBody');
+  document.body.appendChild(darkenBody);
   document.getElementById('goToScoreScreen').addEventListener('click', () => {
     // End the game and go to the score screen
     setTimeout(() => {
@@ -433,6 +412,11 @@ function disableGame() {
     });
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const resultsModal = document.getElementById('resultsModal');
+  dragElement(resultsModal);
+});
 
 Materia.Engine.start({
   start: (instance, qset, qsetVersion) => {
@@ -462,5 +446,3 @@ Materia.Engine.start({
     }
   },
 });
-
-// Add event listeners for check buttons
