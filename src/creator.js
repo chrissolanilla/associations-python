@@ -39,6 +39,21 @@ let savedWidgetState = {
   description5: '',
   description6: '',
 };
+//sets to ohave o(1) look up times for duplicates
+let wordSet = new Set();
+let descriptionSet = new Set();
+
+function updateSets() {
+  wordSet.clear();
+  descriptionSet.clear();
+
+  for (let i = 1; i <= 6; i++) {
+    widgetState[`words${i}`].forEach((word) => wordSet.add(word.trim()));
+    descriptionSet.add(savedWidgetState[`description${i}`].trim());
+  }
+  console.log('WORDSET', wordSet);
+  console.log('DESCRIPTIONSET', descriptionSet);
+}
 
 const placeholders = [
   [
@@ -117,6 +132,27 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', updateGameName);
   });
   const gameName2Input = document.getElementById('GameName2');
+  gameName2Input.addEventListener('input', () => {
+    if (gameName2Input.value.trim() === '') {
+      console.log('empty game name');
+      gameName2Input.classList.add('invalid');
+    } //
+    else {
+      gameName2Input.classList.remove('invalid');
+      gameName2Input.classList.add('valid');
+    }
+  });
+  const GameNameInput = document.getElementById('GameName');
+  GameNameInput.addEventListener('input', () => {
+    if (GameNameInput.value.trim() === '') {
+      console.log('empty game name');
+      GameNameInput.classList.add('invalid');
+    } //
+    else {
+      GameNameInput.classList.remove('invalid');
+      GameNameInput.classList.add('valid');
+    }
+  });
   const closeIntroButton = document.getElementById('closeIntro');
   const arrowBoxLeft = document.getElementById('arrow_box_left');
 
@@ -236,7 +272,7 @@ function createDynamicInputs() {
   const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Grey', 'Yellow'];
   const dynamicInputs = document.getElementById('dynamicInputs');
   dynamicInputs.innerHTML = ''; // Clear previous inputs
-  console.log('HELLO HELP');
+  updateSets();
 
   for (let j = 0; j < widgetState.dimensionY; j++) {
     const inputContainer = document.createElement('div');
@@ -263,18 +299,24 @@ function createDynamicInputs() {
     }
     descriptionInput.classList.add('dInput');
     descriptionInput.addEventListener('input', () => {
-      if (descriptionInput.value.trim() !== '') {
+      updateDescriptionState(j + 1, descriptionInput.value);
+      console.log(
+        'The widget state for description is:',
+        widgetState[`description${j + 1}`],
+      );
+
+      if (
+        descriptionInput.value.trim() !== '' &&
+        !descriptionSet.has(descriptionInput.value.trim())
+      ) {
         descriptionInput.classList.add('valid');
         descriptionInput.classList.remove('invalid');
       } //
       else {
         descriptionInput.classList.add('invalid');
       }
-      updateDescriptionState(j + 1, descriptionInput.value);
-      console.log(
-        'The widget state for description is:',
-        widgetState[`description${j + 1}`],
-      );
+      //update the hash map
+      updateSets();
     });
     creatorAnswersDiv.appendChild(descriptionLabel);
     creatorAnswersDiv.appendChild(descriptionInput);
@@ -307,7 +349,10 @@ function createDynamicInputs() {
       wordInput.addEventListener('input', () => {
         if (wordParent) {
           //trim so that if its only spaces it is not valid
-          if (wordInput.value.trim() !== '') {
+          if (
+            wordInput.value.trim() !== '' &&
+            !wordSet.has(wordInput.value.trim())
+          ) {
             wordParent.classList.add('valid');
             wordParent.classList.remove('invalid');
           } //
@@ -316,6 +361,7 @@ function createDynamicInputs() {
           }
         }
         updateWidgetState(j + 1, i + 1, wordInput.value);
+        updateSets();
       });
 
       wordsGrid.appendChild(wordCell);
@@ -333,6 +379,7 @@ function updateWidgetState(group, position, value) {
     `Updated widgetState.words${group}:`,
     widgetState[`words${group}`],
   );
+  updateSets();
 }
 
 function updateDescriptionState(group, value) {
@@ -354,37 +401,13 @@ function trunkcadeWords(widgetState, savedWidgetState) {
 }
 
 function flashInvalidInputs() {
-  // Flashing effect for description inputs
-  const descriptionInputs = document.querySelectorAll('.dInput');
+  // Flashing effect for any element with an invalid class
+  const descriptionInputs = document.querySelectorAll('.invalid');
   descriptionInputs.forEach((input) => {
-    if (input.value.trim() === '') {
-      input.classList.add('flash-red');
-      setTimeout(() => {
-        input.classList.remove('flash-red');
-      }, 1000);
-    }
-  });
-  //flashing effect for title input
-  const titleInput = document.getElementById('GameName');
-  if (titleInput.value.trim() === '') {
-    titleInput.classList.add('flash-red');
+    input.classList.add('flash-red');
     setTimeout(() => {
-      titleInput.classList.remove('flash-red');
+      input.classList.remove('flash-red');
     }, 1000);
-  }
-
-  // Flashing effect for word inputs' parent divs
-  const wordInputs = document.querySelectorAll('.grid-input');
-  wordInputs.forEach((input) => {
-    if (input.value.trim() === '') {
-      const parentDiv = input.closest('.previewItem');
-      if (parentDiv) {
-        parentDiv.classList.add('flash-red');
-        setTimeout(() => {
-          parentDiv.classList.remove('flash-red');
-        }, 1000);
-      }
-    }
   });
 }
 
@@ -455,12 +478,14 @@ Materia.CreatorCore.start({
       console.log(description);
       //check if words and description are empty
       // if (words === '' || description === '') better way to check i think
-      if (document.getElementById('GameName').value === '') {
+      const GameName = document.getElementById('GameName');
+      if (GameName.value.trim() === '') {
         console.log('empty game name');
-        document.getElementById('GameName').classList.add('invalid');
+        GameName.classList.add('invalid');
       } //
       else {
-        document.getElementById('GameName').classList.remove('invalid');
+        GameName.classList.remove('invalid');
+        GameName.classList.add('valid');
       }
       //checks for any invalid red inputs
       const invalidElements = document.querySelectorAll('.invalid');
