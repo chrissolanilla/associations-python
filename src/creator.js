@@ -255,12 +255,21 @@ function createDynamicInputs() {
     console.log(`DescriptionInput.id is ${descriptionInput.id}`);
     descriptionInput.placeholder = `Enter a description for a group of words, e.g., ${placeholders[j][0]}`;
     descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
+    if (descriptionInput.value.trim() !== '') {
+      descriptionInput.classList.add('valid');
+    } //
+    else {
+      descriptionInput.classList.add('invalid');
+    }
     descriptionInput.classList.add('dInput');
     descriptionInput.addEventListener('input', () => {
-      console.log(
-        `updating savedWidgetState.description${j + 1} to be event.target.value:`,
-        descriptionInput.value,
-      );
+      if (descriptionInput.value.trim() !== '') {
+        descriptionInput.classList.add('valid');
+        descriptionInput.classList.remove('invalid');
+      } //
+      else {
+        descriptionInput.classList.add('invalid');
+      }
       updateDescriptionState(j + 1, descriptionInput.value);
       console.log(
         'The widget state for description is:',
@@ -297,10 +306,12 @@ function createDynamicInputs() {
       }
       wordInput.addEventListener('input', () => {
         if (wordParent) {
-          if (wordInput.value) {
+          //trim so that if its only spaces it is not valid
+          if (wordInput.value.trim() !== '') {
             wordParent.classList.add('valid');
             wordParent.classList.remove('invalid');
-          } else {
+          } //
+          else {
             wordParent.classList.add('invalid');
           }
         }
@@ -451,6 +462,7 @@ Materia.CreatorCore.start({
       else {
         document.getElementById('GameName').classList.remove('invalid');
       }
+      //checks for any invalid red inputs
       const invalidElements = document.querySelectorAll('.invalid');
       if (invalidElements.length > 0) {
         console.log('empty words or description');

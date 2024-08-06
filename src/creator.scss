@@ -97,13 +97,14 @@ label {
   border: 2px solid red;
 }
 
-.dInput:valid {
-border: 2px solid green;
-}
+//we can not do this simply cause spaces are not valid
+// .dInput:valid {
+// border: 2px solid green;
+// }
 
-.dInput:invalid {
-border: 2px solid red;
-}
+// .dInput:invalid {
+// border: 2px solid red;
+// }
 
 .valid {
   border: 2px solid green;
