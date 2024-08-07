@@ -98,6 +98,7 @@ function updatePreview() {
   const allWords = [];
   for (let i = 1; i <= widgetState.dimensionY; i++) {
     console.log('iteration ', i);
+    //spllting the words by comma makes it bad in the case they put commas in their words
     const words = document
       .getElementById(`Words${i}`)
       .value.split(',')
@@ -331,6 +332,10 @@ function createDynamicInputs() {
       wordCell.id = `Word${j + 1}-${i + 1}`;
 
       const wordInput = document.createElement('input');
+      const commaWarning = document.createElement('p');
+      commaWarning.textContent = 'Please do not include commas in your words';
+      commaWarning.classList.add('hidden');
+      commaWarning.classList.add('commaWarning');
       wordInput.type = 'text';
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
@@ -339,6 +344,7 @@ function createDynamicInputs() {
       wordInput.placeholder = placeholders[j][i];
       wordInput.value = widgetState[`words${j + 1}`][i] || '';
       wordCell.appendChild(wordInput);
+      wordCell.appendChild(commaWarning);
       const wordParent = wordInput.parentNode;
       if (!wordInput.value) {
         wordParent.classList.add('invalid');
@@ -351,13 +357,21 @@ function createDynamicInputs() {
           //trim so that if its only spaces it is not valid
           if (
             wordInput.value.trim() !== '' &&
+            !wordInput.value.includes(',') &&
             !wordSet.has(wordInput.value.trim())
           ) {
             wordParent.classList.add('valid');
             wordParent.classList.remove('invalid');
+            commaWarning.classList.add('hidden');
           } //
           else {
             wordParent.classList.add('invalid');
+          }
+          if (wordInput.value.includes(',')) {
+            //unhide the text underneathe to say to not include commas in words
+            commaWarning.classList.remove('hidden');
+          } else {
+            commaWarning.classList.add('hidden');
           }
         }
         updateWidgetState(j + 1, i + 1, wordInput.value);

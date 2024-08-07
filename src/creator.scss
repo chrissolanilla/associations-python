@@ -120,13 +120,26 @@ label {
     font-size: 1.5rem;
 	padding: 0.5rem;
 	border-radius: 4px;  /* Adding rounded corners to input fields */
-	margin-bottom: 1rem;
     width: 100%;  /* Full width for input fields */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+.dInput {
+  margin-bottom: 1rem;
+}
+
 .grid-input::placeholder {
   font-size: 0.8rem!important;
+}
+
+grid-input {
+  margin-bottom: 0!important;
+}
+
+.commaWarning {
+  color:red;
+  font-size: 0.8rem;
+  margin: 2px 0 2px 0;
 }
 /*colors for the blocks */
 // .Blue {background-color: rgb(84, 146, 255)}
@@ -149,11 +162,12 @@ label {
 	font-size: 1rem;
 	padding: 1rem;
 	display: flex;
+    flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	background: #efefe6;
 	border-radius: 6px;
-	height: 4rem;
+	min-height: 2rem;
 	text-align: center;
 	text-transform: uppercase;
 	margin: 0 0.5rem 0 0.5rem;
