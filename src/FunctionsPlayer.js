@@ -29,6 +29,7 @@ export function setSelectedWords(words) {
 }
 
 export function getSelectedWords() {
+  console.log(`in the functin library selectedWords are ${selectedWords}`);
   return selectedWords;
 }
 
@@ -172,7 +173,7 @@ export function selectWord(word, wordElement, checkbox) {
     // Select word
     selectedWords.push(word);
   }
-  console.log('Selected Words:', selectedWords);
+  console.log('Selected Words in function selectWord:', selectedWords);
   updateSelectionStyles();
   toggleCheckbox();
 }

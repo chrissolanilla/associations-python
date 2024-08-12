@@ -23,6 +23,7 @@ let widgetState = {
   _title: '',
   _qset: {},
   showanswers: false,
+  lives: 0,
 };
 
 let savedWidgetState = {
@@ -81,8 +82,46 @@ introModal.showModal();
 // const closeIntroButton = document.getElementById('closeIntro');
 const modal = document.querySelector('[data-modal]');
 modal.classList.add('hidden');
+
+//lives input thing
+
+const livesInput = document.getElementById('livesInput');
+const decrementButton = document.getElementById('decrementButton');
+const incrementButton = document.getElementById('incrementButton');
+
+livesInput.addEventListener('input', () => {
+  if (/^[1-9]\d*$/.test(livesInput.value)) {
+    widgetState.lives = livesInput.value;
+    livesInput.classList.remove('invalid');
+    livesInput.classList.add('valid');
+  } //
+  else {
+    livesInput.classList.add('invalid');
+    livesInput.classList.remove('valid');
+  }
+});
+
+decrementButton.addEventListener('click', () => {
+  if (livesInput.value > 0) {
+    livesInput.value--;
+    livesInput.classList.add('valid');
+    livesInput.classList.remove('invalid');
+  }
+  if (livesInput.value <= 0) {
+    livesInput.classList.remove('valid');
+    livesInput.classList.add('invalid');
+  }
+});
+
+incrementButton.addEventListener('click', () => {
+  livesInput.value++;
+  livesInput.classList.remove('invalid');
+  livesInput.classList.add('valid');
+});
+
 //have a some inputs craeted already on page load
 createDynamicInputs();
+
 function updateGameName() {
   const gamename2 = document.getElementById('GameName2').value;
   const gamename1 = document.getElementById('GameName').value;
@@ -458,6 +497,8 @@ Materia.CreatorCore.start({
       widgetState.dimensionY = qset.data.items.length;
       //for some reason the title is widget
       widgetState._title = widget;
+      console.log('lives from the qset', qset.lives);
+      widgetState.lives = qset.lives;
       for (let i = 1; i <= widgetState.dimensionY; i++) {
         widgetState[`words${i}`] =
           qset.data.items[i - 1].answers[0].text.split(',');
@@ -526,6 +567,7 @@ Materia.CreatorCore.start({
         name: widgetState._title,
         version: 1,
         showAnswers: widgetState.showanswers,
+        lives: widgetState.lives,
         data: {
           items,
         },

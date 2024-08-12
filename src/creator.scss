@@ -18,7 +18,7 @@ body {
 header {
   background: #3E363F;
   display: flex;
-  gap:5rem;
+  gap:4rem;
   justify-content: flex-start;
   align-items: center;
   position: relative;
@@ -460,4 +460,46 @@ grid-input {
 
 .flash-red {
   animation: flashRed 1.5s ease-in-out;
+}
+
+.number-input {
+    display: flex;
+    align-items: center;
+}
+
+.number-input input {
+    text-align: center;
+    width: 50px;
+    margin: 0 5px;
+    border-radius: 5px;
+}
+
+.number-input button {
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.number-input button:active {
+    background-color: #bbb;
+}
+
+.increment {
+  background-color: #4CAF50;
+}
+
+.decrement {
+  background-color: #f44336;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

@@ -5,13 +5,16 @@
     "version": 1,
     "data": {
       "showAnswers": true,
+      "lives": 4,
       "items": [
         {
           "materiaType": "question",
           "questions": [{ "text": "Names" }],
           "type": "connections",
           "id": 1,
-          "answers": [{ "text": "Sim Ho,Bed,Chris,Golden", "value": 25 }]
+          "answers": [
+            { "text": ["Sim Ho", "Bed", "Chris", "Golden"], "value": 25 }
+          ]
         },
         {
           "materiaType": "question",
@@ -19,7 +22,10 @@
           "id": 2,
           "questions": [{ "text": "Restaurants" }],
           "answers": [
-            { "text": "BugerFi, TacoBell, Wawa,Lazy Moon", "value": 25 }
+            {
+              "text": ["BurgerFi", "TacoBell", "Wawa", "Lazy Moon"],
+              "value": 25
+            }
           ]
         },
         {
@@ -28,7 +34,10 @@
           "questions": [{ "text": "Magical Creatures" }],
           "type": "connections",
           "answers": [
-            { "text": "Fairies, Mermaids, Unicorns,Dragons", "value": 25 }
+            {
+              "text": ["Fairies", "Mermaids", "Unicorns", "Dragons"],
+              "value": 25
+            }
           ]
         },
         {
@@ -38,7 +47,7 @@
           "type": "connections",
           "answers": [
             {
-              "text": "Mammoths, Black Rhino, Saber Tooth,Dinosaurs",
+              "text": ["Mammoths", "Black Rhino", "Saber Tooth", "Dinosaurs"],
               "value": 25
             }
           ]

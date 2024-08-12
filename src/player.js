@@ -75,11 +75,12 @@ function setupGame(qset) {
   // Get currentQset for logging
   console.log('currentQset is: ', getCurrentQset());
   //get the dimmensions of the qset
-  const dimensionX = qset.items[0].answers[0].text.split(',').length;
+  const dimensionX = qset.items[0].answers[0].text.length;
   const dimensionY = qset.items.length;
   setDimensions(dimensionX, dimensionY);
   dimensionXGlobal = dimensionX;
   dimensionYGlobal = dimensionY;
+  //change it so that the creator can set it to be what they want
   if (dimensionXGlobal >= dimensionYGlobal) {
     maxAttempts = dimensionX;
   } else {
@@ -101,9 +102,8 @@ function setupGame(qset) {
     columnString += '1fr ';
   }
   wordsGrid.style.gridTemplateColumns = columnString;
-  const allWords = qset.items.flatMap((item) =>
-    item.answers[0].text.split(','),
-  ); // Extract individual words from the concatenated answer strings
+  const allWords = qset.items.flatMap((item) => item.answers[0].text); // Extract individual words from the array
+  console.log('All words:', allWords);
   console.log('All words:', allWords);
   const shuffledWords = shuffleArray(allWords);
 
@@ -189,7 +189,9 @@ async function checkSelection(count) {
   let validWordsCount = 0;
   // Track groups that should be removed
   let groupsToRemove = [];
-  const selectedWords = getSelectedWords().map((word) => word.trim());
+  const selectedWords = getSelectedWords();
+  console.log('Checking if this is an array', Array.isArray(selectedWords));
+  console.log(`THE SELECTED WORDS ARE: ${selectedWords}`);
   const currentQset = getCurrentQset();
   //refacotr things to be by dimensionX instead of 4
   for (let i = 0; i < selectedWords.length; i += dimensionXGlobal) {
@@ -201,13 +203,14 @@ async function checkSelection(count) {
         console.log('Skipping this group because it was already guessed');
         return; // Skip already guessed groups
       }
-      const answerWords = item.answers[0].text
-        .split(',')
-        .map((word) => word.trim());
+      const answerWords = item.answers[0].text.map((word) => word.trim());
+      console.log('The answer words are: ', answerWords);
       const group = currentGroup.filter((word) => answerWords.includes(word));
       if (group.length > highestGroupLength) {
         highestGroupLength = group.length;
       }
+      console.log(`The group is: ${group}`);
+      console.log('checking if group is an array', Array.isArray(group));
       //the item has all our data of what the question is and the answer.
       if (group.length === dimensionXGlobal) {
         const guessedGroups = getGuessedGroups();
@@ -232,9 +235,10 @@ async function checkSelection(count) {
             answerWords;
         }, 2000);
         // Submit the group as a single answer with the question ID and group of words
+        // submit the group as an array instead of comma separated string
         Materia.Score.submitQuestionForScoring(
           item.id,
-          group.join(','),
+          JSON.stringify(group),
           pointsPerCorrectGroup,
         );
         //this dosent actually matter anymore to be honest but its nice to remember how to do this weird string thing.
@@ -258,9 +262,7 @@ async function checkSelection(count) {
     if (!groupFound && currentGroup.length === dimensionXGlobal) {
       // Find the correct index for the group
       currentQset.items.forEach((item, index) => {
-        const answerWords = item.answers[0].text
-          .split(',')
-          .map((word) => word.trim());
+        const answerWords = item.answers[0].text.map((word) => word.trim());
         const group = currentGroup.filter((word) => answerWords.includes(word));
         if (group.length > 0) {
           guessedGroupsState[`group${index + 1}`] = currentGroup;
@@ -358,10 +360,20 @@ function disableGame() {
   });
 
   unguessedDescriptions.forEach((item, index) => {
-    const incorrectGroup = guessedGroupsState[`group${index + 1}`].join(',');
+    // const incorrectGroup = guessedGroupsState[`group${index + 1}`].join(',');
+    let incorrectGroup = guessedGroupsState[`group${index + 1}`];
+
+    if (incorrectGroup) {
+      incorrectGroup = Array.isArray(incorrectGroup)
+        ? incorrectGroup
+        : [incorrectGroup];
+    } //
+    else {
+      incorrectGroup = ['Ran out of Lives'];
+    }
     Materia.Score.submitQuestionForScoring(
       item.id,
-      incorrectGroup || 'Ran out of Lives',
+      JSON.stringify(incorrectGroup),
       0,
     );
     console.log(

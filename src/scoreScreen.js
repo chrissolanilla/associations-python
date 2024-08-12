@@ -12,9 +12,14 @@ function createFancyAnswer(userAnswer, words, containerId) {
   );
   console.log('function words is ', words);
   console.log('userAnswer is ', userAnswer);
-  const userWordsArray = userAnswer.split(',').map((word) => word.trim());
-  const correctWordsArray = words.split(',').map((word) => word.trim());
-  // const wordsArray = words.split(',');
+  // we have to do this because for some reason json encoding makes it not an array somewhere along its travels
+  let userWordsArray = Array.isArray(userAnswer)
+    ? userAnswer
+    : JSON.parse(userAnswer);
+
+  console.log('userWordsArray is ', userAnswer);
+  const correctWordsArray = words;
+  console.log('correctWordsArray is ', correctWordsArray);
   userWordsArray.forEach((word, index) => {
     // console.log('WORD IN THE FUNCTION FOR EACH IS ', word);
     // console.log('index in the function is ', index);
@@ -34,7 +39,6 @@ function createFancyAnswer(userAnswer, words, containerId) {
       }
     }
     FancyContainer.appendChild(previewItem);
-    //make it correct or incorrect if it contains the correct answer array
   });
 }
 
@@ -100,7 +104,6 @@ function populateTable(scoreTable, showAnswers) {
   });
 }
 
-// start & register a callback
 Materia.ScoreCore.start({
   start: (instance, qset, scoreTable, isPreview, qsetVersion) => {
     const showAnswersBoolean = qset.showAnswers;
