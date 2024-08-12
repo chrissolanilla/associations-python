@@ -323,7 +323,6 @@ function createDynamicInputs() {
     descriptionInput.name = `Description${j + 1}`;
     descriptionInput.id = `Description${j + 1}`;
     descriptionInput.required = true;
-    console.log(`DescriptionInput.id is ${descriptionInput.id}`);
     descriptionInput.placeholder = `Enter a description for a group of words, e.g., ${placeholders[j][0]}`;
     descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
     if (descriptionInput.value.trim() !== '') {
@@ -474,10 +473,7 @@ Materia.CreatorCore.start({
     console.log(
       `AFTER INIT EXISTING WIDGET method, The title is ${title} and the qset.items is ${qset.data.items} and the qset version is ${qsetVersion}`,
     );
-    console.log(
-      'dimensionX is : ',
-      qset.data.items[0].answers[0].text.split(',').length,
-    );
+    console.log('dimensionX is : ', qset.data.items[0].answers[0].text.length);
     console.log(
       'dimensionY is :',
       (widgetState.dimensionY = qset.data.items.length),
@@ -487,16 +483,14 @@ Materia.CreatorCore.start({
       introModal.close();
       introModal.classList.add('hidden');
 
-      widgetState.dimensionX =
-        qset.data.items[0].answers[0].text.split(',').length;
+      widgetState.dimensionX = qset.data.items[0].answers[0].text.length;
       widgetState.dimensionY = qset.data.items.length;
       //for some reason the title is widget
       widgetState._title = widget;
       console.log('lives from the qset', qset.lives);
       widgetState.lives = qset.lives;
       for (let i = 1; i <= widgetState.dimensionY; i++) {
-        widgetState[`words${i}`] =
-          qset.data.items[i - 1].answers[0].text.split(',');
+        widgetState[`words${i}`] = qset.data.items[i - 1].answers[0].text;
         widgetState[`description${i}`] =
           qset.data.items[i - 1].questions[0].text;
         savedWidgetState[`words${i}`] = widgetState[`words${i}`];
