@@ -39,6 +39,9 @@ const guessedGroupsState = {
   group6: [],
 };
 
+let livesConstant = 0;
+console.log(` initializing lives with ${livesConstant}`);
+
 // Modal code
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
@@ -81,11 +84,14 @@ function setupGame(qset) {
   dimensionXGlobal = dimensionX;
   dimensionYGlobal = dimensionY;
   //change it so that the creator can set it to be what they want
-  if (dimensionXGlobal >= dimensionYGlobal) {
-    maxAttempts = dimensionX;
-  } else {
-    maxAttempts = dimensionYGlobal;
-  }
+  // if (dimensionXGlobal >= dimensionYGlobal) {
+  //   maxAttempts = dimensionX;
+  // } else {
+  //   maxAttempts = dimensionYGlobal;
+  // }
+  maxAttempts = livesConstant;
+  console.log('the lives are ', qset.lives);
+  console.log('Max attempts: ', maxAttempts);
   maxWrongAttemptsElement.textContent = `(${maxAttempts - attempts} left)`;
   instructionDescription.textContent = `Select words in groups of  ${dimensionXGlobal} that belong to a common category.`;
   const instructoinDescriptions2 =
@@ -445,6 +451,8 @@ Materia.Engine.start({
       TitleElement.innerHTML = title;
       const modalH1 = document.getElementById('welcomeModalTitle');
       modalH1.textContent = 'Welcome to the ' + title + ' Game!';
+      livesConstant = qset.lives;
+      console.log(`setting lives to ${livesConstant}`);
       setupGame(qset.data);
     }
     //
@@ -454,6 +462,8 @@ Materia.Engine.start({
       TitleElement.innerHTML = title;
       const modalH1 = document.getElementById('welcomeModalTitle');
       modalH1.textContent = 'Welcome to the ' + title + ' Game!';
+      livesConstant = instance.qset.data.lives;
+      console.log(`setting lives to ${livesConstant}`);
       setupGame(qset);
       console.error('No qset found.');
     }

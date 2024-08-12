@@ -53,12 +53,15 @@
           required
         />
       </div>
-      <div class="ShowAnswersBoolean">
-        <label for="ShowAnswersCheckbox">Reveal Answers on Score Screen</label>
+      <div id="ShowAnswersDiv" class="ShowAnswersBoolean off">
+        <label class="noselect" id="ShowAnswersLabel" for="ShowAnswersCheckbox">
+          Reveal Answers on Score Screen: Off
+        </label>
         <input
           type="checkbox"
           id="ShowAnswersCheckbox"
           name="ShowAnswersCheckbox"
+          style="display: none"
         />
       </div>
 

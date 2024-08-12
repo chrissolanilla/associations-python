@@ -27,7 +27,7 @@ header {
   left: 0px;
   right: 0px;
   height: 40px;
-  padding: 13px 8px;
+  padding: 18px 8px 13px 8px;
   z-index: 100;
   color: #fff;
 }
@@ -169,7 +169,6 @@ grid-input {
 	border-radius: 6px;
 	min-height: 2rem;
 	text-align: center;
-	text-transform: uppercase;
 	margin: 0 0.5rem 0 0.5rem;
 }
 
@@ -244,7 +243,6 @@ grid-input {
   border-radius: 6px;
   height: 2rem;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .wordsGrid .grid-input {
@@ -502,4 +500,41 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.ShowAnswersBoolean {
+  padding: 10px;
+  cursor: pointer;
+  background-color: lightgray;
+  color: black;
+  text-align: center;
+  border-radius: 4px;
+  // margin-top: 5px;
+}
+
+.ShowAnswersBoolean label {
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.ShowAnswersBoolean.on {
+  background-color: #d9a0ff;
+  color: black;
+}
+
+.ShowAnswersBoolean.off {
+  background-color: #5E5C5C;
+  color: white;
+}
+
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }

@@ -104,6 +104,7 @@ livesInput.addEventListener('input', () => {
 decrementButton.addEventListener('click', () => {
   if (livesInput.value > 0) {
     livesInput.value--;
+    widgetState.lives = livesInput.value;
     livesInput.classList.add('valid');
     livesInput.classList.remove('invalid');
   }
@@ -115,6 +116,7 @@ decrementButton.addEventListener('click', () => {
 
 incrementButton.addEventListener('click', () => {
   livesInput.value++;
+  widgetState.lives = livesInput.value;
   livesInput.classList.remove('invalid');
   livesInput.classList.add('valid');
 });
@@ -153,13 +155,25 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', updatePreview);
   });
 
-  //set if the checkbox is checked or not
-  const ShowAnswersCheckbox = document.getElementById('ShowAnswersCheckbox');
-  ShowAnswersCheckbox.addEventListener('input', (event) => {
-    if (ShowAnswersCheckbox.checked) {
+  const showAnswersDiv = document.getElementById('ShowAnswersDiv');
+  const showAnswersLabel = document.getElementById('ShowAnswersLabel');
+  const showAnswersCheckbox = document.getElementById('ShowAnswersCheckbox');
+
+  showAnswersDiv.addEventListener('click', () => {
+    // Toggle the checkbox state
+    showAnswersCheckbox.checked = !showAnswersCheckbox.checked;
+
+    // Toggle the widgetState and update the UI
+    if (showAnswersCheckbox.checked) {
       widgetState.showanswers = true;
+      showAnswersDiv.classList.remove('off');
+      showAnswersDiv.classList.add('on');
+      showAnswersLabel.textContent = 'Reveal Answers on Score Screen: On';
     } else {
       widgetState.showanswers = false;
+      showAnswersDiv.classList.remove('on');
+      showAnswersDiv.classList.add('off');
+      showAnswersLabel.textContent = 'Reveal Answers on Score Screen: Off';
     }
   });
   document.querySelectorAll('.GameNameInput input').forEach((input) => {
@@ -365,10 +379,10 @@ function createDynamicInputs() {
       wordCell.id = `Word${j + 1}-${i + 1}`;
 
       const wordInput = document.createElement('input');
-      const commaWarning = document.createElement('p');
-      commaWarning.textContent = 'Please do not include commas in your words';
-      commaWarning.classList.add('hidden');
-      commaWarning.classList.add('commaWarning');
+      const duplicateWarning = document.createElement('p');
+      duplicateWarning.textContent = 'Please do not use duplicate words';
+      duplicateWarning.classList.add('hidden');
+      duplicateWarning.classList.add('commaWarning');
       wordInput.type = 'text';
       wordInput.classList.add('grid-input');
       wordInput.name = `Word${j + 1}-${i + 1}`;
@@ -377,7 +391,7 @@ function createDynamicInputs() {
       wordInput.placeholder = placeholders[j][i];
       wordInput.value = widgetState[`words${j + 1}`][i] || '';
       wordCell.appendChild(wordInput);
-      wordCell.appendChild(commaWarning);
+      wordCell.appendChild(duplicateWarning);
       const wordParent = wordInput.parentNode;
       if (!wordInput.value) {
         wordParent.classList.add('invalid');
@@ -395,16 +409,16 @@ function createDynamicInputs() {
           ) {
             wordParent.classList.add('valid');
             wordParent.classList.remove('invalid');
-            commaWarning.classList.add('hidden');
+            duplicateWarning.classList.add('hidden');
           } //
           else {
             wordParent.classList.add('invalid');
           }
-          if (wordInput.value.includes(',')) {
-            //unhide the text underneathe to say to not include commas in words
-            commaWarning.classList.remove('hidden');
+          if (wordSet.has(wordInput.value.trim())) {
+            //unhide the text underneathe to say to not include duplicate words
+            duplicateWarning.classList.remove('hidden');
           } else {
-            commaWarning.classList.add('hidden');
+            duplicateWarning.classList.add('hidden');
           }
         }
         updateWidgetState(j + 1, i + 1, wordInput.value);
