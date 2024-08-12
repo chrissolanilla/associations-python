@@ -136,12 +136,7 @@ function updateGameName() {
 function updatePreview() {
   const allWords = [];
   for (let i = 1; i <= widgetState.dimensionY; i++) {
-    console.log('iteration ', i);
-    //spllting the words by comma makes it bad in the case they put commas in their words
-    const words = document
-      .getElementById(`Words${i}`)
-      .value.split(',')
-      .map((word) => word.trim());
+    const words = widgetState[`words${i}`];
     allWords.push(...words);
     console.log('SUCSS');
   }
@@ -396,7 +391,7 @@ function createDynamicInputs() {
           //trim so that if its only spaces it is not valid
           if (
             wordInput.value.trim() !== '' &&
-            !wordInput.value.includes(',') &&
+            // !wordInput.value.includes(',') &&
             !wordSet.has(wordInput.value.trim())
           ) {
             wordParent.classList.add('valid');
@@ -427,7 +422,7 @@ function createDynamicInputs() {
 }
 
 function updateWidgetState(group, position, value) {
-  widgetState[`words${group}`][position - 1] = value;
+  widgetState[`words${group}`][position - 1] = value.trim();
   console.log(
     `Updated widgetState.words${group}:`,
     widgetState[`words${group}`],
@@ -524,7 +519,7 @@ Materia.CreatorCore.start({
     for (let i = 1; i <= widgetState.dimensionY; i++) {
       console.log('getting words' + i);
       // const words = widgetState[`words${i}`].join(',');
-      const words = savedWidgetState[`words${i}`].join(',');
+      const words = savedWidgetState[`words${i}`];
       console.log('WORDS IS', words);
       console.log('getting description' + i);
       const description = document
