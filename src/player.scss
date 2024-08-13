@@ -1,27 +1,27 @@
 /* my player scss */
-body{
-      font-family: 'Lato',  serif;
-      // background: #545f62;
-      // background: #3E363F;
-      background: #323B3E;
-      color:#fff;
+body {
+  font-family: 'Lato', serif;
+  // background: #545f62;
+  // background: #3E363F;
+  background: #323b3e;
+  color: #fff;
 }
 
 h1 {
-	text-align: center;
+  text-align: center;
 }
 
 dialog {
   position: absolute;
-  background: #3E363F;
-  border-width:5px;
+  background: #3e363f;
+  border-width: 5px;
   border-radius: 5px;
 }
 
 #resultsModal {
   position: absolute;
-  background: #3E363F;
-  border-width:5px;
+  background: #3e363f;
+  border-width: 5px;
   border-radius: 5px;
   border: solid black 5px;
 }
@@ -32,109 +32,111 @@ dialog::backdrop {
 }
 
 .modalClass {
-    cursor: move;
-    user-select: none;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	text-align: center;
-    background: #3E363F;
-    color: #fff;
-    padding: 1rem;
+  cursor: move;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background: #3e363f;
+  color: #fff;
+  padding: 1rem;
 }
 
 .modal {
-  position:absolute;
+  position: absolute;
   z-index: 10;
 }
 
 .greyOutButton {
-	pointer-events: none;
-	background-color: rgb(175, 175, 175);
-	color: white;
-	border: none;
-	border-radius: 30px;
-	padding: 10px 20px;
-	font-size: 16px;
-	cursor: pointer;
-	width: fit-content;
-	// margin: 0 auto;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  background-color: rgb(175, 175, 175);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: fit-content;
+  // margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .styled-button {
-	background-color: black;
-	color: white;
-	border: none;
-	border-radius: 30px;
-	padding: 10px 20px;
-	font-size: 16px;
-	cursor: pointer;
-	width: fit-content;
-	margin: 0 auto;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: fit-content;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .styled-button:hover {
-	background-color: #333;
+  background-color: #333;
 }
 
 .styled-button:focus {
-	outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 .wordsPreview {
-	display: grid;
-	// grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: grid;
+  // grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .previewItem {
-	opacity: 1;
-    color:black;
-	font-size: 1rem;
-	padding: 1rem 0 1rem 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: #efefe6;
-	border-radius: 6px;
-	height: 4rem;
-	text-align: center;
-	text-transform: uppercase;
-	margin: 0.5rem;
-	// transition: .2s ease-in-out 0s;
-    transition: transform 0.2s, opacity 0.5s;
+  opacity: 1;
+  color: black;
+  font-size: 1rem;
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efefe6;
+  border-radius: 6px;
+  height: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0.5rem;
+  // transition: .2s ease-in-out 0s;
+  transition:
+    transform 0.2s,
+    opacity 0.5s;
 }
 
 .previewItem input {
-	clip: rect(0 0 0 0);
-	-webkit-clip-path: inset(50%);
-	clip-path: inset(50%);
-	height: 1px;
-	overflow: hidden;
-	position: absolute;
-	white-space: nowrap;
-	width: 1px;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 .previewItem label {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-	border-radius: 6px;
-	padding: 1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 1rem;
 }
 .previewItem:hover {
-	background-color: #9c9c9c;
-	transform: scale(1.07);
+  background-color: #9c9c9c;
+  transform: scale(1.07);
 }
-.previewItem:active{
-	background-color: lightblue;
+.previewItem:active {
+  background-color: lightblue;
 }
 .previewItem.selected {
-	background-color: rgb(219, 154, 154);
+  background-color: rgb(219, 154, 154);
 }
 
 .previewItem.staggered-jump {
@@ -183,77 +185,76 @@ dialog::backdrop {
   }
 }
 
-.previewItem input[type="checkbox"]:checked + label {
-	// background-color: red;
+.previewItem input[type='checkbox']:checked + label {
+  // background-color: red;
 }
-.previewItem.selected-4 input[type="checkbox"]:checked + label {
-	background-color: rgb(223, 123, 234);;
+.previewItem.selected-4 input[type='checkbox']:checked + label {
+  background-color: rgb(223, 123, 234);
 }
-.previewItem.selected-8 input[type="checkbox"]:checked + label {
-	background-color: rgb(84, 146, 255);;
+.previewItem.selected-8 input[type='checkbox']:checked + label {
+  background-color: rgb(84, 146, 255);
 }
-.previewItem.selected-12 input[type="checkbox"]:checked + label {
-	background-color: rgb(105, 227, 82);
+.previewItem.selected-12 input[type='checkbox']:checked + label {
+  background-color: rgb(105, 227, 82);
 }
-.previewItem.selected-16 input[type="checkbox"]:checked + label {
-	background-color: #E28757;
+.previewItem.selected-16 input[type='checkbox']:checked + label {
+  background-color: #e28757;
 }
-.previewItem.selected-tan input[type="checkbox"]:checked + label {
-    background-color: #733934;
+.previewItem.selected-tan input[type='checkbox']:checked + label {
+  background-color: #733934;
 }
-.previewItem.selected-grey input[type="checkbox"]:checked + label {
-    background-color: #786e6d;
+.previewItem.selected-grey input[type='checkbox']:checked + label {
+  background-color: #786e6d;
 }
 .CorrectAnswers {
-	display: grid;
-    justify-content: center;
-    // margin-bottom: 8px;
-    gap: 8px;
-    // background-color: rgb(84, 146, 255);;
-    text-align: center;
-    // padding: 2rem 2rem;
-    // color: white;
-	font-weight: bold;
+  display: grid;
+  justify-content: center;
+  // margin-bottom: 8px;
+  gap: 8px;
+  // background-color: rgb(84, 146, 255);;
+  text-align: center;
+  // padding: 2rem 2rem;
+  // color: white;
+  font-weight: bold;
 }
 .AnswerDivBackground {
-	padding: 2rem 2rem;
-	margin-bottom: 8px;
-	width: 90vw;
-    color:black;
-    font-weight: bold;
-    font-size: larger;
-	// how do i make the colors correspond to the groups like red blue and green?
+  padding: 2rem 2rem;
+  margin-bottom: 8px;
+  width: 90vw;
+  color: black;
+  font-weight: bold;
+  font-size: larger;
+  // how do i make the colors correspond to the groups like red blue and green?
 }
 .AnswerDivBackground.selected-8 {
-	background-color:#6BA0C9;
+  background-color: #6ba0c9;
 }
 .AnswerDivBackground.selected-12 {
-	background-color:#85BE64;
+  background-color: #85be64;
 }
 .AnswerDivBackground.selected-4 {
-	background-color:#94579C;
+  background-color: #94579c;
 }
 .AnswerDivBackground.selected-24 {
-	background-color:rgb(251, 212, 0);
+  background-color: rgb(251, 212, 0);
 }
 .AnswerDivBackground.selected-16 {
-    background-color: #E28757;
+  background-color: #e28757;
 }
 .AnswerDivBackground.selected-20 {
-    background-color: #97a2a6;
+  background-color: #97a2a6;
 }
 
 .selected-24 {
-	background-color:rgb(251, 212, 0);
+  background-color: rgb(251, 212, 0);
 }
 
 .selected-20 {
-    background-color: #97a2a6;
+  background-color: #97a2a6;
 }
 
-
 .AnswerDivBackground.selected-tan {
-    background-color: #733934;
+  background-color: #733934;
 }
 
 @keyframes growFromCenter {
@@ -274,19 +275,29 @@ dialog::backdrop {
   animation: growFromCenter 0.5s ease-out forwards;
 }
 
-
 /*colors for the blocks */
 // .Blue {background-color: rgb(84, 146, 255)}
-.Blue {background-color: #6BA0C9;}
+.Blue {
+  background-color: #6ba0c9;
+}
 // .Green{background-color: rgb(105, 227, 82);}
-.Green {background-color: #85BE64;}
-.Yellow {background-color: rgb(251, 212, 0);}
+.Green {
+  background-color: #85be64;
+}
+.Yellow {
+  background-color: rgb(251, 212, 0);
+}
 // .Pink {background-color: rgb(223, 123, 234);}
-.Pink {background-color: #94579C;}
+.Pink {
+  background-color: #94579c;
+}
 // .Tan {background-color: #914943;}
-.Tan {background-color: #E28757;}
-.Grey {background: #97a2a6;}
-
+.Tan {
+  background-color: #e28757;
+}
+.Grey {
+  background: #97a2a6;
+}
 
 .focus-highlight {
   outline: 4px solid #3b82f6; // Change the color to your preference
@@ -324,7 +335,9 @@ span {
   padding: 10px;
   border-radius: 5px;
   margin-top: 5px;
-  animation: slidein 0.5s, fadeout 0.5s 4.5s;
+  animation:
+    slidein 0.5s,
+    fadeout 0.5s 4.5s;
 }
 
 @keyframes slidein {
@@ -348,14 +361,14 @@ span {
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 #screenReader {
   display: inline;

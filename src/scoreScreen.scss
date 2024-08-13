@@ -1,10 +1,12 @@
 body {
-  background: #3E363F;
+  background: #3e363f;
   color: #fff;
 }
+
 h1 {
   text-align: center;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -15,39 +17,39 @@ h1 {
   background-color: #5cb85c;
   color: white;
 }
+
 .preview-item {
-	opacity: 1;
-    color:black;
-	font-size: 1rem;
-	padding: 1rem 0 1rem 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: #efefe6;
-	border-radius: 6px;
-	height: 4rem;
-	text-align: center;
-	text-transform: uppercase;
-	margin: 0.5rem;
-	transition: .2s ease-in-out 0s;
-    min-width: 6rem;
+  opacity: 1;
+  color: black;
+  font-size: 1rem;
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efefe6;
+  border-radius: 6px;
+  height: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0.5rem;
+  transition: 0.2s ease-in-out 0s;
+  min-width: 6rem;
 }
 
 .preview-item label {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	// cursor: pointer;
-	border-radius: 6px;
-	padding: 1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // cursor: pointer;
+  border-radius: 6px;
+  padding: 1rem;
 }
 // .preview-item:hover {
 // 	background-color: #9c9c9c;
 // 	transform: scale(1.07);
 // }
-
 
 .wrong {
   background-color: #d9534f;
@@ -56,17 +58,18 @@ h1 {
 table {
   border: 1px solid #ccc;
 }
-th, td {
+th,
+td {
   border: 1px solid #555;
 }
 
 thead tr {
-    background-color: #444;
-    color: #fff;
+  background-color: #444;
+  color: #fff;
 }
 
 tbody td {
-    background-color: #595959;
+  background-color: #595959;
 }
 
 .screenReader {
@@ -76,11 +79,11 @@ tbody td {
   top: -999em;
 }
 
-.correct-word{
+.correct-word {
   background-color: #5cb85c;
 }
 
-.incorrect-word{
+.incorrect-word {
   background-color: #d9534f;
 }
 

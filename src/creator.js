@@ -399,29 +399,37 @@ function createDynamicInputs() {
       else {
         wordParent.classList.add('valid');
       }
+
       wordInput.addEventListener('input', () => {
         if (wordParent) {
-          //trim so that if its only spaces it is not valid
-          if (
-            wordInput.value.trim() !== '' &&
-            // !wordInput.value.includes(',') &&
-            !wordSet.has(wordInput.value.trim())
-          ) {
+          const trimmedValue = wordInput.value.trim();
+
+          //check if our word is a duplicate but not on ourselve
+          const isDuplicate = [...wordSet].some(
+            (word) =>
+              word === trimmedValue && word !== widgetState[`words${j + 1}`][i],
+          );
+
+          if (trimmedValue !== '' && !isDuplicate) {
             wordParent.classList.add('valid');
             wordParent.classList.remove('invalid');
             duplicateWarning.classList.add('hidden');
-          } //
-          else {
-            wordParent.classList.add('invalid');
-          }
-          if (wordSet.has(wordInput.value.trim())) {
-            //unhide the text underneathe to say to not include duplicate words
-            duplicateWarning.classList.remove('hidden');
           } else {
+            wordParent.classList.add('invalid');
+            duplicateWarning.classList.remove('hidden');
+          }
+          if (!isDuplicate) {
             duplicateWarning.classList.add('hidden');
           }
         }
-        updateWidgetState(j + 1, i + 1, wordInput.value);
+
+        const finalValue = wordInput.value.trim();
+
+        if (!wordSet.has(finalValue)) {
+          wordSet.add(finalValue);
+          wordInput.value = finalValue;
+          updateWidgetState(j + 1, i + 1, wordInput.value.trim());
+        }
         updateSets();
       });
 
@@ -480,18 +488,6 @@ Materia.CreatorCore.start({
     );
   },
   initExistingWidget: (widget, title, qset, qsetVersion, baseUrl, mediaUrl) => {
-    // updatePreview();
-    console.log(
-      `In INIT EXISTING WIDGET method, The widget is ${widget} and th base url is ${baseUrl} and the media url is ${mediaUrl}`,
-    );
-    console.log(
-      `AFTER INIT EXISTING WIDGET method, The title is ${title} and the qset.items is ${qset.data.items} and the qset version is ${qsetVersion}`,
-    );
-    console.log('dimensionX is : ', qset.data.items[0].answers[0].text.length);
-    console.log(
-      'dimensionY is :',
-      (widgetState.dimensionY = qset.data.items.length),
-    );
     //if widget exists, close the intro modal and update our state and create the dynamic inputs
     if (widget) {
       introModal.close();
@@ -499,10 +495,43 @@ Materia.CreatorCore.start({
 
       widgetState.dimensionX = qset.data.items[0].answers[0].text.length;
       widgetState.dimensionY = qset.data.items.length;
+
       //for some reason the title is widget
+      const GameNameExisting = document.getElementById('GameName');
+      GameNameExisting.value = widget;
+      if (GameNameExisting.value.trim() === '') {
+        GameNameExisting.classList.add('invalid');
+      } //
+      else {
+        GameNameExisting.classList.add('valid');
+      }
       widgetState._title = widget;
-      console.log('lives from the qset', qset.lives);
+
+      //sync the lives input and state
       widgetState.lives = qset.lives;
+      livesInput.value = widgetState.lives;
+      if (livesInput.value > 0) {
+        livesInput.classList.add('valid');
+      } //
+      else {
+        livesInput.classList.remove('valid');
+        livesInput.classList.add('invalid');
+      }
+      //sync the show answers checkbox and state
+      widgetState.showanswers = qset.showAnswers;
+      const ShowAnswersCheckbox2 = document.getElementById(
+        'ShowAnswersCheckbox',
+      );
+      const showAnswersDiv2 = document.getElementById('ShowAnswersDiv');
+      const showAnswersLabel2 = document.getElementById('ShowAnswersLabel');
+
+      ShowAnswersCheckbox2.checked = qset.showAnswers;
+      if (ShowAnswersCheckbox2.checked) {
+        showAnswersDiv2.classList.remove('off');
+        showAnswersDiv2.classList.add('on');
+        showAnswersLabel2.textContent = 'Reveal Answers on Score Screen: On';
+      }
+
       for (let i = 1; i <= widgetState.dimensionY; i++) {
         widgetState[`words${i}`] = qset.data.items[i - 1].answers[0].text;
         widgetState[`description${i}`] =
@@ -510,16 +539,11 @@ Materia.CreatorCore.start({
         savedWidgetState[`words${i}`] = widgetState[`words${i}`];
         savedWidgetState[`description${i}`] = widgetState[`description${i}`];
       }
-      console.log(
-        `After everything the saved widget state is ${savedWidgetState}`,
-      );
+
       createDynamicInputs();
-      if (document.getElementById('GameName').value === '') {
-        console.log('adding the game name to the input');
-        GameName.value = widget;
-      }
     }
   },
+
   onSaveClicked: (mode = 'save') => {
     trunkcadeWords(widgetState, savedWidgetState);
     const items = [];
