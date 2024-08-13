@@ -7,6 +7,36 @@ body {
   color: #fff;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  h1 {
+    flex: 1;
+    text-align: center;
+    margin-left: 3.5rem;
+  }
+
+  button {
+    margin-right: 2rem;
+    background-color: #a270c4;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+    // margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  button:hover {
+    background-color: #333;
+  }
+}
+
 h1 {
   text-align: center;
 }
@@ -62,7 +92,7 @@ dialog::backdrop {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .styled-button {
-  background-color: black;
+  background-color: #a270c4;
   color: white;
   border: none;
   border-radius: 30px;

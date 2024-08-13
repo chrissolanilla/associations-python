@@ -43,11 +43,15 @@ let livesConstant = 0;
 console.log(` initializing lives with ${livesConstant}`);
 
 // Modal code
+const helpButton = document.getElementById('helpButton');
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
 modal.showModal();
 closeButton.addEventListener('click', () => {
   modal.close();
+});
+helpButton.addEventListener('click', () => {
+  modal.showModal();
 });
 //this will decide if our function will display the answers or not which will be updated by the instance
 let showAnswersBoolean = false;
