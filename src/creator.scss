@@ -379,7 +379,7 @@ grid-input {
   background: #fbf767;
   border: 2px solid #fbf767;
   right: 51%; /* Adjust the position as needed */
-  top: 70%;
+  top: 80%;
   color: #151515;
   font-weight: 400;
   padding: 5px;
@@ -566,4 +566,13 @@ input[type='number'] {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+.whatis {
+  margin: 0 1rem;
+}
+
+p.whatis {
+  text-align: left;
+  padding: 0.2rem;
 }
