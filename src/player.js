@@ -46,13 +46,19 @@ console.log(` initializing lives with ${livesConstant}`);
 const helpButton = document.getElementById('helpButton');
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
+const tutorialModal = document.getElementById('tutorialModal');
+const continueButton = document.getElementById('continueButton');
 modal.showModal();
 closeButton.addEventListener('click', () => {
   modal.close();
 });
 helpButton.addEventListener('click', () => {
-  modal.showModal();
+  tutorialModal.showModal();
 });
+continueButton.addEventListener('click', () => {
+  tutorialModal.close();
+});
+
 //this will decide if our function will display the answers or not which will be updated by the instance
 let showAnswersBoolean = false;
 const instructionDescription = document.getElementById('instructionsModal');
@@ -87,12 +93,6 @@ function setupGame(qset) {
   setDimensions(dimensionX, dimensionY);
   dimensionXGlobal = dimensionX;
   dimensionYGlobal = dimensionY;
-  //change it so that the creator can set it to be what they want
-  // if (dimensionXGlobal >= dimensionYGlobal) {
-  //   maxAttempts = dimensionX;
-  // } else {
-  //   maxAttempts = dimensionYGlobal;
-  // }
   maxAttempts = livesConstant;
   console.log('the lives are ', qset.lives);
   console.log('Max attempts: ', maxAttempts);
@@ -101,7 +101,29 @@ function setupGame(qset) {
   const instructoinDescriptions2 =
     document.getElementById('instructionsModal2');
   instructoinDescriptions2.textContent = `Do this ${dimensionYGlobal} times to win!`;
-  console.log('Dimensions are: ', dimensionX, dimensionY);
+
+  const HowToPlay = document.getElementById('HowToPlay');
+  const tutorial1 = document.getElementById('tutorial1');
+  const tutorial2 = document.getElementById('tutorial2');
+  const tutorial3 = document.getElementById('tutorial3');
+  const tutorial4 = document.getElementById('tutorial4');
+  const tutorial5 = document.getElementById('tutorial5');
+
+  HowToPlay.textContent = `How to Play`;
+  tutorial1.style.textAlign = 'center';
+  tutorial1.textContent = `There are ${dimensionXGlobal * dimensionYGlobal} words on the grid, with
+    ${dimensionY} groups, each group containing ${dimensionX} words.`;
+  tutorial2.innerHTML = `Your goal is select words from the grid to see if your selection of words
+     all have a <strong>connection</strong> or a relationship between each other.`;
+  tutorial3.textContent = `If you are able to correct match a selection of words that belong to
+     the same group, you will be able to see what describes their connection. However, if you make
+    an incorrect selection, you will lose a life.`;
+  tutorial4.textContent = `You start the game with ${maxAttempts} lives and if
+     you lose them all the game will end. If this happens your score will be your correct selections
+     divided by the total number of groups. Losing life will not deduct your final score, so if you
+     are able to guess all the groups but lose some life along the way, you will still get a 100%.`;
+  tutorial5.textContent = `For a more detailed explanation, check out the player guide. Good luck!`;
+  tutorial5.style.textAlign = 'center';
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
   console.log('Descriptions:', descriptions);
@@ -410,14 +432,6 @@ function disableGame() {
     `;
   if (showAnswersBoolean) {
     showRemainingCorrectAnswers();
-  } //
-  else {
-    // showRemainingCorrectAnswers();
-    // alert on the player is not necessary
-    // alert(
-    //   `Your instructor has turned off the option to see correct answers for wrong
-    //     questions you answered`,
-    // );
   }
   // Show the modal for the final score
   resultsModal.classList.remove('hidden');

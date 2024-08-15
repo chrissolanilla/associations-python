@@ -62,6 +62,18 @@ dialog::backdrop {
 }
 
 .modalClass {
+  // cursor: move;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background: #3e363f;
+  color: #fff;
+  padding: 1rem;
+}
+
+.modalClass2 {
   cursor: move;
   user-select: none;
   display: flex;
@@ -71,6 +83,22 @@ dialog::backdrop {
   background: #3e363f;
   color: #fff;
   padding: 1rem;
+}
+
+.modalClass3 {
+  user-select: none;
+  max-width: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background: #3e363f;
+  color: #fff;
+  padding: 1rem;
+
+  p {
+    text-align: left;
+  }
 }
 
 .modal {
