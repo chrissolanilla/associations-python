@@ -1,5 +1,6 @@
 {
   "singleQuote": true,
   "htmlWhitespaceSensitivity": "ignore",
-  "templateLiteralMacros": ["html"]
+  "templateLiteralMacros": ["html"],
+  "embeddedLanguageFormatting": "auto"
 }

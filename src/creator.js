@@ -1,11 +1,8 @@
 //needed for scss
-import { createRef } from 'react';
 import { showToast } from './FunctionsPlayer';
 import './creator.scss';
 
 let widgetState = {
-  //right now hard code 4 groups of words and descriptions, maybe have it variable
-
   words1: [],
   words2: [],
   words3: [],
@@ -40,7 +37,7 @@ let savedWidgetState = {
   description5: '',
   description6: '',
 };
-//sets to ohave o(1) look up times for duplicates
+
 let wordSet = new Set();
 let descriptionSet = new Set();
 
@@ -84,7 +81,6 @@ const modal = document.querySelector('[data-modal]');
 modal.classList.add('hidden');
 
 //lives input thing
-
 const livesInput = document.getElementById('livesInput');
 const decrementButton = document.getElementById('decrementButton');
 const incrementButton = document.getElementById('incrementButton');
@@ -210,7 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gameName2Input.value.trim() !== '') {
       closeIntroButton.disabled = false;
       arrowBoxLeft.style.display = 'none'; // hide the arrow
-    } else {
+    } //
+    else {
       closeIntroButton.disabled = true;
       arrowBoxLeft.style.display = 'block'; // show the arrow
     }
@@ -293,14 +290,12 @@ DimensionContainer.addEventListener('click', (event) => {
       modal.close();
       modal.classList.add('hidden');
       createDynamicInputs();
-      // createPreviewGrid();
     }
   }
 });
 
 chooseButton.addEventListener('click', (event) => {
   modal.showModal();
-  // DimensionContainer.classList.remove('hidden');
   modal.classList.remove('hidden');
 });
 function highlightGrid(rows, cols) {
@@ -550,7 +545,6 @@ Materia.CreatorCore.start({
     //this will succesffully trunkcade groups but not extra words.
     for (let i = 1; i <= widgetState.dimensionY; i++) {
       console.log('getting words' + i);
-      // const words = widgetState[`words${i}`].join(',');
       const words = savedWidgetState[`words${i}`];
       console.log('WORDS IS', words);
       console.log('getting description' + i);
@@ -559,7 +553,6 @@ Materia.CreatorCore.start({
         .value.trim();
       console.log(description);
       //check if words and description are empty
-      // if (words === '' || description === '') better way to check i think
       const GameName = document.getElementById('GameName');
       if (GameName.value.trim() === '') {
         console.log('empty game name');
@@ -575,7 +568,6 @@ Materia.CreatorCore.start({
         console.log('empty words or description');
         //show a toast module that says to complete all fields
         showToast('Please complete all fields', 'error');
-        //TODO? fill the input fields with red
         flashInvalidInputs();
         return;
       }

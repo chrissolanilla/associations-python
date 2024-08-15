@@ -20,6 +20,9 @@ import {
   setCorrectGuesses,
   dragElement,
 } from './FunctionsPlayer';
+
+import { createTutorialModal } from './tutorialModal';
+
 /**
  * @typedef {Object} GuessedGroupsState
  * @property {string[]} group1 - Group 1 guessed words.
@@ -43,20 +46,11 @@ let livesConstant = 0;
 console.log(` initializing lives with ${livesConstant}`);
 
 // Modal code
-const helpButton = document.getElementById('helpButton');
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
-const tutorialModal = document.getElementById('tutorialModal');
-const continueButton = document.getElementById('continueButton');
 modal.showModal();
 closeButton.addEventListener('click', () => {
   modal.close();
-});
-helpButton.addEventListener('click', () => {
-  tutorialModal.showModal();
-});
-continueButton.addEventListener('click', () => {
-  tutorialModal.close();
 });
 
 //this will decide if our function will display the answers or not which will be updated by the instance
@@ -102,28 +96,14 @@ function setupGame(qset) {
     document.getElementById('instructionsModal2');
   instructoinDescriptions2.textContent = `Do this ${dimensionYGlobal} times to win!`;
 
-  const HowToPlay = document.getElementById('HowToPlay');
-  const tutorial1 = document.getElementById('tutorial1');
-  const tutorial2 = document.getElementById('tutorial2');
-  const tutorial3 = document.getElementById('tutorial3');
-  const tutorial4 = document.getElementById('tutorial4');
-  const tutorial5 = document.getElementById('tutorial5');
+  const { openModal, closeModal } = createTutorialModal(
+    dimensionX,
+    dimensionY,
+    maxAttempts,
+  );
 
-  HowToPlay.textContent = `How to Play`;
-  tutorial1.style.textAlign = 'center';
-  tutorial1.textContent = `There are ${dimensionXGlobal * dimensionYGlobal} words on the grid, with
-    ${dimensionY} groups, each group containing ${dimensionX} words.`;
-  tutorial2.innerHTML = `Your goal is select words from the grid to see if your selection of words
-     all have a <strong>connection</strong> or a relationship between each other.`;
-  tutorial3.textContent = `If you are able to correct match a selection of words that belong to
-     the same group, you will be able to see what describes their connection. However, if you make
-    an incorrect selection, you will lose a life.`;
-  tutorial4.textContent = `You start the game with ${maxAttempts} lives and if
-     you lose them all the game will end. If this happens your score will be your correct selections
-     divided by the total number of groups. Losing life will not deduct your final score, so if you
-     are able to guess all the groups but lose some life along the way, you will still get a 100%.`;
-  tutorial5.textContent = `For a more detailed explanation, check out the player guide. Good luck!`;
-  tutorial5.style.textAlign = 'center';
+  const helpButton = document.getElementById('helpButton');
+  helpButton.addEventListener('click', openModal);
 
   const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
   console.log('Descriptions:', descriptions);
@@ -266,7 +246,6 @@ async function checkSelection(count) {
             ' was the description for the group of words: ' +
             answerWords;
         }, 2000);
-        // Submit the group as a single answer with the question ID and group of words
         // submit the group as an array instead of comma separated string
         Materia.Score.submitQuestionForScoring(
           item.id,
@@ -392,7 +371,6 @@ function disableGame() {
   });
 
   unguessedDescriptions.forEach((item, index) => {
-    // const incorrectGroup = guessedGroupsState[`group${index + 1}`].join(',');
     let incorrectGroup = guessedGroupsState[`group${index + 1}`];
 
     if (incorrectGroup) {
