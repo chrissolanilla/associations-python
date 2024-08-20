@@ -23,12 +23,13 @@
 
 <div>
     <ol>
-        <li> Make the creator ui more intuitive</li>
-        <li> Make the player ui more intuitive?</li>
-        <li> Give the creator a dropdown option to choose a grid size of 2x2, 3x3,4x4, and 5x5</li>
-        <li> Refactor code and logic so that it works with different grid sizes</li>
-        <li> Clean up code in score_module.php so it works with variable grid sizes and remove unused code</li>
-        <li> Make the game name equal the name of the creator input.</li>
+        <li> ✅Make the creator ui more intuitive</li>
+        <li> ✅Make the player ui more intuitive?</li>
+        <li> ✅Give the creator a dropdown option to choose a grid size of 2x2, 3x3,4x4, and 5x5</li>
+        <li> ✅Refactor code and logic so that it works with different grid sizes</li>
+        <li> ✅Clean up code in score_module.php so it works with variable grid sizes and remove unused code</li>
+        <li> ✅Make the game name equal the name of the creator input.</li>
+        <li>feel free to suggest improvements editing this file or by submitting an issue</li>
     </ol>
 </div>
 
