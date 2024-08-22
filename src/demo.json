@@ -9,11 +9,11 @@
       "items": [
         {
           "materiaType": "question",
-          "questions": [{ "text": "Names" }],
+          "questions": [{ "text": "Outer Space" }],
           "type": "connections",
           "id": 1,
           "answers": [
-            { "text": ["Sim Ho", "Bed", "Chris", "Golden"], "value": 25 }
+            { "text": ["Nebula", "Galaxy", "Comet", "Astroid"], "value": 25 }
           ]
         },
         {
@@ -23,7 +23,7 @@
           "questions": [{ "text": "Restaurants" }],
           "answers": [
             {
-              "text": ["BurgerFi", "TacoBell", "Wawa", "Lazy Moon"],
+              "text": ["BurgerFi", "Red Lobster", "Checkers", "Lazy Moon"],
               "value": 25
             }
           ]
