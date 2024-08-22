@@ -20,7 +20,7 @@ let widgetState = {
   _title: '',
   _qset: {},
   showanswers: false,
-  lives: 0,
+  lives: 1,
 };
 
 let savedWidgetState = {
@@ -94,14 +94,6 @@ gameNameForm.addEventListener('submit', (event) => {
   introModal.close();
   modal.showModal();
 });
-
-// const helpButton = document.getElementById('helpButton');
-// helpButton.addEventListener('click', () => {
-//   console.log('HELP BUTTON CLICKED');
-// });
-function helpButton() {
-  console.log('HELP BUTTON CLICKED');
-}
 
 //lives input thing
 const livesInput = document.getElementById('livesInput');

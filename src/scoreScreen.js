@@ -12,32 +12,42 @@ function createFancyAnswer(userAnswer, words, containerId) {
   );
   console.log('function words is ', words);
   console.log('userAnswer is ', userAnswer);
-  // we have to do this because for some reason json encoding makes it not an array somewhere along its travels
+  // Handle case where userAnswer is an empty string (ran out of lives)
   let userWordsArray = Array.isArray(userAnswer)
     ? userAnswer
     : JSON.parse(userAnswer);
-
-  console.log('userWordsArray is ', userAnswer);
+  console.log('userWordsArray is ', userWordsArray);
   const correctWordsArray = words;
   console.log('correctWordsArray is ', correctWordsArray);
+  // Check if the userWordsArray is empty or contains empty strings
+  if (
+    userWordsArray.length === 0 ||
+    userWordsArray.every((word) => word === '')
+  ) {
+    const previewItem = document.createElement('div');
+    previewItem.innerHTML = `<h1> You ran out of lives</h1>`;
+    FancyContainer.appendChild(previewItem);
+    return;
+  }
+
   userWordsArray.forEach((word, index) => {
-    // console.log('WORD IN THE FUNCTION FOR EACH IS ', word);
-    // console.log('index in the function is ', index);
     const previewItem = document.createElement('div');
     console.log('THE WORD IS: ', word);
-    if (word === 'Ran out of Lives') {
-      previewItem.innerHTML = `<h1> You ran out of lives</h1>`;
+    //this shouldnt happen anymore since our stuff is array not strings separetd by commas but..
+    if (word === '') {
+      previewItem.innerHTML = `<label> (No answer given)</label>`;
+      previewItem.classList.add('no-answer');
     } //
     else {
       previewItem.innerHTML = `<label> ${word}</label>`;
       previewItem.classList.add('preview-item');
       if (correctWordsArray.includes(word)) {
-        previewItem.classList.add('correct-word'); // Add class for correct word
-      } //
-      else {
-        previewItem.classList.add('incorrect-word'); // Add class for incorrect word
+        previewItem.classList.add('correct-word');
+      } else {
+        previewItem.classList.add('incorrect-word');
       }
     }
+
     FancyContainer.appendChild(previewItem);
   });
 }
