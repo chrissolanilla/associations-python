@@ -15,6 +15,11 @@ body {
   // background: linear-gradient(to bottom, #E0E0E0, #615860);
 }
 
+button:active {
+  background-color: #bbb;
+  transfrom: scale(0.92);
+}
+
 header {
   background: #3e363f;
   display: flex;
@@ -209,6 +214,14 @@ grid-input {
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   border: none;
+
+}
+.ChooseButton:active {
+  transform: scale(0.92);
+}
+.ChooseButton:disabled {
+  // cursor: not-allowed;
+  pointer-events: none;
 }
 
 .Form-dimension-container {
@@ -594,4 +607,12 @@ p.whatis {
   width: -moz-fit-content;
   width: fit-content;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.helpButton:hover {
+  background-color: #8a3ab9;
+}
+
+.helpButton:active {
+  transform: scale(0.92);
 }
