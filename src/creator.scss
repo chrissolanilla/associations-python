@@ -18,7 +18,7 @@ body {
 header {
   background: #3e363f;
   display: flex;
-  gap: 4rem;
+  gap: 3rem;
   justify-content: flex-start;
   align-items: center;
   position: relative;
@@ -575,4 +575,23 @@ input[type='number'] {
 p.whatis {
   text-align: left;
   padding: 0.2rem;
+}
+
+#gameNameForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.helpButton {
+  // margin-right: 2rem;
+  // background-color: #a270c4;
+  // color: white;
+  // border: none;
+  // border-radius: 30px;
+  // padding: 10px 20px;
+  // font-size: 16px;
+  // cursor: pointer;
+  // width: -moz-fit-content;
+  // width: fit-content;
+  // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

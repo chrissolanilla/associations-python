@@ -34,26 +34,26 @@
         To get started, please enter a game name and grid size.
       </p>
       <p id="introP2">You can change both of these at any time later on.</p>
-      <label for="GameName2">Game Name</label>
-      <input
-        placeholder="E.g. My Trivia Game"
-        type="text"
-        name="GameName2"
-        id="GameName2"
-        class="GameName"
-        required
-      />
-      <button id="closeIntro" class="ChooseButton">Move on to grid size</button>
+      <form id="gameNameForm">
+        <label for="GameName2">Game Name</label>
+        <input
+          placeholder="E.g. My Trivia Game"
+          type="text"
+          name="GameName2"
+          id="GameName2"
+          class="GameName"
+          required
+        />
+        <button id="closeIntro" class="ChooseButton">
+          Move on to grid size
+        </button>
+      </form>
       <div id="arrow_box_left" class="arrow_box_left">
         <span>Please Enter a Title</span>
       </div>
     </dialog>
     <header>
       <div class="logo"></div>
-      <!-- <h1 class="headings">Create a Puzzle</h1> -->
-      <!-- <h2 id="EnterGameName" class="headings"> -->
-      <!--   Please Enter a Game Name and Grid Size -->
-      <!-- </h2> -->
       <div class="ContainerDimensionGroup">
         <label for="GameName" class="headings">Game Name</label>
         <input
@@ -84,6 +84,10 @@
           <input name="lives" type="number" id="livesInput" value="1" min="0" />
           <button class="increment" id="incrementButton">+</button>
         </div>
+      </div>
+
+      <div class="ContainerDimensionGroup">
+        <button id="helpButton" class="helpButton">?</button>
       </div>
 
       <div class="ContainerDimensionInput">

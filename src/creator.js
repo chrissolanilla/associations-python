@@ -80,6 +80,29 @@ introModal.showModal();
 const modal = document.querySelector('[data-modal]');
 modal.classList.add('hidden');
 
+//code to handle form submission for gamename so you can do it by pressing enter
+const gameNameForm = document.getElementById('gameNameForm');
+gameNameForm.addEventListener('submit', (event) => {
+  event.preventDefault(); //stops from refreshing the page
+  const gameName = document.getElementById('GameName2').value;
+  //currently this dosen't work since you can not submit empty forms
+  // if (gameName.trim() === '') {
+  //   showToast('Please enter a game name', 'error');
+  //   return;
+  // }
+  widgetState._title = gameName;
+  introModal.close();
+  modal.showModal();
+});
+
+// const helpButton = document.getElementById('helpButton');
+// helpButton.addEventListener('click', () => {
+//   console.log('HELP BUTTON CLICKED');
+// });
+function helpButton() {
+  console.log('HELP BUTTON CLICKED');
+}
+
 //lives input thing
 const livesInput = document.getElementById('livesInput');
 const decrementButton = document.getElementById('decrementButton');
@@ -149,6 +172,13 @@ function updatePreview() {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.CreatorAnswers input').forEach((input) => {
     input.addEventListener('input', updatePreview);
+  });
+
+  const helpButton = document.getElementById('helpButton');
+  helpButton.addEventListener('click', () => {
+    console.log('HELP BUTTON CLICKED');
+    introModal.showModal();
+    introModal.classList.remove('hidden');
   });
 
   const showAnswersDiv = document.getElementById('ShowAnswersDiv');
@@ -488,6 +518,13 @@ Materia.CreatorCore.start({
       introModal.close();
       introModal.classList.add('hidden');
 
+      console.log(`qset is ${qset}`);
+      if (!qset.data) {
+        console.log('No data in qset');
+        introModal.showModal();
+        introModal.classList.remove('hidden');
+        return;
+      }
       widgetState.dimensionX = qset.data.items[0].answers[0].text.length;
       widgetState.dimensionY = qset.data.items.length;
 
