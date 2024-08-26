@@ -302,27 +302,27 @@ grid-input {
   border-radius: 5px;
   margin-top: 5px;
   animation:
-    slidein 0.5s,
-    fadeout 0.5s 4.5s;
+	slidein 0.5s,
+	fadeout 0.5s 4.5s;
 }
 
 @keyframes slidein {
   from {
-    opacity: 0;
-    transform: translateX(100%);
+	opacity: 0;
+	transform: translateX(100%);
   }
   to {
-    opacity: 1;
-    transform: translateX(0);
+	opacity: 1;
+	transform: translateX(0);
   }
 }
 
 @keyframes fadeout {
   from {
-    opacity: 1;
+	opacity: 1;
   }
   to {
-    opacity: 0;
+	opacity: 0;
   }
 }
 
@@ -379,10 +379,10 @@ grid-input {
 @keyframes pounce {
   0%,
   100% {
-    transform: translateX(0);
+	transform: translateX(0);
   }
   50% {
-    transform: translateX(-10px);
+	transform: translateX(-10px);
   }
 }
 
@@ -440,60 +440,60 @@ grid-input {
 @keyframes pounce_left {
   0%,
   100% {
-    transform: translateX(0);
+	transform: translateX(0);
   }
   50% {
-    transform: translateX(10px);
+	transform: translateX(10px);
   } /* Reverse the direction of the pounce */
 }
 
 /* Media queries for responsiveness */
 @media (max-width: 1650px) {
   .headings {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
   }
   #EnterGameName {
-    font-size: 1.2rem;
+	font-size: 1.2rem;
   }
   header label {
-    font-size: 1.2rem;
+	font-size: 1.2rem;
   }
   #chooseButton {
-    font-size: 0.8rem;
+	font-size: 0.8rem;
   }
 }
 
 @media (max-width: 1440px) {
   .headings {
-    font-size: 1.2rem;
+	font-size: 1.2rem;
   }
   #EnterGameName {
-    font-size: 0.8rem;
+	font-size: 0.8rem;
   }
   header label {
-    font-size: 0.8rem;
+	font-size: 0.8rem;
   }
   .GameName {
-    max-width: 50%;
+	max-width: 50%;
   }
 }
 
 @keyframes flashRed {
   0%,
   25% {
-    background-color: red;
+	background-color: red;
   }
   25%,
   50% {
-    background-color: white;
+	background-color: white;
   }
   50%,
   75% {
-    background-color: red;
+	background-color: red;
   }
   75%,
   100% {
-    background-color: white;
+	background-color: white;
   }
 }
 
@@ -578,7 +578,7 @@ input[type='number'] {
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+								  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .whatis {

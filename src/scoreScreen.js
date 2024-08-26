@@ -81,13 +81,13 @@ function populateTable(scoreTable, showAnswers) {
     FancyCell.colSpan = 4;
     FancyCell.setAttribute('role', 'cell');
     FancyCell.innerHTML = `
-       <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-          <h1 style="margin-bottom: 0;">${entry.data[0]}</h1>
-          ${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
-            <label>Your choice:</label>
-          <div data-container-id="${containerId}" style="display:flex;"></div>
-        </div>
-      `;
+	   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+		  <h1 style="margin-bottom: 0;">${entry.data[0]}</h1>
+		  ${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
+			<label>Your choice:</label>
+		  <div data-container-id="${containerId}" style="display:flex;"></div>
+		</div>
+	  `;
     row1.appendChild(FancyCell);
     tbodyElement.appendChild(row1);
     createFancyAnswer(entry.data[1], entry.data[2], containerId);

@@ -18,32 +18,32 @@ header {
   position: relative;
 
   h1 {
-    flex: 1;
-    text-align: center;
-    margin-left: 3.5rem;
+	flex: 1;
+	text-align: center;
+	margin-left: 3.5rem;
   }
 
   button {
-    margin-right: 2rem;
-    background-color: #a270c4;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    width: fit-content;
-    // margin: 0 auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	margin-right: 2rem;
+	background-color: #a270c4;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	width: fit-content;
+	// margin: 0 auto;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   button:hover {
-    // background-color: #333;
-    background-color: #8a3ab9;
+	// background-color: #333;
+	background-color: #8a3ab9;
   }
 
   button:active {
-    transform: scale(0.92);
+	transform: scale(0.92);
   }
 
 }
@@ -108,7 +108,7 @@ dialog::backdrop {
   padding: 1rem;
 
   p {
-    text-align: left;
+	text-align: left;
   }
 }
 
@@ -175,8 +175,8 @@ dialog::backdrop {
   margin: 0.5rem;
   // transition: .2s ease-in-out 0s;
   transition:
-    transform 0.2s,
-    opacity 0.5s;
+	transform 0.2s,
+	opacity 0.5s;
 }
 
 .previewItem input {
@@ -224,35 +224,35 @@ dialog::backdrop {
 
 @keyframes jump {
   0% {
-    transform: translateY(0);
+	transform: translateY(0);
   }
   100% {
-    transform: translateY(-20px);
+	transform: translateY(-20px);
   }
 }
 
 @keyframes moveToTop {
   0% {
-    transform: translateY(0);
+	transform: translateY(0);
   }
   100% {
-    transform: translateY(-100%);
-    opacity: 0;
+	transform: translateY(-100%);
+	opacity: 0;
   }
 }
 
 @keyframes sideToSide {
   0% {
-    transform: translateX(-100%);
-    // opacity: 0;
+	transform: translateX(-100%);
+	// opacity: 0;
   }
   50% {
-    transform: translateX(100);
-    // opacity: 1;
+	transform: translateX(100);
+	// opacity: 1;
   }
   100% {
-    transform: translateX(0);
-    // opacity: 1;
+	transform: translateX(0);
+	// opacity: 1;
   }
 }
 
@@ -330,15 +330,15 @@ dialog::backdrop {
 
 @keyframes growFromCenter {
   0% {
-    transform: scale(0);
-    opacity: 0;
+	transform: scale(0);
+	opacity: 0;
   }
   50% {
-    transform: scale(1.1);
-    opacity: 1;
+	transform: scale(1.1);
+	opacity: 1;
   }
   100% {
-    transform: scale(1);
+	transform: scale(1);
   }
 }
 
@@ -407,27 +407,27 @@ span {
   border-radius: 5px;
   margin-top: 5px;
   animation:
-    slidein 0.5s,
-    fadeout 0.5s 4.5s;
+	slidein 0.5s,
+	fadeout 0.5s 4.5s;
 }
 
 @keyframes slidein {
   from {
-    opacity: 0;
-    transform: translateX(100%);
+	opacity: 0;
+	transform: translateX(100%);
   }
   to {
-    opacity: 1;
-    transform: translateX(0);
+	opacity: 1;
+	transform: translateX(0);
   }
 }
 
 @keyframes fadeout {
   from {
-    opacity: 1;
+	opacity: 1;
   }
   to {
-    opacity: 0;
+	opacity: 0;
   }
 }
 

@@ -404,10 +404,10 @@ function disableGame() {
   const finalResults = document.getElementById('finalResults');
   percentScore = percentScore.toFixed(2);
   finalResults.innerHTML = `
-        <p>Correct Selections: ${scoreCount}</p>
-        <p>Wrong Attempts: ${attempts}</p>
-        <p>Grade : ${percentScore} </p>
-    `;
+		<p>Correct Selections: ${scoreCount}</p>
+		<p>Wrong Attempts: ${attempts}</p>
+		<p>Grade : ${percentScore} </p>
+	`;
   if (showAnswersBoolean) {
     showRemainingCorrectAnswers();
   }
