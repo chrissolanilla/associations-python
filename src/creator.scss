@@ -91,6 +91,13 @@ label {
   text-align: center;
 }
 
+.GameName1 {
+  border-radius: 6px;
+  font-size: 1rem;
+  padding: 0.4rem 0;
+  text-align: center;
+}
+
 .valid {
   border: 2px solid green;
 }
@@ -447,36 +454,6 @@ grid-input {
   } /* Reverse the direction of the pounce */
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 1650px) {
-  .headings {
-	font-size: 1.5rem;
-  }
-  #EnterGameName {
-	font-size: 1.2rem;
-  }
-  header label {
-	font-size: 1.2rem;
-  }
-  #chooseButton {
-	font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 1440px) {
-  .headings {
-	font-size: 1.2rem;
-  }
-  #EnterGameName {
-	font-size: 0.8rem;
-  }
-  header label {
-	font-size: 0.8rem;
-  }
-  .GameName {
-	max-width: 50%;
-  }
-}
 
 @keyframes flashRed {
   0%,
@@ -552,7 +529,7 @@ input[type='number'] {
   color: black;
   text-align: center;
   border-radius: 4px;
-  // margin-top: 5px;
+  min-width:80px;
 }
 
 .ShowAnswersBoolean label {
@@ -596,7 +573,7 @@ p.whatis {
 }
 
 .helpButton {
-  margin-right: 2rem;
+  // margin-right: 2rem;
   background-color: #a270c4;
   color: white;
   border: none;
@@ -615,4 +592,67 @@ p.whatis {
 
 .helpButton:active {
   transform: scale(0.92);
+}
+/* Media queries for responsiveness */
+@media (max-width: 1540px) {
+  .headings {
+	font-size: 1.5rem;
+  }
+  #EnterGameName {
+	font-size: 1.2rem;
+  }
+  header label {
+	font-size: 1.2rem;
+  }
+  #chooseButton {
+	font-size: 0.8rem;
+  }
+
+  #ShowAnswersLabel {
+    font-size: 0.9rem;
+    text-align:left;
+  }
+}
+
+@media screen and (max-width: 1420px) {
+  header {
+    gap: 1rem;
+  }
+  .headings {
+	font-size: 1.2rem;
+  }
+  #EnterGameName {
+	font-size: 0.8rem;
+  }
+  header label {
+	font-size: 0.8rem;
+  }
+  .GameName {
+	max-width: 50%;
+  }
+  #chooseButton {
+	font-size: 0.6rem;
+  }
+  .ShowAnswersBoolean label {
+	font-size: 0.4rem;
+  }
+
+  .ContainerDimensionInput {
+
+    // margin: 0 0.5rem 0 0.5rem;
+    // gap: 0;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .ShowAnswersBoolean label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .ShowAnswersBoolean label {
+    font-size: 0.4rem;
+  }
 }
