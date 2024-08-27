@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+//event listener to escape when grid dialog is opened
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     modal.close();
@@ -208,7 +209,6 @@ DimensionContainer.addEventListener('mouseover', (event) => {
     console.log('attempting to highlight create preview grid');
     widgetState.dimensionX = event.target.dataset.col;
     widgetState.dimensionY = event.target.dataset.row;
-    // createPreviewGrid();
   }
 });
 
@@ -226,6 +226,90 @@ DimensionContainer.addEventListener('click', (event) => {
       createDynamicInputs();
     }
   }
+});
+
+//code to select dimensions with arrow keys
+let finalCol = 4;
+let finalRow = 4;
+document.addEventListener('keydown', (event) => {
+  if (modal.hasAttribute('open')) {
+    if (event.key === 'ArrowLeft') {
+      console.log('left');
+      if (widgetState.dimensionY > 1) {
+        const row = widgetState.dimensionY - 1;
+        finalCol = row;
+        widgetState.dimensionY = row;
+        widgetState.dimensionY = Math.max(1, row);
+        console.log(
+          `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
+        );
+
+        //highlight the grid
+        console.log(`hightlighitng grid with ${widgetState.dimensionX} ${row}`);
+        highlightGrid(widgetState.dimensionX, row);
+      }
+    } //
+    else if (event.key === 'ArrowRight') {
+      console.log('right');
+      console.log(
+        `widgetState x and y is ${widgetState.dimensionX} ${widgetState.dimensionY}`,
+      );
+      if (widgetState.dimensionY < 6) {
+        const row = widgetState.dimensionY + 1;
+        finalCol = row;
+        console.log(`The finalCol is ${finalCol}`);
+        widgetState.dimensionY = row;
+        widgetState.dimensionY = Math.min(6, row);
+        console.log(
+          `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
+        );
+
+        highlightGrid(widgetState.dimensionX, row);
+      }
+    } //
+    else if (event.key == 'ArrowUp') {
+      if (widgetState.dimensionX > 1) {
+        const col = widgetState.dimensionX - 1;
+        finalRow = col;
+        widgetState.dimensionX = col;
+        widgetState.dimensionX = Math.max(1, col);
+        highlightGrid(col, widgetState.dimensionY);
+      }
+    } //
+    else if (event.key === 'ArrowDown') {
+      if (widgetState.dimensionX < 6) {
+        const col = widgetState.dimensionX + 1;
+        finalRow = col;
+        console.log(`The finalRow is ${finalRow}`);
+        widgetState.dimensionX = col;
+        widgetState.dimensionX = Math.min(6, col);
+        highlightGrid(col, widgetState.dimensionY);
+      }
+    } //
+    else if (event.key === 'Enter') {
+      if (widgetState.dimensionX <= 1 || widgetState.dimensionY <= 1) {
+        showToast('The grid must be at least 2x2', 'error');
+      } //
+      else {
+        event.preventDefault();
+        console.log('enter pressed');
+        modal.close();
+        modal.classList.add('hidden');
+        //do a quick swap for my bad code
+        widgetState.dimensionX =
+          widgetState.dimensionX + widgetState.dimensionY;
+        widgetState.dimensionY =
+          widgetState.dimensionX - widgetState.dimensionY;
+        widgetState.dimensionX =
+          widgetState.dimensionX - widgetState.dimensionY;
+        if (widgetState.dimensionX <= 6 && widgetState.dimensionY <= 6) {
+          createDynamicInputs();
+        }
+      }
+    }
+  }
+  DimensionStatusElement.textContent = `${finalCol} x ${finalRow}`;
+  DimensionStatusElement2.textContent = `${finalCol} x ${finalRow}`;
 });
 
 chooseButton.addEventListener('click', (event) => {
