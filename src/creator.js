@@ -8,6 +8,8 @@ import {
   createDynamicInputs,
   trunkcadeWords,
   flashInvalidInputs,
+  highlightGrid,
+  addKeydownEventListener,
   // variables imported
   widgetState,
   savedWidgetState,
@@ -228,108 +230,23 @@ DimensionContainer.addEventListener('click', (event) => {
   }
 });
 
-//code to select dimensions with arrow keys
+// //code to select dimensions with arrow keys
 let finalCol = 4;
 let finalRow = 4;
-document.addEventListener('keydown', (event) => {
-  if (modal.hasAttribute('open')) {
-    if (event.key === 'ArrowLeft') {
-      console.log('left');
-      if (widgetState.dimensionY > 1) {
-        const row = widgetState.dimensionY - 1;
-        finalCol = row;
-        widgetState.dimensionY = row;
-        widgetState.dimensionY = Math.max(1, row);
-        console.log(
-          `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
-        );
-
-        //highlight the grid
-        console.log(`hightlighitng grid with ${widgetState.dimensionX} ${row}`);
-        highlightGrid(widgetState.dimensionX, row);
-      }
-    } //
-    else if (event.key === 'ArrowRight') {
-      console.log('right');
-      console.log(
-        `widgetState x and y is ${widgetState.dimensionX} ${widgetState.dimensionY}`,
-      );
-      if (widgetState.dimensionY < 6) {
-        const row = widgetState.dimensionY + 1;
-        finalCol = row;
-        console.log(`The finalCol is ${finalCol}`);
-        widgetState.dimensionY = row;
-        widgetState.dimensionY = Math.min(6, row);
-        console.log(
-          `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
-        );
-
-        highlightGrid(widgetState.dimensionX, row);
-      }
-    } //
-    else if (event.key == 'ArrowUp') {
-      if (widgetState.dimensionX > 1) {
-        const col = widgetState.dimensionX - 1;
-        finalRow = col;
-        widgetState.dimensionX = col;
-        widgetState.dimensionX = Math.max(1, col);
-        highlightGrid(col, widgetState.dimensionY);
-      }
-    } //
-    else if (event.key === 'ArrowDown') {
-      if (widgetState.dimensionX < 6) {
-        const col = widgetState.dimensionX + 1;
-        finalRow = col;
-        console.log(`The finalRow is ${finalRow}`);
-        widgetState.dimensionX = col;
-        widgetState.dimensionX = Math.min(6, col);
-        highlightGrid(col, widgetState.dimensionY);
-      }
-    } //
-    else if (event.key === 'Enter') {
-      if (widgetState.dimensionX <= 1 || widgetState.dimensionY <= 1) {
-        showToast('The grid must be at least 2x2', 'error');
-      } //
-      else {
-        event.preventDefault();
-        console.log('enter pressed');
-        modal.close();
-        modal.classList.add('hidden');
-        //do a quick swap for my bad code
-        widgetState.dimensionX =
-          widgetState.dimensionX + widgetState.dimensionY;
-        widgetState.dimensionY =
-          widgetState.dimensionX - widgetState.dimensionY;
-        widgetState.dimensionX =
-          widgetState.dimensionX - widgetState.dimensionY;
-        if (widgetState.dimensionX <= 6 && widgetState.dimensionY <= 6) {
-          createDynamicInputs();
-        }
-      }
-    }
-  }
-  DimensionStatusElement.textContent = `${finalCol} x ${finalRow}`;
-  DimensionStatusElement2.textContent = `${finalCol} x ${finalRow}`;
-});
+addKeydownEventListener(
+  modal,
+  widgetState,
+  finalCol,
+  finalRow,
+  highlightGrid,
+  createDynamicInputs,
+  showToast,
+);
 
 chooseButton.addEventListener('click', (event) => {
   modal.showModal();
   modal.classList.remove('hidden');
 });
-function highlightGrid(rows, cols) {
-  const cells = DimensionContainer.querySelectorAll('.cell');
-  cells.forEach((cell) => {
-    const cellRow = cell.dataset.row;
-    const cellCol = cell.dataset.col;
-    if (cellRow <= rows && cellCol <= cols) {
-      cell.classList.remove('cellbg');
-      cell.classList.add('hovered');
-    } else {
-      cell.classList.remove('hovered');
-      cell.classList.add('cellbg');
-    }
-  });
-}
 
 Materia.CreatorCore.start({
   initNewWidget: (widget, baseUrl, mediaUrl) => {

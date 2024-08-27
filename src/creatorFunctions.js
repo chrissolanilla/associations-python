@@ -257,3 +257,114 @@ export function flashInvalidInputs() {
     }, 1000);
   });
 }
+
+export function highlightGrid(rows, cols) {
+  const cells = DimensionContainer.querySelectorAll('.cell');
+  cells.forEach((cell) => {
+    const cellRow = cell.dataset.row;
+    const cellCol = cell.dataset.col;
+    if (cellRow <= rows && cellCol <= cols) {
+      cell.classList.remove('cellbg');
+      cell.classList.add('hovered');
+    } else {
+      cell.classList.remove('hovered');
+      cell.classList.add('cellbg');
+    }
+  });
+}
+
+// Export this function from your module
+export function addKeydownEventListener(
+  modal,
+  widgetState,
+  finalCol,
+  finalRow,
+  highlightGrid,
+  createDynamicInputs,
+  showToast,
+) {
+  const status1 = document.getElementById('DimensionStatus');
+  const status2 = document.getElementById('DimensionStatus2');
+
+  document.addEventListener('keydown', (event) => {
+    if (modal.hasAttribute('open')) {
+      // Ensure widgetState values are numbers
+      widgetState.dimensionX = +widgetState.dimensionX;
+      widgetState.dimensionY = +widgetState.dimensionY;
+
+      if (event.key === 'ArrowLeft') {
+        console.log('left');
+        if (widgetState.dimensionY > 1) {
+          const row = widgetState.dimensionY - 1;
+          finalCol = row;
+          widgetState.dimensionY = Math.max(1, row);
+          console.log(
+            `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
+          );
+
+          // Highlight the grid
+          highlightGrid(widgetState.dimensionX, row);
+        }
+      } else if (event.key === 'ArrowRight') {
+        console.log('right');
+        console.log(
+          `widgetState x and y is ${widgetState.dimensionX} ${widgetState.dimensionY}`,
+        );
+        if (widgetState.dimensionY < 6) {
+          const row = widgetState.dimensionY + 1;
+          finalCol = row;
+          widgetState.dimensionY = Math.min(6, row);
+          console.log(
+            `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
+          );
+
+          // Highlight the grid
+          highlightGrid(widgetState.dimensionX, row);
+        }
+      } else if (event.key == 'ArrowUp') {
+        if (widgetState.dimensionX > 1) {
+          const col = widgetState.dimensionX - 1;
+          finalRow = col;
+          widgetState.dimensionX = Math.max(1, col);
+
+          // Highlight the grid
+          highlightGrid(col, widgetState.dimensionY);
+        }
+      } else if (event.key === 'ArrowDown') {
+        if (widgetState.dimensionX < 6) {
+          const col = widgetState.dimensionX + 1;
+          finalRow = col;
+          widgetState.dimensionX = Math.min(6, col);
+          console.log(`The finalRow is ${finalRow}`);
+
+          // Highlight the grid
+          highlightGrid(col, widgetState.dimensionY);
+        }
+      } else if (event.key === 'Enter') {
+        if (widgetState.dimensionX <= 1 || widgetState.dimensionY <= 1) {
+          showToast('The grid must be at least 2x2', 'error');
+        } else {
+          event.preventDefault();
+          console.log('enter pressed');
+          modal.close();
+          modal.classList.add('hidden');
+          // Perform the swap for dimensionX and dimensionY
+          widgetState.dimensionX =
+            widgetState.dimensionX + widgetState.dimensionY;
+          widgetState.dimensionY =
+            widgetState.dimensionX - widgetState.dimensionY;
+          widgetState.dimensionX =
+            widgetState.dimensionX - widgetState.dimensionY;
+
+          if (widgetState.dimensionX <= 6 && widgetState.dimensionY <= 6) {
+            createDynamicInputs();
+          }
+        }
+      }
+    }
+
+    // Update status elements
+    status1.textContent = `${finalCol} x ${finalRow}`;
+    status2.textContent = `${finalCol} x ${finalRow}`;
+  });
+}
