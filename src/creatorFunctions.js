@@ -1,3 +1,4 @@
+/** @type {Object} */
 export let widgetState = {
   words1: [],
   words2: [],
@@ -19,6 +20,7 @@ export let widgetState = {
   lives: 1,
 };
 
+/** @type {Object} */
 export let savedWidgetState = {
   words1: [],
   words2: [],
@@ -34,9 +36,12 @@ export let savedWidgetState = {
   description6: '',
 };
 
+/** @type {Set} wordSet
+ * @type {Set} descriptionSet */
 export let wordSet = new Set();
 export let descriptionSet = new Set();
 
+/** @type {Array<Array<string>>} */
 export const placeholders = [
   [
     'Restaurants',
@@ -273,7 +278,15 @@ export function highlightGrid(rows, cols) {
   });
 }
 
-// Export this function from your module
+/**
+ * @param {Element} modal
+ * @param {Object} widgetState
+ * @param {number} finalCol
+ * @param {number} finalRow
+ * @param {Function} highlightGrid
+ * @param {Function} createDynamicInputs
+ * @param {Function} showToast
+ */
 export function addKeydownEventListener(
   modal,
   widgetState,
@@ -288,7 +301,7 @@ export function addKeydownEventListener(
 
   document.addEventListener('keydown', (event) => {
     if (modal.hasAttribute('open')) {
-      // Ensure widgetState values are numbers
+      // ensure widgetState values are numbers cause im traumatized of javascript addition
       widgetState.dimensionX = +widgetState.dimensionX;
       widgetState.dimensionY = +widgetState.dimensionY;
 
@@ -301,11 +314,10 @@ export function addKeydownEventListener(
           console.log(
             `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
           );
-
-          // Highlight the grid
           highlightGrid(widgetState.dimensionX, row);
         }
-      } else if (event.key === 'ArrowRight') {
+      } //
+      else if (event.key === 'ArrowRight') {
         console.log('right');
         console.log(
           `widgetState x and y is ${widgetState.dimensionX} ${widgetState.dimensionY}`,
@@ -317,30 +329,27 @@ export function addKeydownEventListener(
           console.log(
             `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
           );
-
-          // Highlight the grid
           highlightGrid(widgetState.dimensionX, row);
         }
-      } else if (event.key == 'ArrowUp') {
+      } //
+      else if (event.key == 'ArrowUp') {
         if (widgetState.dimensionX > 1) {
           const col = widgetState.dimensionX - 1;
           finalRow = col;
           widgetState.dimensionX = Math.max(1, col);
-
-          // Highlight the grid
           highlightGrid(col, widgetState.dimensionY);
         }
-      } else if (event.key === 'ArrowDown') {
+      } //
+      else if (event.key === 'ArrowDown') {
         if (widgetState.dimensionX < 6) {
           const col = widgetState.dimensionX + 1;
           finalRow = col;
           widgetState.dimensionX = Math.min(6, col);
           console.log(`The finalRow is ${finalRow}`);
-
-          // Highlight the grid
           highlightGrid(col, widgetState.dimensionY);
         }
-      } else if (event.key === 'Enter') {
+      } //
+      else if (event.key === 'Enter') {
         if (widgetState.dimensionX <= 1 || widgetState.dimensionY <= 1) {
           showToast('The grid must be at least 2x2', 'error');
         } else {
@@ -348,13 +357,13 @@ export function addKeydownEventListener(
           console.log('enter pressed');
           modal.close();
           modal.classList.add('hidden');
-          // Perform the swap for dimensionX and dimensionY
+          // do a swap with bit shifting cause its cool but mainly cause its all messed up with arrow keys what is up or down.
           widgetState.dimensionX =
-            widgetState.dimensionX + widgetState.dimensionY;
+            widgetState.dimensionX ^ widgetState.dimensionY;
           widgetState.dimensionY =
-            widgetState.dimensionX - widgetState.dimensionY;
+            widgetState.dimensionX ^ widgetState.dimensionY;
           widgetState.dimensionX =
-            widgetState.dimensionX - widgetState.dimensionY;
+            widgetState.dimensionX ^ widgetState.dimensionY;
 
           if (widgetState.dimensionX <= 6 && widgetState.dimensionY <= 6) {
             createDynamicInputs();
@@ -362,8 +371,6 @@ export function addKeydownEventListener(
         }
       }
     }
-
-    // Update status elements
     status1.textContent = `${finalCol} x ${finalRow}`;
     status2.textContent = `${finalCol} x ${finalRow}`;
   });

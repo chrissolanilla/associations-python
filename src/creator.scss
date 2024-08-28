@@ -593,6 +593,23 @@ p.whatis {
 .helpButton:active {
   transform: scale(0.92);
 }
+
+#ShowAnswersCheckbox {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.focus-highlight {
+  outline: 4px solid #3b82f6; // Change the color to your preference
+  outline-offset: 2px;
+}
+
 /* Media queries for responsiveness */
 @media (max-width: 1540px) {
   .headings {

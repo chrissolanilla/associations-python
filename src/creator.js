@@ -97,6 +97,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const showAnswersLabel = document.getElementById('ShowAnswersLabel');
   const showAnswersCheckbox = document.getElementById('ShowAnswersCheckbox');
 
+  showAnswersCheckbox.addEventListener('focus', (event) => {
+    console.log('FOCUSED ON SHOW ANSWERS CHECKBOX');
+    const parentDiv = event.target.closest('.ShowAnswersBoolean');
+    if (parentDiv) {
+      parentDiv.classList.add('focus-highlight');
+    } else {
+      console.log('CANT FIND PARENT');
+    }
+  });
+
+  showAnswersCheckbox.addEventListener('blur', (event) => {
+    const parentDiv = event.target.closest('.ShowAnswersBoolean');
+    if (parentDiv) {
+      parentDiv.classList.remove('focus-highlight');
+    }
+  });
+  showAnswersCheckbox.addEventListener('keypress', (event) => {
+    const parentDiv = event.target.closest('.ShowAnswersBoolean');
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      showAnswersCheckbox.checked = !showAnswersCheckbox.checked;
+      if (showAnswersCheckbox.checked) {
+        widgetState.showanswers = true;
+        parentDiv.classList.remove('off');
+        parentDiv.classList.add('on');
+        showAnswersLabel.textContent = 'Reveal Answers on Score Screen: On';
+      } //
+      else {
+        widgetState.showanswers = false;
+        showAnswersDiv.classList.remove('on');
+        showAnswersDiv.classList.add('off');
+        showAnswersLabel.textContent = 'Reveal Answers on Score Screen: Off';
+      }
+    }
+  });
+
   showAnswersDiv.addEventListener('click', () => {
     showAnswersCheckbox.checked = !showAnswersCheckbox.checked;
     if (showAnswersCheckbox.checked) {
