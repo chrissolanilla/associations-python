@@ -91,7 +91,15 @@
       <div class="ContainerDimensionInput">
         <button id="helpButton" class="helpButton">?</button>
         <button class="ChooseButton" id="chooseButton">Choose Grid Size</button>
-        <div class="dimension-status" id="DimensionStatus">0x0</div>
+        <div
+          class="dimension-status"
+          id="DimensionStatus"
+          aria-live="polite"
+          aria-atomic="true"
+          role="alert"
+        >
+          <!-- 0x0 -->
+        </div>
         <dialog data-modal>
           <h1>Please choose a grid size</h1>
           <div class="Form-dimension-container" id="DimensionContainer"></div>

@@ -244,6 +244,9 @@ DimensionContainer.addEventListener('mouseover', (event) => {
     highlightGrid(row, col);
     DimensionStatusElement.textContent = `${col} x ${row}`;
     DimensionStatusElement2.textContent = `${col} x ${row}`;
+    // console.log(DimensionStatusElement.offsetHeight); // This forces a reflow and allows error messages to be read
+    // console.log(DimensionStatusElement2.offsetHeight); // This forces a reflow and allows error messages to be read
+
     console.log('attempting to highlight create preview grid');
     widgetState.dimensionX = event.target.dataset.col;
     widgetState.dimensionY = event.target.dataset.row;

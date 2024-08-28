@@ -301,9 +301,11 @@ async function checkSelection(count) {
   if (validWordsCount !== count) {
     if (highestGroupLength + 1 === dimensionXGlobal) {
       showToast('one away...', 'error');
+      ScreenReaderElement.textContent = 'Incorrect, one away...';
     } //
     else {
       showToast('Sorry, that was not correct', 'error');
+      ScreenReaderElement.textContent = 'Incorrect, try again';
     }
     attempts++;
     AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;

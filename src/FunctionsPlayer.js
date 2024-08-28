@@ -191,6 +191,7 @@ function toggleCheckbox() {
   });
 }
 
+/** @param {string} message @param {string} type */
 export function showToast(message, type) {
   const toastContainer = document.getElementById('toastContainer');
   setTimeout(() => {}, 500);
@@ -200,7 +201,8 @@ export function showToast(message, type) {
   toast.className = 'toast';
   if (type === 'success') {
     toast.style.backgroundColor = 'green';
-  } else if (type === 'error') {
+  } //
+  else if (type === 'error') {
     toast.style.backgroundColor = 'red';
   }
   toast.style.display = 'none';
@@ -212,6 +214,7 @@ export function showToast(message, type) {
     toast.classList.add('hide');
   }, 5000);
 }
+
 /** @param {boolean} isCorrect */
 export function animateSelectionToTop(isCorrect) {
   console.log('------THE BOOLEAN IS : ', isCorrect);
