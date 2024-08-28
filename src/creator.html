@@ -103,7 +103,15 @@
         <dialog data-modal>
           <h1>Please choose a grid size</h1>
           <div class="Form-dimension-container" id="DimensionContainer"></div>
-          <div class="dimension-status" id="DimensionStatus2">0x0</div>
+          <div
+            class="dimension-status"
+            id="DimensionStatus2"
+            aria-live="polite"
+            aria-atomic="true"
+            role="alert"
+          >
+            0x0
+          </div>
           <div class="arrow_box" id="arrow_box">
             <span>Click here to Choose a grid size</span>
           </div>
