@@ -306,47 +306,35 @@ export function addKeydownEventListener(
       widgetState.dimensionY = +widgetState.dimensionY;
 
       if (event.key === 'ArrowLeft') {
-        console.log('left');
-        if (widgetState.dimensionY > 1) {
-          const row = widgetState.dimensionY - 1;
+        if (widgetState.dimensionX > 1) {
+          const row = widgetState.dimensionX - 1;
           finalCol = row;
-          widgetState.dimensionY = Math.max(1, row);
-          console.log(
-            `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
-          );
-          highlightGrid(widgetState.dimensionX, row);
+          widgetState.dimensionX = Math.max(1, row);
+          highlightGrid(widgetState.dimensionY, row);
         }
       } //
       else if (event.key === 'ArrowRight') {
-        console.log('right');
-        console.log(
-          `widgetState x and y is ${widgetState.dimensionX} ${widgetState.dimensionY}`,
-        );
-        if (widgetState.dimensionY < 6) {
-          const row = widgetState.dimensionY + 1;
+        if (widgetState.dimensionX < 6) {
+          const row = widgetState.dimensionX + 1;
           finalCol = row;
-          widgetState.dimensionY = Math.min(6, row);
-          console.log(
-            `The row is ${row} and the widget state is ${widgetState.dimensionY}`,
-          );
-          highlightGrid(widgetState.dimensionX, row);
+          widgetState.dimensionX = Math.min(6, row);
+          highlightGrid(widgetState.dimensionY, row);
         }
       } //
       else if (event.key == 'ArrowUp') {
-        if (widgetState.dimensionX > 1) {
-          const col = widgetState.dimensionX - 1;
+        if (widgetState.dimensionY > 1) {
+          const col = widgetState.dimensionY - 1;
           finalRow = col;
-          widgetState.dimensionX = Math.max(1, col);
-          highlightGrid(col, widgetState.dimensionY);
+          widgetState.dimensionY = Math.max(1, col);
+          highlightGrid(col, widgetState.dimensionX);
         }
       } //
       else if (event.key === 'ArrowDown') {
-        if (widgetState.dimensionX < 6) {
-          const col = widgetState.dimensionX + 1;
+        if (widgetState.dimensionY < 6) {
+          const col = widgetState.dimensionY + 1;
           finalRow = col;
-          widgetState.dimensionX = Math.min(6, col);
-          console.log(`The finalRow is ${finalRow}`);
-          highlightGrid(col, widgetState.dimensionY);
+          widgetState.dimensionY = Math.min(6, col);
+          highlightGrid(col, widgetState.dimensionX);
         }
       } //
       else if (event.key === 'Enter') {
@@ -354,17 +342,8 @@ export function addKeydownEventListener(
           showToast('The grid must be at least 2x2', 'error');
         } else {
           event.preventDefault();
-          console.log('enter pressed');
           modal.close();
           modal.classList.add('hidden');
-          // do a swap with bit shifting cause its cool but mainly cause its all messed up with arrow keys what is up or down.
-          widgetState.dimensionX =
-            widgetState.dimensionX ^ widgetState.dimensionY;
-          widgetState.dimensionY =
-            widgetState.dimensionX ^ widgetState.dimensionY;
-          widgetState.dimensionX =
-            widgetState.dimensionX ^ widgetState.dimensionY;
-
           if (widgetState.dimensionX <= 6 && widgetState.dimensionY <= 6) {
             createDynamicInputs();
           }
