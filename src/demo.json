@@ -13,7 +13,7 @@
           "type": "connections",
           "id": 1,
           "answers": [
-            { "text": ["Nebula", "Galaxy", "Comet", "Astroid"], "value": 25 }
+            { "text": ["Nebula", "Galaxy", "Comet", "Asteroid"], "value": 25 }
           ]
         },
         {

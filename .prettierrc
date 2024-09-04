@@ -2,5 +2,6 @@
   "singleQuote": true,
   "htmlWhitespaceSensitivity": "ignore",
   "templateLiteralMacros": ["html"],
-  "embeddedLanguageFormatting": "auto"
+  "embeddedLanguageFormatting": "auto",
+  "tabWidth": 4
 }
