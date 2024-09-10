@@ -387,6 +387,9 @@ Materia.CreatorCore.start({
         console.log('empty words or description');
         //show a toast module that says to complete all fields
         showToast('Please complete all fields', 'error');
+          //do the creator core cancel function
+        Materia.CreatorCore.cancelSave('It looks like some input fields are invalid. Please fix them before saving.');
+        console.log('we did teh cancel save');
         flashInvalidInputs();
         return;
       }
