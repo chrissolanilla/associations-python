@@ -1,89 +1,94 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" type="text/css" href="player.css" />
-    <title>Connections</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700;900&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" type="text/css" href="player.css" />
+		<title>Connections</title>
 
-    <script src="materia.enginecore.js"></script>
-  </head>
-  <body>
-    <dialog data-modal class="modal">
-      <div class="modalClass">
-        <h1 id="welcomeModalTitle"></h1>
-        <p id="instructionsModal"></p>
-        <p id="instructionsModal2"></p>
-        <button
-          data-close-modal
-          class="styled-button"
-          aria-labelledby="welcomeModalTitle instructionsModal instructionsModal2"
-        >
-          Start Game
-        </button>
-      </div>
-    </dialog>
+		<script src="materia.enginecore.js"></script>
+	</head>
+	<body>
+		<dialog data-modal class="modal">
+			<div class="modalClass">
+				<h1 id="welcomeModalTitle"></h1>
+				<p id="instructionsModal"></p>
+				<p id="instructionsModal2"></p>
+				<button
+					data-close-modal
+					class="styled-button"
+					aria-labelledby="welcomeModalTitle instructionsModal instructionsModal2"
+				>
+					Start Game
+				</button>
+			</div>
+		</dialog>
 
-    <div id="resultsModal" class="hidden modal">
-      <div class="modalClass2">
-        <h1 id="gameOverAria">Game Over</h1>
-        <div id="finalResults">
-          <!-- Final results will be inserted here -->
-        </div>
-        <button
-          id="goToScoreScreen"
-          class="styled-button"
-          aria-labelledby="gameOverAria finalResults"
-        >
-          Go to Score Screen
-        </button>
-      </div>
-    </div>
+		<div id="resultsModal" class="hidden modal">
+			<div class="modalClass2">
+				<h1 id="gameOverAria">Game Over</h1>
+				<div id="finalResults">
+					<!-- Final results will be inserted here -->
+				</div>
+				<button
+					id="goToScoreScreen"
+					class="styled-button"
+					aria-labelledby="gameOverAria finalResults"
+				>
+					Go to Score Screen
+				</button>
+			</div>
+		</div>
 
-    <main>
-      <div
-        id="toastContainer"
-        class="toast-container"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <div class="toast" role="alert" aria-live="polite" aria-atomic="true">
-          <!--will get inserted text here.-->
-        </div>
-      </div>
-      <!-- <div id="srAnnouncer" class="sr-only" aria-live="assertive"></div> -->
+		<main>
+			<div
+				id="toastContainer"
+				class="toast-container"
+				aria-live="polite"
+				aria-atomic="true"
+			>
+				<div
+					class="toast"
+					role="alert"
+					aria-live="polite"
+					aria-atomic="true"
+				>
+					<!--will get inserted text here.-->
+				</div>
+			</div>
+			<!-- <div id="srAnnouncer" class="sr-only" aria-live="assertive"></div> -->
 
-      <!--the title will be inserted from the javascript: TODO-->
-      <header>
-        <h1 id="Title"></h1>
-        <button id="helpButton" class="helpButton">?</button>
-      </header>
-      <div class="CorrectAnswers" id="correctAnswers">
-        <p id="screenReader" aria-live="polite" aria-atomic="true"></p>
-        <!--correct words and descriptions will show up when you get some right-->
-      </div>
-      <div class="wordsPreview">
-        <!-- words will be dynamically inserted here -->
-      </div>
-      <div class="controls" id="controls">
-        <!-- <button id="check4" class="greyOutButton">Check 4</button> -->
-        <!-- <button id="check8" class="greyOutButton">Check 8</button> -->
-        <!-- <button id="check12" class="greyOutButton">Check 12</button> -->
-        <!-- <button id="check16" class="greyOutButton">Check 16</button> -->
-        <span id="span" aria-live="polite">
-          <span id="Attempts"></span>
-          <span class="parenthesis" id="maxWrongAttempts"></span>
-        </span>
-      </div>
-    </main>
+			<!--the title will be inserted from the javascript: TODO-->
+			<header>
+				<h1 id="Title"></h1>
+				<button id="helpButton" class="helpButton">?</button>
+			</header>
+			<div class="CorrectAnswers" id="correctAnswers">
+				<p id="screenReader" aria-live="polite" aria-atomic="true"></p>
+				<!--correct words and descriptions will show up when you get some right-->
+			</div>
+			<div class="wordsPreview">
+				<!-- words will be dynamically inserted here -->
+			</div>
+			<div class="controls" id="controls">
+				<!-- <button id="check4" class="greyOutButton">Check 4</button> -->
+				<!-- <button id="check8" class="greyOutButton">Check 8</button> -->
+				<!-- <button id="check12" class="greyOutButton">Check 12</button> -->
+				<!-- <button id="check16" class="greyOutButton">Check 16</button> -->
+				<span id="span" aria-live="polite">
+					<span id="Attempts"></span>
+					<span class="parenthesis" id="maxWrongAttempts"></span>
+				</span>
+			</div>
+		</main>
 
-    <script src="player.js"></script>
-  </body>
+		<script src="player.js"></script>
+	</body>
 </html>

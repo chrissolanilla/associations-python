@@ -626,14 +626,14 @@ p.whatis {
   }
 
   #ShowAnswersLabel {
-    font-size: 0.9rem;
-    text-align:left;
+	font-size: 0.9rem;
+	text-align:left;
   }
 }
 
 @media screen and (max-width: 1420px) {
   header {
-    gap: 1rem;
+	gap: 1rem;
   }
   .headings {
 	font-size: 1.2rem;
@@ -656,20 +656,20 @@ p.whatis {
 
   .ContainerDimensionInput {
 
-    // margin: 0 0.5rem 0 0.5rem;
-    // gap: 0;
+	// margin: 0 0.5rem 0 0.5rem;
+	// gap: 0;
   }
 
 }
 
 @media (max-width: 900px) {
   .ShowAnswersBoolean label {
-    font-size: 0.6rem;
+	font-size: 0.6rem;
   }
 }
 
 @media (max-width: 450px) {
   .ShowAnswersBoolean label {
-    font-size: 0.4rem;
+	font-size: 0.4rem;
   }
 }

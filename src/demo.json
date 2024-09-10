@@ -1,58 +1,76 @@
 {
-  "name": "Connections Widget Demo",
-  "qset": {
-    "name": "Connections Widget Demo!!!",
-    "version": 1,
-    "data": {
-      "showAnswers": true,
-      "lives": 4,
-      "items": [
-        {
-          "materiaType": "question",
-          "questions": [{ "text": "Outer Space" }],
-          "type": "connections",
-          "id": 1,
-          "answers": [
-            { "text": ["Nebula", "Galaxy", "Comet", "Asteroid"], "value": 25 }
-          ]
-        },
-        {
-          "materiaType": "question",
-          "type": "connections",
-          "id": 2,
-          "questions": [{ "text": "Restaurants" }],
-          "answers": [
-            {
-              "text": ["BurgerFi", "Red Lobster", "Checkers", "Lazy Moon"],
-              "value": 25
-            }
-          ]
-        },
-        {
-          "materiaType": "question",
-          "id": 3,
-          "questions": [{ "text": "Magical Creatures" }],
-          "type": "connections",
-          "answers": [
-            {
-              "text": ["Fairies", "Mermaids", "Unicorns", "Dragons"],
-              "value": 25
-            }
-          ]
-        },
-        {
-          "materiaType": "question",
-          "id": 4,
-          "questions": [{ "text": "Extinct Creatures" }],
-          "type": "connections",
-          "answers": [
-            {
-              "text": ["Mammoths", "Black Rhino", "Saber Tooth", "Dinosaurs"],
-              "value": 25
-            }
-          ]
-        }
-      ]
-    }
-  }
+	"name": "Connections Widget Demo",
+	"qset": {
+		"name": "Connections Widget Demo!!!",
+		"version": 1,
+		"data": {
+			"showAnswers": true,
+			"lives": 4,
+			"items": [
+				{
+					"materiaType": "question",
+					"questions": [{ "text": "Outer Space" }],
+					"type": "connections",
+					"id": 1,
+					"answers": [
+						{
+							"text": ["Nebula", "Galaxy", "Comet", "Asteroid"],
+							"value": 25
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"type": "connections",
+					"id": 2,
+					"questions": [{ "text": "Restaurants" }],
+					"answers": [
+						{
+							"text": [
+								"BurgerFi",
+								"Red Lobster",
+								"Checkers",
+								"Lazy Moon"
+							],
+							"value": 25
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": 3,
+					"questions": [{ "text": "Magical Creatures" }],
+					"type": "connections",
+					"answers": [
+						{
+							"text": [
+								"Fairies",
+								"Mermaids",
+								"Unicorns",
+								"Dragons"
+							],
+							"value": 25
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": 4,
+					"questions": [{ "text": "Extinct Creatures" }],
+					"type": "connections",
+					"answers": [
+						{
+							"text": [
+								"Mammoths",
+								"Black Rhino",
+								"Saber Tooth",
+								"Dinosaurs"
+							],
+							"value": 25
+						}
+					]
+				}
+			]
+		}
+	}
 }

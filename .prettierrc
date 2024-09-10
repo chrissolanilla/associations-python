@@ -1,7 +1,8 @@
 {
-  "singleQuote": true,
-  "htmlWhitespaceSensitivity": "ignore",
-  "templateLiteralMacros": ["html"],
-  "embeddedLanguageFormatting": "auto",
-  "tabWidth": 4
+	"singleQuote": true,
+	"htmlWhitespaceSensitivity": "ignore",
+	"templateLiteralMacros": ["html"],
+	"embeddedLanguageFormatting": "auto",
+	"tabWidth": 4,
+	"useTabs": true
 }

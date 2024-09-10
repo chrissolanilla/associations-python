@@ -6,11 +6,11 @@
  * @returns {{ openModal: function, closeModal: function, modal: Element }}
  */
 export function createTutorialModal(dimensionX, dimensionY, maxAttempts) {
-  const modal = document.createElement('dialog');
-  modal.className = 'modal';
-  modal.id = 'tutorialModal';
+	const modal = document.createElement('dialog');
+	modal.className = 'modal';
+	modal.id = 'tutorialModal';
 
-  modal.innerHTML = `
+	modal.innerHTML = `
 	<div class="modalClass3">
 	  <h1 id="HowToPlay">How to Play</h1>
 	  <p style="text-align:center;" id="tutorial1">There are ${dimensionX * dimensionY} words on the grid, with
@@ -36,14 +36,14 @@ export function createTutorialModal(dimensionX, dimensionY, maxAttempts) {
 	</div>
   `;
 
-  document.body.appendChild(modal);
-  const openModal = () => modal.showModal();
-  const closeModal = () => modal.close();
-  const continueButton = modal.querySelector('#continueButton');
-  continueButton.addEventListener('click', closeModal);
+	document.body.appendChild(modal);
+	const openModal = () => modal.showModal();
+	const closeModal = () => modal.close();
+	const continueButton = modal.querySelector('#continueButton');
+	continueButton.addEventListener('click', closeModal);
 
-  return {
-    openModal,
-    closeModal,
-  };
+	return {
+		openModal,
+		closeModal,
+	};
 }
