@@ -6,10 +6,17 @@ const tbodyElement = document.getElementById('tbody');
 const screenReaderTbodyElement = document.getElementById('screenReaderTbody');
 const message = document.getElementById('message');
 
-function createFancyAnswer(userAnswer, words, containerId) {
+function createFancyAnswer(
+	userAnswer,
+	words,
+	containerId,
+	showAnswers,
+	labelId,
+) {
 	const FancyContainer = document.querySelector(
 		`[data-container-id='${containerId}']`,
 	);
+	const label = document.querySelector(`[data-label-id='${labelId}']`);
 	console.log('function words is ', words);
 	console.log('userAnswer is ', userAnswer);
 	// Handle case where userAnswer is an empty string (ran out of lives)
@@ -24,9 +31,22 @@ function createFancyAnswer(userAnswer, words, containerId) {
 		userWordsArray.length === 0 ||
 		userWordsArray.every((word) => word === '')
 	) {
-		const previewItem = document.createElement('div');
-		previewItem.innerHTML = `<h1> You ran out of lives</h1>`;
-		FancyContainer.appendChild(previewItem);
+		label.textContent = 'Correct Answer:';
+		if (showAnswers === true) {
+			//create fancy of the answers
+
+			correctWordsArray.forEach((word, index) => {
+				const previewItem = document.createElement('div');
+				previewItem.innerHTML = `<label> ${word}</label>`;
+				previewItem.classList.add('preview-item');
+				FancyContainer.appendChild(previewItem);
+			});
+		} //
+		else {
+			const previewItem = document.createElement('div');
+			previewItem.innerHTML = `<h1>Answers are hidden</h1>`;
+			FancyContainer.appendChild(previewItem);
+		}
 		return;
 	}
 
@@ -90,6 +110,7 @@ function populateTable(scoreTable, showAnswers) {
 		row1.appendChild(scoreCell);
 		//make the row for the top part of the row span
 		const containerId = `fancyContainer-${entryIndex}`;
+		const labelId = `label-${entryIndex}`;
 		const FancyCell = document.createElement('td');
 		console.log('Creating the fancy cell show answer is ', entry.data[2]);
 		FancyCell.colSpan = 4;
@@ -101,17 +122,40 @@ function populateTable(scoreTable, showAnswers) {
 				? `<h1 style="margin-bottom: 0;"> Ran out of lives! </h1>`
 				: `<h1 style="margin-bottom: 0;"> Wrong attempt </h1>`;
 
+		//if isEmpty and showAnswers: then we show the remaining categories they got wrong
+		//if isEmpty and !showAnswers: then we say they ran out of lives and the instructor disabled viewing of answers and remaining categories
+		let subHeading = '';
+		if (isEmpty) {
+			if (showAnswers) {
+				// Show remaining categories they got wrong
+				subHeading = `
+					<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">
+						Unsolved Category: <span style="color: #0df; font-weight: normal";> ${entry.data[0]}</span>
+					</p>
+				`;
+			} else {
+				// They ran out of lives and viewing of answers is disabled
+				subHeading = `<p style="margin-top: 0; color: #ff0000; font-weight: bold;"> The widget creator has disabled viewing of answers for wrong questions.</p>`;
+			}
+		}
+
 		FancyCell.innerHTML = `
 		   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				${heading}
-				${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
-				<label>Your choice:</label>
+				${subHeading}
+				<label data-label-id="${labelId}">Your choice:</label>
 				<div data-container-id="${containerId}" style="display:flex;"></div>
 			</div>
 		`;
 		row1.appendChild(FancyCell);
 		tbodyElement.appendChild(row1);
-		createFancyAnswer(entry.data[1], entry.data[2], containerId);
+		createFancyAnswer(
+			entry.data[1],
+			entry.data[2],
+			containerId,
+			showAnswers,
+			labelId,
+		);
 		const row2 = document.createElement('tr');
 		tbodyElement.appendChild(row2);
 		// Populate screen reader table
