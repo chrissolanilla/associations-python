@@ -82,6 +82,7 @@ function populateTable(scoreTable, showAnswers) {
 		row1.setAttribute('role', 'row');
 
 		let isEmpty = false;
+		//really funny json encoding made it a literal string
 		if (entry.data[1] === `[""]`) {
 			isEmpty = true;
 			console.log('WE FINALLY DID IT');
@@ -92,6 +93,12 @@ function populateTable(scoreTable, showAnswers) {
 
 		const scoreCell = document.createElement('td');
 		scoreCell.setAttribute('role', 'cell');
+		//make it a flexbox with direction column and justify content center
+		// scoreCell.style.display = 'flex';
+		scoreCell.style.flexDirection = 'column';
+		scoreCell.style.justifyContent = 'center'; // Center vertically
+		scoreCell.style.alignItems = 'center'; // Center horizontally
+		scoreCell.style.height = '100%'; // Ensure it takes the full cell height
 		if (entry.score === 100) {
 			scoreCell.innerHTML = checkmark;
 			scoreCell.classList.add('correct');
@@ -104,6 +111,10 @@ function populateTable(scoreTable, showAnswers) {
 		//maybe add the number for each scoreCell
 		const questionNumber = document.createElement('label');
 		questionNumber.textContent = `#${entryIndex + 1}`;
+		const ptag = document.createElement('p');
+		ptag.style.margin = '0rem';
+		ptag;
+		scoreCell.append(ptag);
 		scoreCell.append(questionNumber);
 
 		scoreCell.rowSpan = 2;
