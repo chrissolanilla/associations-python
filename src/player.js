@@ -199,6 +199,7 @@ async function checkSelection(count) {
 	const correctAnswersDiv = document.getElementById('correctAnswers');
 	let validGroupsCount = 0;
 	let validWordsCount = 0;
+	let closestMatch = null;
 	// Track groups that should be removed
 	let groupsToRemove = [];
 	const selectedWords = getSelectedWords();
@@ -226,6 +227,7 @@ async function checkSelection(count) {
 			);
 			if (group.length > highestGroupLength) {
 				highestGroupLength = group.length;
+				closestMatch = item;
 			}
 			console.log(`The group is: ${group}`);
 			console.log('checking if group is an array', Array.isArray(group));
@@ -311,7 +313,18 @@ async function checkSelection(count) {
 		});
 	});
 
+	//case where our selecton is wrong, we should submit the question for scoring to log their answer
+	//or maybe we don't submit the question for scoring, we just do it once?
 	if (validWordsCount !== count) {
+		console.log(`closest match is ${closestMatch}`);
+		//item is not defined since its out of scope form the parameter
+		const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
+		Materia.Score.submitQuestionForScoring(
+			closestMatch.id,
+			JSON.stringify(selectedWords),
+			0,
+		);
+
 		if (highestGroupLength + 1 === dimensionXGlobal) {
 			showToast('one away...', 'error');
 			ScreenReaderElement.textContent = 'Incorrect, one away...';
@@ -377,6 +390,7 @@ function showRemainingCorrectAnswers() {
 	wordsGrid.innerHTML = '';
 }
 
+//we don't need to get their best guess anymore
 function disableGame() {
 	const wordsGrid = document.querySelector('.wordsPreview');
 	const currentQset = getCurrentQset();
@@ -385,28 +399,14 @@ function disableGame() {
 		return !getGuessedGroups().has(item.questions[0].text);
 	});
 
-	unguessedDescriptions.forEach((item, index) => {
-		let incorrectGroup = guessedGroupsState[`group${index + 1}`];
-
-		if (incorrectGroup) {
-			incorrectGroup = Array.isArray(incorrectGroup)
-				? incorrectGroup
-				: [incorrectGroup];
-		} //
-		else {
-			incorrectGroup = ['Ran out of Lives'];
-		}
+	unguessedDescriptions.forEach((item) => {
+		const incorrectGroup = [''];
 		Materia.Score.submitQuestionForScoring(
 			item.id,
 			JSON.stringify(incorrectGroup),
 			0,
 		);
-		console.log(
-			'Submitted question for scoring:',
-			item.id,
-			incorrectGroup || 'Ran out of Lives',
-			0,
-		);
+		console.log('Submitted question for scoring:', item.id, '', 0);
 	});
 
 	wordsGrid
@@ -428,7 +428,7 @@ function disableGame() {
 	}
 	// Show the modal for the final score
 	resultsModal.classList.remove('hidden');
-	//stupid way of centering it but iFrame
+	//stupid way of centering it but I'm convinced I have to cause iFrame
 	const rect = resultsModal.getBoundingClientRect();
 	resultsModal.style.top = `calc(50% - ${rect.height / 2}px)`;
 	resultsModal.style.left = `calc(51% - ${rect.height / 2}px)`;
