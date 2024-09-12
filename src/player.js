@@ -322,7 +322,7 @@ async function checkSelection(count) {
 		Materia.Score.submitQuestionForScoring(
 			closestMatch.id,
 			JSON.stringify(selectedWords),
-			pointsPerCorrectGroup,
+			0,
 		);
 
 		if (highestGroupLength + 1 === dimensionXGlobal) {
@@ -395,33 +395,19 @@ function disableGame() {
 	const wordsGrid = document.querySelector('.wordsPreview');
 	const currentQset = getCurrentQset();
 
-	// const unguessedDescriptions = currentQset.items.filter((item) => {
-	// 	return !getGuessedGroups().has(item.questions[0].text);
-	// });
+	const unguessedDescriptions = currentQset.items.filter((item) => {
+		return !getGuessedGroups().has(item.questions[0].text);
+	});
 
-	// unguessedDescriptions.forEach((item, index) => {
-	// 	let incorrectGroup = guessedGroupsState[`group${index + 1}`];
-	//
-	// 	if (incorrectGroup) {
-	// 		incorrectGroup = Array.isArray(incorrectGroup)
-	// 			? incorrectGroup
-	// 			: [incorrectGroup];
-	// 	} //
-	// 	else {
-	// 		incorrectGroup = ['Ran out of Lives'];
-	// 	}
-	// 	Materia.Score.submitQuestionForScoring(
-	// 		item.id,
-	// 		JSON.stringify(incorrectGroup),
-	// 		0,
-	// 	);
-	// 	console.log(
-	// 		'Submitted question for scoring:',
-	// 		item.id,
-	// 		incorrectGroup || 'Ran out of Lives',
-	// 		0,
-	// 	);
-	// });
+	unguessedDescriptions.forEach((item) => {
+		const incorrectGroup = [''];
+		Materia.Score.submitQuestionForScoring(
+			item.id,
+			JSON.stringify(incorrectGroup),
+			0,
+		);
+		console.log('Submitted question for scoring:', item.id, '', 0);
+	});
 
 	wordsGrid
 		.querySelectorAll('.previewItem input[type="checkbox"]')

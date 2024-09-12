@@ -61,6 +61,15 @@ function populateTable(scoreTable, showAnswers) {
 		const row1 = document.createElement('tr');
 		row1.setAttribute('role', 'row');
 
+		let isEmpty = false;
+		if (entry.data[1] === `[""]`) {
+			isEmpty = true;
+			console.log('WE FINALLY DID IT');
+		} else {
+			console.log('NOPE YOU DIDNT DO IT');
+			console.log(`entry.data[1] is ${JSON.stringify(entry.data[1])}`);
+		}
+
 		const scoreCell = document.createElement('td');
 		scoreCell.setAttribute('role', 'cell');
 		if (entry.score === 100) {
@@ -72,6 +81,11 @@ function populateTable(scoreTable, showAnswers) {
 			scoreCell.innerHTML = xmark;
 			scoreCell.classList.add('wrong');
 		}
+		//maybe add the number for each scoreCell
+		const questionNumber = document.createElement('label');
+		questionNumber.textContent = `#${entryIndex + 1}`;
+		scoreCell.append(questionNumber);
+
 		scoreCell.rowSpan = 2;
 		row1.appendChild(scoreCell);
 		//make the row for the top part of the row span
@@ -80,14 +94,21 @@ function populateTable(scoreTable, showAnswers) {
 		console.log('Creating the fancy cell show answer is ', entry.data[2]);
 		FancyCell.colSpan = 4;
 		FancyCell.setAttribute('role', 'cell');
+
+		let heading = isAllRight
+			? `<h1 style="margin-bottom: 0;">${entry.data[0]}</h1>`
+			: isEmpty
+				? `<h1 style="margin-bottom: 0;"> Ran out of lives! </h1>`
+				: `<h1 style="margin-bottom: 0;"> Wrong attempt </h1>`;
+
 		FancyCell.innerHTML = `
-	   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-		  <h1 style="margin-bottom: 0;">${entry.data[0]}</h1>
-		  ${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
-			<label>Your choice:</label>
-		  <div data-container-id="${containerId}" style="display:flex;"></div>
-		</div>
-	  `;
+		   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+				${heading}
+				${showAnswers && !isAllRight ? `<p style="margin-top: 0; color: #ff84f2; font-weight: bold;">Correct answers: <span style="color: #0df; font-weight: normal";> ${entry.data[2]}</span></p>` : ''}
+				<label>Your choice:</label>
+				<div data-container-id="${containerId}" style="display:flex;"></div>
+			</div>
+		`;
 		row1.appendChild(FancyCell);
 		tbodyElement.appendChild(row1);
 		createFancyAnswer(entry.data[1], entry.data[2], containerId);
