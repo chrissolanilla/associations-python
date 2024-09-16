@@ -19,6 +19,7 @@ import {
 	sleep,
 	setCorrectGuesses,
 	dragElement,
+	updateButtonStyles,
 } from './FunctionsPlayer';
 
 import { createTutorialModal } from './tutorialModal';
@@ -121,32 +122,52 @@ function setupGame(qset) {
 
 	const controlsElement = document.getElementById('controls');
 	const attemptsSpan = document.getElementById('span');
-	for (let i = 0; i < dimensionY; i++) {
-		const button = document.createElement('button');
-		const count = dimensionX * (i + 1);
-		button.textContent = `Check ${count}`;
-		button.id = `check${count}`;
-		button.classList.add('greyOutButton');
-		button.setAttribute(
-			'aria-label',
-			`Check your selection of ${count} words.`,
-		);
-		button.addEventListener('click', (event) => {
-			if (!event.target.classList.contains('styled-button')) {
-				event.preventDefault();
-				return;
-			}
-			checkSelection(count);
-		});
-		//disable or hide the extra buttons
-		if (i !== 0) {
-			button.style.display = 'none';
+	const button = document.createElement('button');
+	button.textContent = `Check ${dimensionX}`;
+	button.id = `check${dimensionX}`;
+	button.classList.add('greyOutButton');
+	button.setAttribute(
+		'aria-label',
+		`Check your selection of ${dimensionX} words.`,
+	);
+	button.addEventListener('click', (event) => {
+		if (!event.target.classList.contains('styled-button')) {
+			event.preventDefault();
+			return;
 		}
-		// controlsElement.appendChild(button);
-		controlsElement.insertBefore(button, attemptsSpan);
-		//send this button to a list of buttons in the functions page.
-		addCurrentButtons(button.id);
-	}
+		//update the style before we do any long computation so they don't submit more than once
+		updateButtonStyles(button.id, false);
+		checkSelection(dimensionX);
+	});
+	controlsElement.insertBefore(button, attemptsSpan);
+	addCurrentButtons(button.id);
+	//we only have one button now so this can be commented out
+	// for (let i = 0; i < dimensionY; i++) {
+	// 	const button = document.createElement('button');
+	// 	const count = dimensionX * (i + 1);
+	// 	button.textContent = `Check ${count}`;
+	// 	button.id = `check${count}`;
+	// 	button.classList.add('greyOutButton');
+	// 	button.setAttribute(
+	// 		'aria-label',
+	// 		`Check your selection of ${count} words.`,
+	// 	);
+	// 	button.addEventListener('click', (event) => {
+	// 		if (!event.target.classList.contains('styled-button')) {
+	// 			event.preventDefault();
+	// 			return;
+	// 		}
+	// 		checkSelection(count);
+	// 	});
+	// 	//disable or hide the extra buttons
+	// 	if (i !== 0) {
+	// 		button.style.display = 'none';
+	// 	}
+	// 	// controlsElement.appendChild(button);
+	// 	controlsElement.insertBefore(button, attemptsSpan);
+	// 	//send this button to a list of buttons in the functions page.
+	// 	addCurrentButtons(button.id);
+	// }
 	wordsGrid.innerHTML = '';
 	//create the checkboxes
 	shuffledWords.forEach((word, index) => {
@@ -318,7 +339,7 @@ async function checkSelection(count) {
 	if (validWordsCount !== count) {
 		console.log(`closest match is ${closestMatch}`);
 		//item is not defined since its out of scope form the parameter
-		const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
+		// const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
 		Materia.Score.submitQuestionForScoring(
 			closestMatch.id,
 			JSON.stringify(selectedWords),
@@ -336,10 +357,13 @@ async function checkSelection(count) {
 		attempts++;
 		AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
 		maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} left)`;
-		for (let i = 1; i <= dimensionYGlobal; i++) {
-			const btn = document.getElementById(`check${dimensionXGlobal * i}`);
-			btn.classList.remove('styled-button');
-		}
+		const btn = document.getElementById(`check${dimensionXGlobal}`);
+		btn.classList.remove('styled-button');
+		//we only have one button now...
+		// for (let i = 1; i <= dimensionYGlobal; i++) {
+		// 	const btn = document.getElementById(`check${dimensionXGlobal * i}`);
+		// 	btn.classList.remove('styled-button');
+		// }
 		if (attempts >= maxAttempts) {
 			disableGame();
 		}

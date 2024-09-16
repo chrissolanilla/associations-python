@@ -4,7 +4,7 @@ let currentQset;
 let guessedGroups = new Set();
 let dimensionX = 0;
 let dimensionY = 0;
-let buttonIDs = [];
+let buttonIDs = '';
 let correctGuesses = 0;
 
 export function sleep(ms) {
@@ -54,12 +54,17 @@ export function resetGuessedGroups() {
 }
 
 export function addCurrentButtons(buttonId) {
-	//add it to the list or array of buttons
-	buttonIDs.push(buttonId);
+	buttonIDs = buttonId;
 }
+//at this point there is only one button so i will comment this out for now
+// export function addCurrentButtons(buttonId) {
+// 	//add it to the list or array of buttons
+// 	buttonIDs.push(buttonId);
+// }
 export function updateButtonStyles(buttonId, isEnabled) {
 	const button = document.getElementById(buttonId);
 	if (isEnabled) {
+		console.log('button is ', buttonId, 'and we are enabled');
 		button.classList.remove('greyOutButton');
 		button.classList.add('styled-button');
 		button.setAttribute('tabindex', '0');
@@ -110,12 +115,24 @@ export function updateSelectionStyles() {
 	const selectionCount = selectedWords.length;
 	//call the function dimensinoX times for the button ids that are dynamically created.
 	// console.log('buttonIDs are ', buttonIDs);
-	for (let i = 0; i < dimensionY; i++) {
-		updateButtonStyles(
-			buttonIDs[i],
-			selectionCount === dimensionX * (i + 1),
+	console.log('selectionCount is ', selectionCount);
+	console.log(`dimensionX is ${dimensionX * 1}`);
+	let styleBool = false;
+	if (selectionCount == dimensionX) {
+		styleBool = true;
+	} //
+	else {
+		console.log(
+			`why is styleBool ${styleBool} when dimensionX is ${dimensionX} and selectionCount is ${selectionCount}`,
 		);
 	}
+	updateButtonStyles(buttonIDs, styleBool);
+	// for (let i = 0; i < dimensionY; i++) {
+	// 	updateButtonStyles(
+	// 		buttonIDs[i],
+	// 		selectionCount === dimensionX * (i + 1),
+	// 	);
+	// }
 	toggleCheckbox();
 }
 

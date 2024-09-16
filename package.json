@@ -1,28 +1,26 @@
 {
-  "name": "connections-game-materia-widget",
-  "materia": {
-    "cleanName": "connections-game"
-  },
-  "version": "0.1.0",
-  "description": "My awesome project",
-  "scripts": {
-    "start": "mwdk-start",
-    "build": "mwdk-build-prod",
-    "build-dev": "mwdk-build-dev",
-    "lint": "eslint . --fix --config .eslintrc.json"
-  },
-  "author": "Your Name",
-  "license": "",
-  "dependencies": {
-    "materia-widget-development-kit": "^3.0.2",
-    "raw-loader": "^4.0.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "eslint": "^9.6.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.3.2"
-  }
+	"name": "connections-game-materia-widget",
+	"materia": {
+		"cleanName": "connections-game"
+	},
+	"version": "0.1.0",
+	"description": "Group words together and check if they form a common connection. Inspired from the NYT Connectins Game",
+	"scripts": {
+		"start": "mwdk-start",
+		"build": "mwdk-build-prod",
+		"build-dev": "mwdk-build-dev",
+		"lint": "eslint . --fix --config .eslintrc.json"
+	},
+	"author": "Christopher Solanilla",
+	"license": "",
+	"dependencies": {
+		"materia-widget-development-kit": "^3.0.2",
+		"raw-loader": "^4.0.2"
+	},
+	"devDependencies": {
+		"eslint": "^9.6.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.1.3",
+		"prettier": "^3.3.2"
+	}
 }
