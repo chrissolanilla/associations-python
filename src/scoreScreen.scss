@@ -8,6 +8,10 @@ h1 {
   text-align: center;
 }
 
+.headings {
+  font-size: 2rem;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -16,7 +20,7 @@ h1 {
 
 .correct {
   background-color: #5cb85c;
-  color: white;
+  color: black;
 }
 
 .preview-item {
@@ -54,7 +58,7 @@ h1 {
 
 .wrong {
   background-color: #d9534f;
-  color: white;
+  color: black;
 }
 table {
   border: 1px solid #ccc;
@@ -94,4 +98,15 @@ tbody td {
 
 #responses {
   margin-top: 4px;
+}
+
+.missed-table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.yellowWord {
+  background-color: #ffd800;
 }
