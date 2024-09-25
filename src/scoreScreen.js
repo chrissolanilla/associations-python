@@ -13,10 +13,11 @@ const missedCategories = [];
 Materia.ScoreCore.start({
 	start: (instance, qset, scoreTable, isPreview, qsetVersion) => {
 		const showAnswersBoolean = qset.showAnswers;
-		if (!showAnswersBoolean) {
-			message.textContent =
-				'The widget creator has disabled viewing of answers for wrong questions.';
-		}
+		// this feels like this message does not belong
+		// if (!showAnswersBoolean) {
+		// 	message.textContent =
+		// 		'The widget creator has disabled viewing of answers for wrong questions.';
+		// }
 		populateTable(
 			scoreTable,
 			showAnswersBoolean,

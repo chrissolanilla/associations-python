@@ -68,6 +68,12 @@ td {
   border: 1px solid #555;
 }
 
+.fancyCell {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 thead tr {
   background-color: #444;
   color: #fff;
@@ -110,3 +116,5 @@ tbody td {
 .yellowWord {
   background-color: #ffd800;
 }
+
+

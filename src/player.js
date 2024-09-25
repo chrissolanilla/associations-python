@@ -141,33 +141,6 @@ function setupGame(qset) {
 	});
 	controlsElement.insertBefore(button, attemptsSpan);
 	addCurrentButtons(button.id);
-	//we only have one button now so this can be commented out
-	// for (let i = 0; i < dimensionY; i++) {
-	// 	const button = document.createElement('button');
-	// 	const count = dimensionX * (i + 1);
-	// 	button.textContent = `Check ${count}`;
-	// 	button.id = `check${count}`;
-	// 	button.classList.add('greyOutButton');
-	// 	button.setAttribute(
-	// 		'aria-label',
-	// 		`Check your selection of ${count} words.`,
-	// 	);
-	// 	button.addEventListener('click', (event) => {
-	// 		if (!event.target.classList.contains('styled-button')) {
-	// 			event.preventDefault();
-	// 			return;
-	// 		}
-	// 		checkSelection(count);
-	// 	});
-	// 	//disable or hide the extra buttons
-	// 	if (i !== 0) {
-	// 		button.style.display = 'none';
-	// 	}
-	// 	// controlsElement.appendChild(button);
-	// 	controlsElement.insertBefore(button, attemptsSpan);
-	// 	//send this button to a list of buttons in the functions page.
-	// 	addCurrentButtons(button.id);
-	// }
 	wordsGrid.innerHTML = '';
 	//create the checkboxes
 	shuffledWords.forEach((word, index) => {
@@ -182,10 +155,9 @@ function setupGame(qset) {
 		wordElement.appendChild(checkbox);
 		wordElement.appendChild(label);
 		wordsGrid.appendChild(wordElement);
-		//dynamically create dimensionY number of buttons with text check {dimensionX}
 
 		checkbox.addEventListener('change', () => {
-			selectWord(word.trim(), wordElement, checkbox);
+			selectWord(word.trim());
 		});
 		//gets the parent element and makes the div look it it's being focused
 		checkbox.addEventListener('focus', (event) => {

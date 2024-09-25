@@ -1,4 +1,3 @@
-// FunctionsPlayer.js
 let selectedWords = [];
 let currentQset;
 let guessedGroups = new Set();
@@ -56,11 +55,7 @@ export function resetGuessedGroups() {
 export function addCurrentButtons(buttonId) {
 	buttonIDs = buttonId;
 }
-//at this point there is only one button so i will comment this out for now
-// export function addCurrentButtons(buttonId) {
-// 	//add it to the list or array of buttons
-// 	buttonIDs.push(buttonId);
-// }
+
 export function updateButtonStyles(buttonId, isEnabled) {
 	const button = document.getElementById(buttonId);
 	if (isEnabled) {
@@ -101,22 +96,12 @@ export function updateSelectionStyles() {
 		else if (correctGuesses < 2) item.classList.add('selected-8');
 		else if (correctGuesses < 3) item.classList.add('selected-12');
 		else if (correctGuesses < 4) item.classList.add('selected-16');
-		else if (correctGuesses < 5) {
-			item.classList.add('selected-20');
-			console.log(
-				'the index is',
-				index,
-				'and the tan index is',
-				index % 5,
-			);
-		} else item.classList.add('selected-24');
+		else if (correctGuesses < 5) item.classList.add('selected-20');
+		else item.classList.add('selected-24');
 	});
 
 	const selectionCount = selectedWords.length;
 	//call the function dimensinoX times for the button ids that are dynamically created.
-	// console.log('buttonIDs are ', buttonIDs);
-	console.log('selectionCount is ', selectionCount);
-	console.log(`dimensionX is ${dimensionX * 1}`);
 	let styleBool = false;
 	if (selectionCount == dimensionX) {
 		styleBool = true;
@@ -127,16 +112,10 @@ export function updateSelectionStyles() {
 		);
 	}
 	updateButtonStyles(buttonIDs, styleBool);
-	// for (let i = 0; i < dimensionY; i++) {
-	// 	updateButtonStyles(
-	// 		buttonIDs[i],
-	// 		selectionCount === dimensionX * (i + 1),
-	// 	);
-	// }
 	toggleCheckbox();
 }
 
-/** @param {String} description @param {Array<string>} group @param {String} className @param {boolean} override */
+/** @param {string} description @param {Array<string>} group @param {string} className @param {boolean} override */
 export function createAnswerDiv(description, group, className, override) {
 	console.log('CREATING ANSWER DIV', description, group, className);
 	const answerDiv = document.createElement('div');
@@ -179,6 +158,7 @@ export function createAnswerDiv(description, group, className, override) {
 	return answerDiv;
 }
 
+/** @param {Array<string>} array */
 export function shuffleArray(array) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -187,15 +167,15 @@ export function shuffleArray(array) {
 	return array;
 }
 
-export function selectWord(word, wordElement, checkbox) {
-	console.log('DIMENSION X AND Y ARE', dimensionX, dimensionY);
+/** @param {string} word */
+export function selectWord(word) {
 	const wordIndex = selectedWords.indexOf(word);
 	if (wordIndex > -1) {
-		// Deselect word
+		// deselect word
 		selectedWords.splice(wordIndex, 1);
-		//don't let them select more than X amonut of words sadly
-	} else if (selectedWords.length < dimensionX) {
-		// Select word
+	}
+	//don't let them select more than X amonut of words sadly(i had a cool system b4)
+	else if (selectedWords.length < dimensionX) {
 		selectedWords.push(word);
 	}
 	console.log('Selected Words in function selectWord:', selectedWords);
@@ -299,6 +279,7 @@ export function animateSelectionToTop(isCorrect) {
 	}, 2000);
 }
 
+/** @param {HTMLElement} elmnt */
 export function dragElement(elmnt) {
 	var pos1 = 0,
 		pos2 = 0,

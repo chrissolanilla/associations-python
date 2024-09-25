@@ -61,6 +61,8 @@ export function populateTable(
 		// console.log('Creating the fancy cell show answer is ', entry.data[2]);
 		FancyCell.colSpan = 4;
 		FancyCell.setAttribute('role', 'cell');
+		FancyCell.classList.add('FancyCell');
+
 
 		//beter than nested ternary for html
 		let heading;
@@ -167,6 +169,8 @@ export function createFancyAnswer(
 	const FancyContainer = document.createElement('div');
 	FancyContainer.setAttribute('data-container-id', containerId);
 	FancyContainer.style.display = 'flex';
+	FancyContainer.style.flexWrap = 'wrap';
+	FancyContainer.style.justifyContent = 'center';
 
 	const label = document.querySelector(`[data-label-id='${labelId}']`);
 	let userWordsArray = Array.isArray(userAnswer)
@@ -207,9 +211,11 @@ export function createFancyAnswer(
 			if (correctWordsArray.includes(word) && isAllRight) {
 				previewItem.classList.add('correct-word');
 			} //
-			else if (correctWordsArray.includes(word) && !isAllRight) {
+				//only show yellow(partially correct) if showAnswers is true
+			else if (showAnswers && correctWordsArray.includes(word) && !isAllRight) {
 				previewItem.classList.add('yellowWord');
 			} //
+
 			else {
 				previewItem.classList.add('incorrect-word');
 			}
@@ -273,6 +279,8 @@ export function generateTable2(showAnswersBool, missedCategories) {
 			const FancyContainer = document.createElement('div');
 			FancyContainer.setAttribute('data-container-id', containerId);
 			FancyContainer.style.display = 'flex';
+			FancyContainer.style.flexWrap = 'wrap';
+			FancyContainer.style.justifyContent = 'center';
 			category.correctAnswers.forEach((answer) => {
 				const previewItem = document.createElement('div');
 				previewItem.innerHTML = `<label> ${answer}</label>`;
