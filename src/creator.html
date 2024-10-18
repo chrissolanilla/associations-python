@@ -18,27 +18,19 @@
 		<!--quick little intro modal that has them enter a game name and explain-->
 		<dialog id="introModal">
 			<h1>Welcome to the Connections Widget Creator</h1>
-			<h3 class="whatis">What is connections?</h3>
 			<p class="whatis">
-				Connections is a game that involves the player selecting a group
-				of words and checking if all the words in their selection are
-				connected in some type of way. The goal of the player is to
-				correctly match the words with all the groups before they run
-				out of lives or attempts.
+				Connections is a game that tasks students with matching words and phrases
+				based on a common topic or theme.
 			</p>
 			<p class="whatis">
-				As the creator, you can customize aspects of the game such as
-				how many lives the player has, how many groups of words are in
-				the game, and how many words for each group.
+				Customize your Connections game by selecting a grid size and selecting a theme or topic for each category. The topics should
+				be distinct from one another. Then, populate each card within every category with words or phrases associated with the topic.
 			</p>
-			<p id="introP1">
-				To get started, please enter a game name and grid size.
-			</p>
-			<p id="introP2">
-				You can change both of these at any time later on.
+			<p class="whatis">
+				Enter a name for your widget and select a grid size. You can modify both options later.
 			</p>
 			<form id="gameNameForm">
-				<label for="GameName2">Game Name</label>
+				<label for="GameName2">Name Your Widget</label>
 				<input
 					placeholder="E.g. My Trivia Game"
 					type="text"
@@ -57,14 +49,13 @@
 		</dialog>
 		<header>
 			<div class="logo"></div>
-			<div class="ContainerDimensionGroup">
-				<label for="GameName" class="headings">Game Name</label>
+			<div class="ContainerDimensionGroup widgetTitle">
 				<input
 					type="text"
 					name="GameName"
 					id="GameName"
 					class="GameName"
-					placeholder="E.g. My Trivia Game"
+					placeholder="My Trivia Widget"
 					required
 				/>
 			</div>
@@ -83,7 +74,7 @@
 				/>
 			</div>
 
-			<div class="ContainerDimensionGroup">
+			<div class="ContainerDimensionGroup livesCount">
 				<label for="lives">Lives</label>
 				<div class="number-input">
 					<button class="decrement" id="decrementButton">-</button>
@@ -102,9 +93,8 @@
 			<!-- </div> -->
 
 			<div class="ContainerDimensionInput">
-				<button id="helpButton" class="helpButton">?</button>
 				<button class="ChooseButton" id="chooseButton">
-					Choose Grid Size
+					Change Grid Size
 				</button>
 				<div
 					class="dimension-status"
@@ -135,6 +125,7 @@
 					</div>
 				</dialog>
 			</div>
+			<button id="helpButton" class="helpButton">?</button>
 		</header>
 		<!--Toast modal in case they put in invalid thing.-->
 		<div
