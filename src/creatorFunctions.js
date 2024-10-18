@@ -133,8 +133,6 @@ export function createDynamicInputs() {
 		const creatorAnswersDiv = document.createElement('div');
 		creatorAnswersDiv.classList.add('CreatorAnswers');
 
-		// const descriptionLabel = document.createElement('label');
-		// descriptionLabel.textContent = `Group ${j + 1}`;
 		const descriptionInput = document.createElement('input');
 		descriptionInput.type = 'text';
 		descriptionInput.name = `Description${j + 1}`;
@@ -142,12 +140,7 @@ export function createDynamicInputs() {
 		descriptionInput.required = true;
 		descriptionInput.placeholder = `Category description, e.g., ${placeholders[j][0]}`;
 		descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
-		// if (descriptionInput.value.trim() !== '') {
-		// 	descriptionInput.classList.add('valid');
-		// } //
-		// else {
-		// 	descriptionInput.classList.add('invalid');
-		// }
+
 		descriptionInput.classList.add('dInput');
 		descriptionInput.addEventListener('input', () => {
 			updateDescriptionState(j + 1, descriptionInput.value);
@@ -170,7 +163,6 @@ export function createDynamicInputs() {
 			//update the hash map
 			updateSets();
 		});
-		// creatorAnswersDiv.appendChild(descriptionLabel);
 		creatorAnswersDiv.appendChild(descriptionInput);
 
 		const wordsGrid = document.createElement('div');
