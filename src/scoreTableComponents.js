@@ -228,6 +228,9 @@ export function createFancyAnswer(
 
 /** @param {boolean} showAnswersBool @param {Object} missedCategories */
 export function generateTable2(showAnswersBool, missedCategories) {
+	if(missedCategories.length === 0) {
+		return;
+	}
 	const container = document.createElement('div');
 	container.classList.add('missed-table-container');
 
