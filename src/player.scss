@@ -201,7 +201,7 @@ dialog::backdrop {
 }
 .previewItem:hover {
   background-color: #9c9c9c;
-  transform: scale(1.07);
+  transform: scale(1.03);
 }
 .previewItem:active {
   background-color: lightblue;
@@ -211,7 +211,7 @@ dialog::backdrop {
 }
 
 .previewItem.staggered-jump {
-  animation: jump 0.5s forwards;
+	animation: jump 0.15s ease-out forwards;
 }
 
 .previewItem.correct-move {
@@ -219,7 +219,7 @@ dialog::backdrop {
 }
 
 .previewItem.incorrect-move {
-  animation: sideToSide 0.5s forwards;
+  animation: sideToSide 0.2s forwards;
 }
 
 @keyframes jump {
@@ -227,7 +227,7 @@ dialog::backdrop {
 	transform: translateY(0);
   }
   100% {
-	transform: translateY(-20px);
+	transform: translateY(-12px);
   }
 }
 
@@ -243,12 +243,18 @@ dialog::backdrop {
 
 @keyframes sideToSide {
   0% {
-	transform: translateX(-100%);
+	transform: translateX(-12px);
 	// opacity: 0;
   }
+  25% {
+	transform: translateX(12px);
+  }
   50% {
-	transform: translateX(100);
+	transform: translateX(-12px);
 	// opacity: 1;
+  }
+  75% {
+	transform: translateX(12px);
   }
   100% {
 	transform: translateX(0);

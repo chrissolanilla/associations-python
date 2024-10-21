@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		introModal.close();
 		introModal.classList.add('hidden');
 		modal.showModal();
-		modal.classList.remove('hidden');
+		modal.classList.remove('hidden')
 	});
 });
 
@@ -265,6 +265,7 @@ DimensionContainer.addEventListener('click', (event) => {
 		else {
 			modal.close();
 			modal.classList.add('hidden');
+			document.getElementById('dynamicInputs').classList.add('show')
 			createDynamicInputs();
 		}
 	}
@@ -313,8 +314,10 @@ Materia.CreatorCore.start({
 				console.log('No data in qset');
 				introModal.showModal();
 				introModal.classList.remove('hidden');
-				return;
+
+				return false
 			}
+			document.getElementById('dynamicInputs').classList.add('show')
 			widgetState.dimensionX = qset.data.items[0].answers[0].text.length;
 			widgetState.dimensionY = qset.data.items.length;
 
@@ -387,14 +390,33 @@ Materia.CreatorCore.start({
 			const GameName = document.getElementById('GameName');
 			if (GameName.value.trim() === '') {
 				console.log('empty game name');
-				GameName.classList.add('invalid');
+				GameName.classList.remove('valid')
+				GameName.classList.add('invalid')
 			} //
 			else {
 				GameName.classList.remove('invalid');
 				GameName.classList.add('valid');
 			}
-			//checks for any invalid red inputs
-			const invalidElements = document.querySelectorAll('.invalid');
+			
+			// pristine words may be invalid but don't yet have the selector; add it first
+			let allWords = document.querySelectorAll('.grid-input')
+			for (const word of allWords) {
+				if (!word.value || word.value.length == 0) {
+					const parentElement = word.closest('.previewItem')
+					if (parentElement) parentElement.classList.add('invalid')
+				}
+			}
+
+			// do the same for categories
+			let allCategories = document.querySelectorAll('.dInput')
+			for (const category of allCategories) {
+				if (!category.value || category.value.length == 0) {
+					category.classList.add('invalid')
+				}
+			}
+
+			//checks for any invalid red inputs (widget title, category names, and words)
+			const invalidElements = document.querySelectorAll('.invalid')
 			if (invalidElements.length > 0) {
 				console.log('empty words or description');
 				//show a toast module that says to complete all fields

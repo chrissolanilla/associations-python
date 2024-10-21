@@ -133,21 +133,14 @@ export function createDynamicInputs() {
 		const creatorAnswersDiv = document.createElement('div');
 		creatorAnswersDiv.classList.add('CreatorAnswers');
 
-		const descriptionLabel = document.createElement('label');
-		descriptionLabel.textContent = `Group ${j + 1}`;
 		const descriptionInput = document.createElement('input');
 		descriptionInput.type = 'text';
 		descriptionInput.name = `Description${j + 1}`;
 		descriptionInput.id = `Description${j + 1}`;
 		descriptionInput.required = true;
-		descriptionInput.placeholder = `Enter a description for a group of words, e.g., ${placeholders[j][0]}`;
+		descriptionInput.placeholder = `Category description, e.g., ${placeholders[j][0]}`;
 		descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
-		if (descriptionInput.value.trim() !== '') {
-			descriptionInput.classList.add('valid');
-		} //
-		else {
-			descriptionInput.classList.add('invalid');
-		}
+
 		descriptionInput.classList.add('dInput');
 		descriptionInput.addEventListener('input', () => {
 			updateDescriptionState(j + 1, descriptionInput.value);
@@ -164,12 +157,12 @@ export function createDynamicInputs() {
 				descriptionInput.classList.remove('invalid');
 			} //
 			else {
+				descriptionInput.classList.remove('valid');
 				descriptionInput.classList.add('invalid');
 			}
 			//update the hash map
 			updateSets();
 		});
-		creatorAnswersDiv.appendChild(descriptionLabel);
 		creatorAnswersDiv.appendChild(descriptionInput);
 
 		const wordsGrid = document.createElement('div');
@@ -196,12 +189,6 @@ export function createDynamicInputs() {
 			wordCell.appendChild(wordInput);
 			wordCell.appendChild(duplicateWarning);
 			const wordParent = wordInput.parentNode;
-			if (!wordInput.value) {
-				wordParent.classList.add('invalid');
-			} //
-			else {
-				wordParent.classList.add('valid');
-			}
 
 			wordInput.addEventListener('input', () => {
 				if (wordParent) {
@@ -219,6 +206,7 @@ export function createDynamicInputs() {
 						wordParent.classList.remove('invalid');
 						duplicateWarning.classList.add('hidden');
 					} else {
+						wordParent.classList.remove('valid');
 						wordParent.classList.add('invalid');
 						duplicateWarning.classList.remove('hidden');
 					}

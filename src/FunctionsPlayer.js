@@ -236,21 +236,19 @@ export function animateSelectionToTop(isCorrect) {
 
 		if (checkbox) {
 			const wordElement = checkbox.parentNode;
-			wordElement.classList.add('staggered-jump');
 			setTimeout(
 				() => {
 					if (isCorrect) {
 						wordElement.classList.add('correct-move');
-					} //
+					}
 					else {
 						wordElement.classList.add('incorrect-move');
 					}
 				},
-				500 + index * 100,
+				index * 100,
 			);
 			setTimeout(() => {
-				// so we can see the animatino again on these words if wrong
-				wordElement.classList.remove('staggered-jump');
+				// so we can see the animation again on these words if wrong
 				wordElement.classList.remove('incorrect-move');
 			}, 3000);
 		} else {
