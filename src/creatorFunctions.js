@@ -148,6 +148,7 @@ export function createDynamicInputs() {
 		descriptionInput.value = savedWidgetState[`description${j + 1}`] || '';
 
 		descriptionInput.classList.add('dInput');
+		descriptionInput.classList.add('hvr-bounce-to-right');
 		descriptionInput.addEventListener('input', () => {
 			updateDescriptionState(j + 1, descriptionInput.value);
 			console.log(

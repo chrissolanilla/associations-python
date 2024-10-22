@@ -1,18 +1,6 @@
-/* my creator scss */
 body {
-  // font-family: Comic Sans MS, sans-serif;
   font-family: 'Lato', serif;
-  // font-family: American Typewriter, serif;
-  /* I kind of like this orange color bth */
-  // background: #c41;
-  // background: #ffa891;
-  // background: #b9aeee;
-  // background: #545f62;
   background: #4e444f;
-  // background: #323B3E;
-  // background: #615860;
-  // background: #776E77;
-  // background: linear-gradient(to bottom, #E0E0E0, #615860);
 }
 
 button:active {
@@ -100,7 +88,7 @@ label {
 
 	border: none;
 	border-bottom: solid 2px #fff;
-	
+
 	color: #fff;
 	font-size: 1rem;
 	text-align: left;
@@ -184,14 +172,14 @@ label {
 
 .CreatorAnswers input,
 .AnswerDescriptions input {
-//   background: rgba(255, 255, 255, 0.5);
-	background: none;
+	background: rgba(0,0,0,0);
+	// background: none;
 	font-size: 1.75rem;
 	padding: 0.5rem;
-	// border-radius: 4px; /* Adding rounded corners to input fields */
-	width: 100%; /* Full width for input fields */
-	box-sizing: border-box; /* Include padding and border in the element's total width and height */
-	text-align: left;
+	border-radius: 4px;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
 	border: none;
 	border-bottom: solid 2px #fff;
 	outline: none;
@@ -202,6 +190,14 @@ label {
 		&.invalid {
 			border-bottom: solid 2px red;
 		}
+	}
+	&.dInput:focus {
+		text-shadow: 0 0 10px #000;
+		background:rgba(0,0,0,0.1);
+	}
+	&.dInput:hover {
+		text-shadow: 0 0 10px #000;
+		background:rgba(0,0,0,0.1);
 	}
 }
 
@@ -241,11 +237,11 @@ grid-input {
 .Grey {
   background: rgba(151, 162, 166, 0.75);
 }
-/* preview for the game */
+
 .wordsPreview {
   display: grid;
-  // grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
 .previewItem {
 	opacity: 1;
 	font-size: 1rem;
@@ -273,8 +269,8 @@ grid-input {
 .ContainerDimensionGroup {
 	display: flex;
 	flex-direction: row;
-	align-items: center; /* Center items horizontally */
-	justify-content: center; /* Center items vertically */
+	align-items: center;
+	justify-content: center;
 	gap: 1rem;
 	box-sizing: border-box;
 	min-height: 2.8rem;
@@ -319,7 +315,7 @@ grid-input {
 	&:disabled {
 		pointer-events: none;
 	}
-	
+
 	&:active {
 		transform: scale(0.92);
 	}
@@ -369,7 +365,7 @@ grid-input {
 
 .wordsGrid {
   display: grid;
-  gap: 10px; /* Space between grid cells */
+  gap: 10px;
 }
 
 .wordsGrid .previewItem {
@@ -400,11 +396,11 @@ grid-input {
   top: 20px;
   right: 20px;
   z-index: 1000;
-  display: none; /* Initially hidden */
+  display: none;
 }
 
 .toast-container.show {
-  display: block; /* Show when needed */
+  display: block;
 }
 
 .toast {
@@ -499,7 +495,6 @@ grid-input {
   }
 }
 
-/* New smaller left-facing arrow */
 .arrow_box_left {
   position: absolute;
   background: #fbf767;
@@ -509,24 +504,24 @@ grid-input {
   color: #151515;
   font-weight: 400;
   padding: 5px;
-  height: 30px; /* Reduce height */
-  width: 120px; /* Reduce width */
-  margin-right: 140px; /* Adjust the margin */
+  height: 30px;
+  width: 120px;
+  margin-right: 140px;
   animation: pounce_left 1s infinite;
 }
 
 .arrow_box_left span {
   display: inline-block;
-  width: 110px; /* Reduce width */
-  float: left; /* Change float to left */		// NO FLOATS
+  width: 110px;
+  float: left;
   margin-top: -5px;
-  margin-left: 12px; /* Adjust margin */
+  margin-left: 12px;
   text-align: center;
 }
 
 .arrow_box_left:after,
 .arrow_box_left:before {
-  left: 100%; /* Change from right to left */
+  left: 100%;
   top: 50%;
   border: solid transparent;
   content: ' ';
@@ -538,16 +533,16 @@ grid-input {
 
 .arrow_box_left:after {
   border-color: rgba(251, 247, 103, 0);
-  border-left-color: #fbf767; /* Change border-right-color to border-left-color */
-  border-width: 30px; /* Reduce border width */
-  margin-top: -30px; /* Adjust to match the reduced border width */
+  border-left-color: #fbf767;
+  border-width: 30px;
+  margin-top: -30px;
 }
 
 .arrow_box_left:before {
   border-color: rgba(251, 247, 103, 0);
-  border-left-color: #fbf767; /* Change border-right-color to border-left-color */
-  border-width: 33px; /* Reduce border width */
-  margin-top: -33px; /* Adjust to match the reduced border width */
+  border-left-color: #fbf767;
+  border-width: 33px;
+  margin-top: -33px;
 }
 
 @keyframes pounce_left {
@@ -557,7 +552,7 @@ grid-input {
   }
   50% {
 	transform: translateX(10px);
-  } /* Reverse the direction of the pounce */
+  }
 }
 
 
@@ -736,7 +731,6 @@ p.whatis {
   outline-offset: 2px;
 }
 
-/* Media queries for responsiveness */
 @media (max-width: 1540px) {
   .headings {
 	font-size: 1.5rem;
