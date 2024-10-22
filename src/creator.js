@@ -77,9 +77,6 @@ incrementButton.addEventListener('click', () => {
 	livesInput.classList.add('valid');
 });
 
-//have a some inputs craeted already on page load
-createDynamicInputs();
-
 // Add event listeners when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelectorAll('.CreatorAnswers input').forEach((input) => {
@@ -265,7 +262,8 @@ DimensionContainer.addEventListener('click', (event) => {
 		else {
 			modal.close();
 			modal.classList.add('hidden');
-			document.getElementById('dynamicInputs').classList.add('show')
+			//moving this to inside the function
+			// document.getElementById('dynamicInputs').classList.add('show')
 			createDynamicInputs();
 		}
 	}
@@ -397,7 +395,7 @@ Materia.CreatorCore.start({
 				GameName.classList.remove('invalid');
 				GameName.classList.add('valid');
 			}
-			
+
 			// pristine words may be invalid but don't yet have the selector; add it first
 			let allWords = document.querySelectorAll('.grid-input')
 			for (const word of allWords) {

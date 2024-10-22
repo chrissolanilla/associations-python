@@ -50,7 +50,7 @@ console.log(` initializing lives with ${livesConstant}`);
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
 modal.showModal();
-closeButton.addEventListener('click', () => {
+closeButton.addEventListener('pointerdown', () => {
 	modal.close();
 });
 
@@ -104,7 +104,7 @@ function setupGame(qset) {
 	);
 
 	const helpButton = document.getElementById('helpButton');
-	helpButton.addEventListener('click', openModal);
+	helpButton.addEventListener('pointerdown', openModal);
 
 	const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
 	console.log('Descriptions:', descriptions);
@@ -130,7 +130,7 @@ function setupGame(qset) {
 		'aria-label',
 		`Check your selection of ${dimensionX} words.`,
 	);
-	button.addEventListener('click', (event) => {
+	button.addEventListener('pointerdown', (event) => {
 		if (!event.target.classList.contains('styled-button')) {
 			event.preventDefault();
 			return;
@@ -431,7 +431,7 @@ function disableGame() {
 	const darkenBody = document.createElement('div');
 	darkenBody.classList.add('darkenBody');
 	document.body.appendChild(darkenBody);
-	document.getElementById('goToScoreScreen').addEventListener('click', () => {
+	document.getElementById('goToScoreScreen').addEventListener('pointerdown', () => {
 		// End the game and go to the score screen
 		setTimeout(() => {
 			Materia.Engine.end();

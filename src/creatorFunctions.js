@@ -121,16 +121,22 @@ export function updatePreview() {
 export function createDynamicInputs() {
 	const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Grey', 'Yellow'];
 
+	console.log("INSIDE THE FUNCTION RAHHHH");
 	const dynamicInputs = document.getElementById('dynamicInputs');
 	if (!dynamicInputs) return;
+	dynamicInputs.classList.add('show');
+	console.log(`we found dynamicInputs with id ${dynamicInputs.id}`);
 	dynamicInputs.innerHTML = ''; // Clear previous inputs
 	updateSets();
 
 	for (let j = 0; j < widgetState.dimensionY; j++) {
+		console.log(`widgetstate dimensions: ${widgetState.dimensionX} by ${widgetState.dimensionY}`)
 		const inputContainer = document.createElement('div');
+		console.log(`created inputContainer with id ${inputContainer.id}`);
 		inputContainer.classList.add('CreatorKVP', colors[j]);
 
 		const creatorAnswersDiv = document.createElement('div');
+		console.log(`created creatorAnswersDiv with id ${creatorAnswersDiv.id}`);
 		creatorAnswersDiv.classList.add('CreatorAnswers');
 
 		const descriptionInput = document.createElement('input');
@@ -229,8 +235,11 @@ export function createDynamicInputs() {
 		}
 
 		creatorAnswersDiv.appendChild(wordsGrid);
+		console.log(`appenindg creatorAnswersDiv to wordsGrid`);
 		inputContainer.appendChild(creatorAnswersDiv);
+		console.log(`appeing creatorAnswersDiv to inputContainer`);
 		dynamicInputs.appendChild(inputContainer);
+		console.log(`appening inputs to dynamicInputs`);
 	}
 }
 
@@ -365,6 +374,7 @@ export function addKeydownEventListener(
 				) {
 					showToast('The grid must be at least 2x2', 'error');
 				} else {
+					console.log('WE ARE IN THE ELSSE FROZEN');
 					event.preventDefault();
 					modal.close();
 					modal.classList.add('hidden');
@@ -372,6 +382,7 @@ export function addKeydownEventListener(
 						widgetState.dimensionX <= 6 &&
 						widgetState.dimensionY <= 6
 					) {
+						console.log("WE ARE CALLING TEH FUNCTION");
 						createDynamicInputs();
 					}
 				}
