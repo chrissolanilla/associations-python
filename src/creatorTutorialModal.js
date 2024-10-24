@@ -14,7 +14,7 @@ export function createCreatorHelpModal() {
 			creating categories, and populating them with words or phrases related to each category.</p>
 		<p id="help2">Here's a quick guide:</p>
 		<ul id="help3">
-			<li><strong>Grid Size:</strong> Choose the number of groups(Y) and the number of words per group(X). This defines how many groups and words per group players will see in the game.</li>
+			<li><strong>Grid Size(X by Y):</strong> Choose the number of groups(Y) and the number of words per group(X). This defines how many groups and words per group players will see in the game.</li>
 			<li><strong>Categories:</strong> Create distinct topics for each group, ensuring that words in each group relate to the same theme.</li>
 			<li><strong>Words:</strong> Fill each category with words or phrases. You can modify the words and categories later if needed. Make sure there are no duplicate words per widget.</li>
 			<li><strong>Lives:</strong> Set the number of attempts players will have before the game ends. When a player checks a selection of words and it is wrong, they lose a life. Their total score is based on how many associations they got by the end of the game. Losing life will not deduct to total score.</li>

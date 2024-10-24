@@ -63,6 +63,7 @@ dialog {
       width: 692px;
       li {
         text-align: left;
+        margin: 0.5rem 0;
       }
     }
 }
@@ -419,6 +420,7 @@ grid-input {
 }
 
 .toast {
+  font-size: 1.5rem;
   display: block;
   background-color: #333;
   color: white;
