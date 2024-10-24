@@ -77,15 +77,17 @@
 			<div class="ContainerDimensionGroup livesCount">
 				<label for="lives">Lives</label>
 				<div class="number-input">
-					<button class="decrement" id="decrementButton">-</button>
+					<button class="decrement" id="decrementButton" for="livesInput" >-</button>
 					<input
 						name="lives"
 						type="number"
 						id="livesInput"
 						value="1"
 						min="0"
+						aria-live="assertive"
+						aria-atomic="true"
 					/>
-					<button class="increment" id="incrementButton">+</button>
+					<button class="increment" id="incrementButton" for="livesInput" >+</button>
 				</div>
 			</div>
 
@@ -106,7 +108,7 @@
 					0x0
 				</div>
 				<dialog data-modal>
-					<h1>Please choose a grid size</h1>
+					<h1 aria-label="Please choose grid size using the arrow keys">Please choose a grid size</h1>
 					<div
 						class="Form-dimension-container"
 						id="DimensionContainer"
@@ -137,7 +139,7 @@
 			<div
 				class="toast"
 				role="alert"
-				aria-live="polite"
+				aria-live="assertive"
 				aria-atomic="true"
 			>
 				<!--will get inserted text here.-->
