@@ -7,6 +7,13 @@ body {
   color: #fff;
 }
 
+button {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
 button:active {
   transform: scale(0.92);
 }
@@ -198,6 +205,12 @@ dialog::backdrop {
   cursor: pointer;
   border-radius: 6px;
   padding: 1rem;
+  //make it so that they dont select the text label
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+
 }
 .previewItem:hover {
   background-color: #9c9c9c;
