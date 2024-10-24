@@ -43,10 +43,11 @@ header {
 
 dialog {
 	text-align: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	// display: flex;
+	// flex-direction: column;
+	// justify-content: center;
+	// align-items: center;
+    position:absolute;
 	background: #3e363f;
 	color: #fff;
 	border-color: black;
@@ -58,7 +59,21 @@ dialog {
 		min-height: 500px;
 		width: 700px;
 	}
+    &#tutorialModal {
+      width: 692px;
+      li {
+        text-align: left;
+      }
+    }
 }
+
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 
 dialog::backdrop {
   background: black;

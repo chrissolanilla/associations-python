@@ -1,5 +1,6 @@
 //needed for scss
 import { showToast } from './FunctionsPlayer';
+import {createCreatorHelpModal} from './creatorTutorialModal.js'
 import './creator.scss';
 import {
 	//my god tried and tested like functions but now modular
@@ -79,6 +80,7 @@ incrementButton.addEventListener('click', () => {
 
 // Add event listeners when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+	const { openModal, closeModal, modal: tutorialModal } = createCreatorHelpModal();
 	document.querySelectorAll('.CreatorAnswers input').forEach((input) => {
 		input.addEventListener('input', updatePreview);
 	});
@@ -86,8 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const helpButton = document.getElementById('helpButton');
 	helpButton.addEventListener('click', () => {
 		console.log('HELP BUTTON CLICKED');
-		introModal.showModal();
-		introModal.classList.remove('hidden');
+		tutorialModal.showModal();
+
 	});
 
 	const showAnswersDiv = document.getElementById('ShowAnswersDiv');

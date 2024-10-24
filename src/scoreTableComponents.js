@@ -95,7 +95,7 @@ export function populateTable(
 						`;
 				} else {
 					// They ran out of lives and viewing of answers is disabled
-					subHeading = `<p style="margin-top: 0; color: #FFC4B6; font-weight: bold;">Answers are hidden for unguessed connections</p>`;
+					subHeading = `<p style="margin-top: 0; color: #FFC4B6; font-weight: bold;">Answers are hidden for unguessed associations</p>`;
 				}
 			}
 
