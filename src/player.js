@@ -319,7 +319,7 @@ async function checkSelection(count) {
 		);
 
 		if (highestGroupLength + 1 === dimensionXGlobal) {
-			showToast('one away...', 'error');
+			showToast('Sorry, that was not correct. You were one away...', 'error');
 			ScreenReaderElement.textContent = 'Incorrect, one away...';
 		} //
 		else {
