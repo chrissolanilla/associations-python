@@ -1,6 +1,6 @@
 ---
 general:
-    name: Connections
+    name: Associations
     height: 0
     width: 0
     in_catalog: Yes
@@ -18,19 +18,17 @@ files:
     flash_version: 0
 score:
     is_scorable: Yes
-    score_module: Connections
+    score_module: Associations
     score_screen: scoreScreen.html
 meta_data:
     features:
         - Customizable
         - Scorable
-        - Media
     supported_data:
-        - Question/Answer
         - Multiple Choice
     excerpt: >
-        NYI
+        Match sets of words based on commonality or theme.
     about: >
-        NYI
+        Students are tasked with selecting groups of words or phrases based on commonality or theme.
     accessibility_keyboard: Full
     accessibility_reader: Full

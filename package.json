@@ -1,17 +1,17 @@
 {
-	"name": "connections-game-materia-widget",
+	"name": "associations-materia-widget",
 	"materia": {
-		"cleanName": "connections-game"
+		"cleanName": "associations"
 	},
 	"version": "0.1.0",
-	"description": "Group words together and check if they form a common connection. Inspired from the NYT Connectins Game",
+	"description": "Match sets of words based on commonality or theme.",
 	"scripts": {
 		"start": "mwdk-start",
 		"build": "mwdk-build-prod",
 		"build-dev": "mwdk-build-dev",
 		"lint": "eslint . --fix --config .eslintrc.json"
 	},
-	"author": "Christopher Solanilla",
+	"author": "UCF Center for Distributed Learning",
 	"license": "",
 	"dependencies": {
 		"materia-widget-development-kit": "^3.0.2",

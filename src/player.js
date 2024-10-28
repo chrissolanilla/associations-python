@@ -452,30 +452,16 @@ Materia.Engine.start({
 		console.log(
 			'the boolean of show answers boolean is ',
 			showAnswersBoolean,
-		);
+		)
 
-		if (qset.data) {
-			//instace is the entire demo.json object, qset is only the items array
-			const title = instance.name;
-			const TitleElement = document.getElementById('Title');
-			TitleElement.innerHTML = title;
-			const modalH1 = document.getElementById('welcomeModalTitle');
-			modalH1.textContent = 'Welcome to the ' + title + ' Game!';
-			livesConstant = qset.lives;
-			console.log(`setting lives to ${livesConstant}`);
-			setupGame(qset.data);
-		}
-		//
-		else {
-			const title = instance.name;
-			const TitleElement = document.getElementById('Title');
-			TitleElement.innerHTML = title;
-			const modalH1 = document.getElementById('welcomeModalTitle');
-			modalH1.textContent = 'Welcome to the ' + title + ' Game!';
-			livesConstant = instance.qset.data.lives;
-			console.log(`setting lives to ${livesConstant}`);
-			setupGame(qset);
-			console.error('No qset found.');
-		}
+		const title = instance.name
+		const TitleElement = document.getElementById('Title')
+		TitleElement.innerHTML = title
+
+		const modalH1 = document.getElementById('welcomeModalTitle')
+		modalH1.textContent = title
+
+		livesConstant = qset.options.lives ?? 1
+		setupGame(qset)
 	},
 });

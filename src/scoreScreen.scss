@@ -61,7 +61,11 @@ h1 {
   color: black;
 }
 table {
-  border: 1px solid #ccc;
+	border: none;
+
+	&.missed-answers-table {
+		width: 100%;
+	}
 }
 th,
 td {
@@ -91,11 +95,11 @@ tbody td {
 }
 
 .correct-word {
-  background-color: #5cb85c;
+  background-color: #ace4ac;
 }
 
 .incorrect-word {
-  background-color: #d9534f;
+  background-color: #ef8a87;
 }
 
 #message {
@@ -114,7 +118,7 @@ tbody td {
 }
 
 .yellowWord {
-  background-color: #ffd800;
+  background-color: #ffed85;
 }
 
 

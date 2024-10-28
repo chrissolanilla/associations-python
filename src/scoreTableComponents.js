@@ -15,6 +15,10 @@ export function populateTable(
 ) {
 	tbodyElement.innerHTML = '';
 	screenReaderTbodyElement.innerHTML = '';
+	// clears dom elements associated with incorrect answers prior to populating a new table
+	document.querySelectorAll('.missed-table-container').forEach(element => {
+		element.remove()
+	})
 	// scoreTable.forEach((entry, entryIndex) => {
 	for (let entryIndex = 0; entryIndex < scoreTable.length; entryIndex++) {
 		const entry = scoreTable[entryIndex];
@@ -103,7 +107,7 @@ export function populateTable(
 				<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				${heading}
 			${subHeading}
-				<label data-label-id="${labelId}">Your choice:</label>
+				<label data-label-id="${labelId}">You selected:</label>
 				<div data-container-id="${containerId}" style="display:flex;"></div>
 				</div>
 				`;
@@ -269,7 +273,7 @@ export function generateTable2(showAnswersBool, missedCategories) {
 				`;
 			} //
 			else {
-				subHeading = `<label style="margin-top: 0; color: #FFC4B6; font-weight: bold;">Answers are hidden for unguessed connections</label>`;
+				subHeading = `<label style="margin-top: 0; color: #FFC4B6; font-weight: bold;">Answers are hidden for unguessed associations</label>`;
 			}
 
 			FancyCell.innerHTML = `

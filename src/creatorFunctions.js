@@ -16,7 +16,7 @@ export let widgetState = {
 	dimensionY: 4,
 	_title: '',
 	_qset: {},
-	showanswers: false,
+	showAnswers: false,
 	lives: 1,
 };
 

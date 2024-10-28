@@ -118,14 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			event.preventDefault();
 			showAnswersCheckbox.checked = !showAnswersCheckbox.checked;
 			if (showAnswersCheckbox.checked) {
-				widgetState.showanswers = true;
+				widgetState.showAnswers = true;
 				parentDiv.classList.remove('off');
 				parentDiv.classList.add('on');
 				showAnswersLabel.textContent =
 					'Reveal Answers on Score Screen: On';
 			} //
 			else {
-				widgetState.showanswers = false;
+				widgetState.showAnswers = false;
 				showAnswersDiv.classList.remove('on');
 				showAnswersDiv.classList.add('off');
 				showAnswersLabel.textContent =
@@ -137,13 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	showAnswersDiv.addEventListener('click', () => {
 		showAnswersCheckbox.checked = !showAnswersCheckbox.checked;
 		if (showAnswersCheckbox.checked) {
-			widgetState.showanswers = true;
+			widgetState.showAnswers = true;
 			showAnswersDiv.classList.remove('off');
 			showAnswersDiv.classList.add('on');
 			showAnswersLabel.textContent = 'Reveal Answers on Score Screen: On';
 		} //
 		else {
-			widgetState.showanswers = false;
+			widgetState.showAnswers = false;
 			showAnswersDiv.classList.remove('on');
 			showAnswersDiv.classList.add('off');
 			showAnswersLabel.textContent =
@@ -297,8 +297,8 @@ Materia.CreatorCore.start({
 		);
 	},
 	initExistingWidget: (
-		widget,
 		title,
+		widget,
 		qset,
 		qsetVersion,
 		baseUrl,
@@ -309,31 +309,29 @@ Materia.CreatorCore.start({
 			introModal.close();
 			introModal.classList.add('hidden');
 
-			console.log(`qset is ${qset}`);
-			if (!qset.data) {
-				console.log('No data in qset');
+			if (qset.data) qset = qset.data
+			if (!qset.items) {
 				introModal.showModal();
 				introModal.classList.remove('hidden');
 
 				return false
 			}
 			document.getElementById('dynamicInputs').classList.add('show')
-			widgetState.dimensionX = qset.data.items[0].answers[0].text.length;
-			widgetState.dimensionY = qset.data.items.length;
+			widgetState.dimensionX = qset.items[0].answers[0].text.length;
+			widgetState.dimensionY = qset.items.length;
 
-			//for some reason the title is widget
 			const GameNameExisting = document.getElementById('GameName');
-			GameNameExisting.value = widget;
+			GameNameExisting.value = title;
 			if (GameNameExisting.value.trim() === '') {
 				GameNameExisting.classList.add('invalid');
-			} //
+			}
 			else {
 				GameNameExisting.classList.add('valid');
 			}
-			widgetState._title = widget;
+			widgetState._title = title;
 
 			//sync the lives input and state
-			widgetState.lives = qset.lives;
+			widgetState.lives = qset.options.lives ?? 1;
 			livesInput.value = widgetState.lives;
 			if (livesInput.value > 0) {
 				livesInput.classList.add('valid');
@@ -343,7 +341,8 @@ Materia.CreatorCore.start({
 				livesInput.classList.add('invalid');
 			}
 			//sync the show answers checkbox and state
-			widgetState.showanswers = qset.showAnswers;
+			widgetState.showAnswers = qset.options.showAnswers ?? false;
+
 			const ShowAnswersCheckbox2 = document.getElementById(
 				'ShowAnswersCheckbox',
 			);
@@ -351,7 +350,7 @@ Materia.CreatorCore.start({
 			const showAnswersLabel2 =
 				document.getElementById('ShowAnswersLabel');
 
-			ShowAnswersCheckbox2.checked = qset.showAnswers;
+			ShowAnswersCheckbox2.checked = qset.options.showAnswers ?? false;
 			if (ShowAnswersCheckbox2.checked) {
 				showAnswersDiv2.classList.remove('off');
 				showAnswersDiv2.classList.add('on');
@@ -361,13 +360,15 @@ Materia.CreatorCore.start({
 
 			for (let i = 1; i <= widgetState.dimensionY; i++) {
 				widgetState[`words${i}`] =
-					qset.data.items[i - 1].answers[0].text;
+					qset.items[i - 1].answers[0].text;
 				widgetState[`description${i}`] =
-					qset.data.items[i - 1].questions[0].text;
+					qset.items[i - 1].questions[0].text;
 				savedWidgetState[`words${i}`] = widgetState[`words${i}`];
 				savedWidgetState[`description${i}`] =
 					widgetState[`description${i}`];
 			}
+
+			DimensionStatusElement.textContent = `${widgetState.dimensionX} x ${widgetState.dimensionY}`
 
 			createDynamicInputs();
 		}
@@ -434,25 +435,18 @@ Materia.CreatorCore.start({
 				type: 'connections',
 				id: null,
 				questions: [{ text: description }],
-				answers: [{ text: words, value: 25 }],
+				answers: [{ text: words, value: 100 }],
 			});
-			console.log('items are', items);
 		}
 
 		const qset = {
-			qset: {
-				name: widgetState._title,
-				version: 1,
-				showAnswers: widgetState.showanswers,
-				lives: widgetState.lives,
-				data: {
-					items,
-				},
-			},
+			items: items,
+			options: {
+				showAnswers: widgetState.showAnswers,
+				lives: widgetState.lives
+			}
 		};
-		console.log(qset);
-		console.log('THE TITLE OF THE WIDGET IS ', widgetState._title);
 		showToast('Game saved successfully', 'success');
-		Materia.CreatorCore.save(widgetState._title, qset.qset);
+		Materia.CreatorCore.save(widgetState._title, qset);
 	},
 });

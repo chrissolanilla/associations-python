@@ -6,31 +6,37 @@ const tbodyElement = document.getElementById('tbody');
 const screenReaderTbodyElement = document.getElementById('screenReaderTbody');
 const message = document.getElementById('message');
 
-//variables to keep track in the case we do not get everything right. I could make it a parameter 🤔
-let breakPoint = { value: false };
-const missedCategories = [];
+const start = (instance, qset, scoreTable, isPreview, qsetVersion) => {
+	update(qset, scoreTable)
+}
+
+const getRenderedHeight = () => {
+	return Math.ceil(parseFloat(window.getComputedStyle(document.querySelector('html')).height)) + 10
+}
+
+const update = (qset,scoreTable) => {
+
+	let breakPoint = { value: false }
+	let missedCategories = []
+	let showAnswersBoolean = qset.options.showAnswers
+
+	populateTable(
+		scoreTable,
+		showAnswersBoolean,
+		breakPoint,
+		missedCategories,
+		tbodyElement,
+		screenReaderTbodyElement,
+	)
+
+	if (breakPoint.value) generateTable2(showAnswersBoolean, missedCategories)
+
+	let h = getRenderedHeight()
+	Materia.ScoreCore.setHeight(h)
+}
 
 Materia.ScoreCore.start({
-	start: (instance, qset, scoreTable, isPreview, qsetVersion) => {
-		const showAnswersBoolean = qset.showAnswers;
-		// this feels like this message does not belong
-		// if (!showAnswersBoolean) {
-		// 	message.textContent =
-		// 		'The widget creator has disabled viewing of answers for wrong questions.';
-		// }
-		populateTable(
-			scoreTable,
-			showAnswersBoolean,
-			breakPoint,
-			missedCategories,
-			tbodyElement,
-			screenReaderTbodyElement,
-		);
-		console.log(`after that function now we know that ${breakPoint}`);
-		if (breakPoint) {
-			generateTable2(showAnswersBoolean, missedCategories);
-		}
-	},
-	update: (qset, scoreTable) => {},
+	start: start,
+	update: update,
 	handleScoreDistribution: (distribution) => {},
 });
