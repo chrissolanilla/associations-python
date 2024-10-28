@@ -44,7 +44,6 @@ const guessedGroupsState = {
 };
 
 let livesConstant = 0;
-console.log(` initializing lives with ${livesConstant}`);
 
 // Modal code
 const closeButton = document.querySelector('[data-close-modal]');
@@ -72,7 +71,6 @@ let dimensionXGlobal = 0;
 let dimensionYGlobal = 0;
 
 function setupGame(qset) {
-	console.log('Setting up game with qset:', qset);
 	if (!qset || !qset.items) {
 		console.error('Invalid qset data', qset);
 		return;
@@ -81,7 +79,6 @@ function setupGame(qset) {
 	resetGuessedGroups(); // Reset guessedGroups
 	resetSelectedWords(); // Reset selectedWords
 	// Get currentQset for logging
-	console.log('currentQset is: ', getCurrentQset());
 	//get the dimmensions of the qset
 	const dimensionX = qset.items[0].answers[0].text.length;
 	const dimensionY = qset.items.length;
@@ -89,8 +86,6 @@ function setupGame(qset) {
 	dimensionXGlobal = dimensionX;
 	dimensionYGlobal = dimensionY;
 	maxAttempts = livesConstant;
-	console.log('the lives are ', qset.lives);
-	console.log('Max attempts: ', maxAttempts);
 	maxWrongAttemptsElement.textContent = `(${maxAttempts - attempts} left)`;
 	instructionDescription.textContent = `Select words in groups of  ${dimensionXGlobal} that belong to a common category.`;
 	const instructoinDescriptions2 =
@@ -107,7 +102,6 @@ function setupGame(qset) {
 	helpButton.addEventListener('pointerdown', openModal);
 
 	const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
-	console.log('Descriptions:', descriptions);
 	const wordsGrid = document.querySelector('.wordsPreview');
 	//this styles it based on the x dimensions
 	let columnString = '';
@@ -116,8 +110,6 @@ function setupGame(qset) {
 	}
 	wordsGrid.style.gridTemplateColumns = columnString;
 	const allWords = qset.items.flatMap((item) => item.answers[0].text); // Extract individual words from the array
-	console.log('All words:', allWords);
-	console.log('All words:', allWords);
 	const shuffledWords = shuffleArray(allWords);
 
 	const controlsElement = document.getElementById('controls');
@@ -196,8 +188,6 @@ async function checkSelection(count) {
 	// Track groups that should be removed
 	let groupsToRemove = [];
 	const selectedWords = getSelectedWords();
-	console.log('Checking if this is an array', Array.isArray(selectedWords));
-	console.log(`THE SELECTED WORDS ARE: ${selectedWords}`);
 	const currentQset = getCurrentQset();
 	//refacotr things to be by dimensionX instead of 4
 	for (let i = 0; i < selectedWords.length; i += dimensionXGlobal) {
@@ -208,13 +198,9 @@ async function checkSelection(count) {
 
 		currentQset.items.forEach((item, index) => {
 			if (getGuessedGroups().has(item.questions[0].text)) {
-				console.log(
-					'Skipping this group because it was already guessed',
-				);
 				return; // Skip already guessed groups
 			}
 			const answerWords = item.answers[0].text.map((word) => word.trim());
-			console.log('The answer words are: ', answerWords);
 			const group = currentGroup.filter((word) =>
 				answerWords.includes(word),
 			);
@@ -222,8 +208,6 @@ async function checkSelection(count) {
 				highestGroupLength = group.length;
 				closestMatch = item;
 			}
-			console.log(`The group is: ${group}`);
-			console.log('checking if group is an array', Array.isArray(group));
 			//the item has all our data of what the question is and the answer.
 			if (group.length === dimensionXGlobal) {
 				const guessedGroups = getGuessedGroups();
@@ -309,7 +293,6 @@ async function checkSelection(count) {
 	//case where our selecton is wrong, we should submit the question for scoring to log their answer
 	//or maybe we don't submit the question for scoring, we just do it once?
 	if (validWordsCount !== count) {
-		console.log(`closest match is ${closestMatch}`);
 		//item is not defined since its out of scope form the parameter
 		// const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
 		Materia.Score.submitQuestionForScoring(
@@ -402,7 +385,6 @@ function disableGame() {
 			JSON.stringify(incorrectGroup),
 			0,
 		);
-		console.log('Submitted question for scoring:', item.id, '', 0);
 	});
 
 	wordsGrid
@@ -446,13 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 Materia.Engine.start({
 	start: (instance, qset, qsetVersion) => {
-		console.log('Starting game with qset:', qset);
-		console.log('The instance is:', instance.qset);
 		showAnswersBoolean = instance.qset.data.showAnswers;
-		console.log(
-			'the boolean of show answers boolean is ',
-			showAnswersBoolean,
-		)
 
 		const title = instance.name
 		const TitleElement = document.getElementById('Title')

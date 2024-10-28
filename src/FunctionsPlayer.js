@@ -28,7 +28,6 @@ export function setSelectedWords(words) {
 }
 
 export function getSelectedWords() {
-	console.log(`in the functin library selectedWords are ${selectedWords}`);
 	return selectedWords;
 }
 
@@ -59,12 +58,10 @@ export function addCurrentButtons(buttonId) {
 export function updateButtonStyles(buttonId, isEnabled) {
 	const button = document.getElementById(buttonId);
 	if (isEnabled) {
-		console.log('button is ', buttonId, 'and we are enabled');
 		button.classList.remove('greyOutButton');
 		button.classList.add('styled-button');
 		button.setAttribute('tabindex', '0');
 	} else {
-		// console.log('button is ', buttonId);
 		button.classList.remove('styled-button');
 		button.classList.add('greyOutButton');
 		button.setAttribute('tabindex', '-1');
@@ -90,7 +87,6 @@ export function updateSelectionStyles() {
 			...document.querySelectorAll('.previewItem input[type="checkbox"]'),
 		].find((input) => input.nextElementSibling.textContent === word);
 		const item = checkbox.parentNode;
-		console.log('The index is ', index);
 		if (correctGuesses < 1) item.classList.add('selected-4');
 		// if (index < dimensionX) item.classList.add('singleSelectionBlue');
 		else if (correctGuesses < 2) item.classList.add('selected-8');
@@ -107,9 +103,6 @@ export function updateSelectionStyles() {
 		styleBool = true;
 	} //
 	else {
-		console.log(
-			`why is styleBool ${styleBool} when dimensionX is ${dimensionX} and selectionCount is ${selectionCount}`,
-		);
 	}
 	updateButtonStyles(buttonIDs, styleBool);
 	toggleCheckbox();
@@ -117,10 +110,8 @@ export function updateSelectionStyles() {
 
 /** @param {string} description @param {Array<string>} group @param {string} className @param {boolean} override */
 export function createAnswerDiv(description, group, className, override) {
-	console.log('CREATING ANSWER DIV', description, group, className);
 	const answerDiv = document.createElement('div');
 	if (override) {
-		console.log('continueing');
 	} //
 	else {
 		if (correctGuesses === 1) {
@@ -178,7 +169,6 @@ export function selectWord(word) {
 	else if (selectedWords.length < dimensionX) {
 		selectedWords.push(word);
 	}
-	console.log('Selected Words in function selectWord:', selectedWords);
 	updateSelectionStyles();
 	toggleCheckbox();
 }
@@ -210,19 +200,17 @@ export function showToast(message, type) {
 	else if (type === 'error') {
 		toast.style.backgroundColor = 'red';
 	}
-	toast.style.display = 'none';
-	console.log(toast.offsetHeight); // This forces a reflow and allows error messages to be read
-	toast.style.display = 'block';
+	// toast.style.display = 'none';
+	// toast.style.display = 'block';
 	//after 5 seconds get rid of the toast
 	setTimeout(() => {
 		toastContainer.classList.remove('show');
-		toast.classList.add('hide');
+		// toast.classList.add('hide');
 	}, 5000);
 }
 
 /** @param {boolean} isCorrect */
 export function animateSelectionToTop(isCorrect) {
-	console.log('------THE BOOLEAN IS : ', isCorrect);
 	const selectedWords = getSelectedWords();
 	const wordsGrid = document.querySelector('.wordsPreview');
 
@@ -252,7 +240,6 @@ export function animateSelectionToTop(isCorrect) {
 				wordElement.classList.remove('incorrect-move');
 			}, 3000);
 		} else {
-			console.error(`Checkbox for word "${word.trim()}" not found`);
 		}
 	});
 
@@ -271,7 +258,6 @@ export function animateSelectionToTop(isCorrect) {
 				const wordElement = checkbox.parentNode;
 				wordsGrid.removeChild(wordElement);
 			} else {
-				console.error(`Checkbox for word "${word.trim()}" not found`);
 			}
 		});
 	}, 2000);

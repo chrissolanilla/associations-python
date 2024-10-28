@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const helpButton = document.getElementById('helpButton');
 	helpButton.addEventListener('click', () => {
-		console.log('HELP BUTTON CLICKED');
 		tutorialModal.showModal();
 
 	});
@@ -97,12 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const showAnswersCheckbox = document.getElementById('ShowAnswersCheckbox');
 
 	showAnswersCheckbox.addEventListener('focus', (event) => {
-		console.log('FOCUSED ON SHOW ANSWERS CHECKBOX');
 		const parentDiv = event.target.closest('.ShowAnswersBoolean');
 		if (parentDiv) {
 			parentDiv.classList.add('focus-highlight');
 		} else {
-			console.log('CANT FIND PARENT');
 		}
 	});
 
@@ -151,13 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	document.querySelectorAll('.GameNameInput input').forEach((input) => {
-		console.log('UPDATING GAME NAME');
 		input.addEventListener('input', updateGameName);
 	});
 	const gameName2Input = document.getElementById('GameName2');
 	gameName2Input.addEventListener('input', () => {
 		if (gameName2Input.value.trim() === '') {
-			console.log('empty game name');
 			gameName2Input.classList.add('invalid');
 		} //
 		else {
@@ -168,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	const GameNameInput = document.getElementById('GameName');
 	GameNameInput.addEventListener('input', () => {
 		if (GameNameInput.value.trim() === '') {
-			console.log('empty game name');
 			GameNameInput.classList.add('invalid');
 		} //
 		else {
@@ -292,9 +286,6 @@ chooseButton.addEventListener('click', (event) => {
 Materia.CreatorCore.start({
 	initNewWidget: (widget, baseUrl, mediaUrl) => {
 		// setup for a new widget
-		console.log(
-			` The widget is ${widget} and th base url is ${baseUrl} and the media url is ${mediaUrl}`,
-		);
 	},
 	initExistingWidget: (
 		title,
@@ -379,18 +370,13 @@ Materia.CreatorCore.start({
 		const items = [];
 		//this will succesffully trunkcade groups but not extra words.
 		for (let i = 1; i <= widgetState.dimensionY; i++) {
-			console.log('getting words' + i);
 			const words = savedWidgetState[`words${i}`];
-			console.log('WORDS IS', words);
-			console.log('getting description' + i);
 			const description = document
 				.getElementById(`Description${i}`)
 				.value.trim();
-			console.log(description);
 			//check if words and description are empty
 			const GameName = document.getElementById('GameName');
 			if (GameName.value.trim() === '') {
-				console.log('empty game name');
 				GameName.classList.remove('valid')
 				GameName.classList.add('invalid')
 			} //
@@ -419,14 +405,12 @@ Materia.CreatorCore.start({
 			//checks for any invalid red inputs (widget title, category names, and words)
 			const invalidElements = document.querySelectorAll('.invalid')
 			if (invalidElements.length > 0) {
-				console.log('empty words or description');
 				//show a toast module that says to complete all fields
 				showToast('Please complete all fields', 'error');
 				//do the creator core cancel function
 				Materia.CreatorCore.cancelSave(
 					'It looks like some input fields are invalid. Please fix them before saving.',
 				);
-				console.log('we did teh cancel save');
 				flashInvalidInputs();
 				return;
 			}

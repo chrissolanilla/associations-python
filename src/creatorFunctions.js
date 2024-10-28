@@ -95,13 +95,10 @@ export function updateGameName() {
 	const gamename1 = document.getElementById('GameName').value;
 	const gamename2 = document.getElementById('GameName2').value;
 	if (gamename1 === '') {
-		console.log('inside the if');
 		widgetState._title = gamename2;
 	} else {
-		console.log('inside the else');
 		widgetState._title = gamename1;
 	}
-	console.log('Game name updated:', widgetState._title);
 }
 
 export function updatePreview() {
@@ -109,7 +106,6 @@ export function updatePreview() {
 	for (let i = 1; i <= widgetState.dimensionY; i++) {
 		const words = widgetState[`words${i}`];
 		allWords.push(...words);
-		console.log('SUCSS');
 	}
 
 	const previewItems = document.querySelectorAll('.previewItem');
@@ -121,18 +117,14 @@ export function updatePreview() {
 export function createDynamicInputs() {
 	const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Grey', 'Yellow'];
 
-	console.log("INSIDE THE FUNCTION RAHHHH");
 	const dynamicInputs = document.getElementById('dynamicInputs');
 	if (!dynamicInputs) return;
 	dynamicInputs.classList.add('show');
-	console.log(`we found dynamicInputs with id ${dynamicInputs.id}`);
 	dynamicInputs.innerHTML = ''; // Clear previous inputs
 	updateSets();
 
 	for (let j = 0; j < widgetState.dimensionY; j++) {
-		console.log(`widgetstate dimensions: ${widgetState.dimensionX} by ${widgetState.dimensionY}`)
 		const inputContainer = document.createElement('div');
-		console.log(`created inputContainer with id ${inputContainer.id}`);
 		inputContainer.classList.add('CreatorKVP', colors[j]);
 
 		const creatorAnswersDiv = document.createElement('div');
@@ -151,10 +143,6 @@ export function createDynamicInputs() {
 		descriptionInput.classList.add('hvr-bounce-to-right');
 		descriptionInput.addEventListener('input', () => {
 			updateDescriptionState(j + 1, descriptionInput.value);
-			console.log(
-				'The widget state for description is:',
-				widgetState[`description${j + 1}`],
-			);
 
 			if (
 				descriptionInput.value.trim() !== '' &&

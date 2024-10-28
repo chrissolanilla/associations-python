@@ -62,7 +62,6 @@ export function populateTable(
 		const containerId = `fancyContainer-${entryIndex}`;
 		const labelId = `label-${entryIndex}`;
 		const FancyCell = document.createElement('td');
-		// console.log('Creating the fancy cell show answer is ', entry.data[2]);
 		FancyCell.colSpan = 4;
 		FancyCell.setAttribute('role', 'cell');
 		FancyCell.classList.add('FancyCell');
@@ -149,7 +148,6 @@ export function populateTable(
 			screenReaderTbodyElement.appendChild(srRow);
 		} //
 		else {
-			console.log('breakpoint is true');
 			//do nothing here
 		}
 	}
@@ -204,7 +202,6 @@ export function createFancyAnswer(
 	}
 
 	userWordsArray.forEach((word) => {
-		console.log(`inside the function the boolean is ${isAllRight}`);
 		const previewItem = document.createElement('div');
 		if (word === '') {
 			previewItem.innerHTML = `<label> (No answer given)</label>`;
@@ -215,7 +212,7 @@ export function createFancyAnswer(
 			if (correctWordsArray.includes(word) && isAllRight) {
 				previewItem.classList.add('correct-word');
 			} //
-				//only show yellow(partially correct) if showAnswers is true
+			//only show yellow(partially correct) if showAnswers is true
 			else if (showAnswers && correctWordsArray.includes(word) && !isAllRight) {
 				previewItem.classList.add('yellowWord');
 			} //
@@ -232,7 +229,7 @@ export function createFancyAnswer(
 
 /** @param {boolean} showAnswersBool @param {Object} missedCategories */
 export function generateTable2(showAnswersBool, missedCategories) {
-	if(missedCategories.length === 0) {
+	if (missedCategories.length === 0) {
 		return;
 	}
 	const container = document.createElement('div');

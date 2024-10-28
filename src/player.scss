@@ -420,11 +420,16 @@ span {
   top: 20px;
   right: 20px;
   z-index: 1000;
-  display: none; /* Initially hidden */
+  // display: none; /* Initially hidden */
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 
 .toast-container.show {
-  display: block; /* Show when needed */
+  // display: block; /* Show when needed */
+  visibility: visible;
+  opacity: 1;
 }
 
 .toast {
