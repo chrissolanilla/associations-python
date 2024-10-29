@@ -69,11 +69,17 @@
 				<button id="helpButton" class="helpButton">?</button>
 			</header>
 			<div class="CorrectAnswers" id="correctAnswers">
-				<p id="screenReader" aria-live="polite" aria-atomic="true"></p>
+				<p id="screenReader" aria-live="assertive" aria-atomic="true"></p>
 				<!--correct words and descriptions will show up when you get some right-->
 			</div>
 			<div class="wordsPreview">
 				<!-- words will be dynamically inserted here -->
+			</div>
+			<div
+				aria-live="polite"
+				class="checkedStatusScreenReader"
+				id="checkedStatusScreenReader">
+				status of checkbox will be changed here
 			</div>
 			<div class="controls" id="controls">
 				<span id="span" aria-live="polite">

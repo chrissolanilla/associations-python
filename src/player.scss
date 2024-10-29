@@ -283,6 +283,12 @@ dialog::backdrop {
 .previewItem.selected-16 input[type='checkbox']:checked + label {
   background-color: #e28757;
 }
+.previewItem.selected-20 input[type='checkbox']:checked + label {
+  background-color: rgba(226, 87, 87, 0.75);
+}
+.previewItem.selected-24 input[type='checkbox']:checked + label {
+  background-color: rgb(251, 212, 0);
+}
 .previewItem.selected-tan input[type='checkbox']:checked + label {
   background-color: #733934;
 }
@@ -320,7 +326,8 @@ dialog::backdrop {
   background-color: rgba(226, 135, 87,0.65);
 }
 .AnswerDivBackground.selected-20 {
-  background-color: rgba(151, 162, 166,0.65);
+  background-color: rgba(226, 87, 87, 0.75);
+  // background-color: rgba(151, 162, 166,0.65);
 }
 
 .selected-24 {
@@ -328,7 +335,8 @@ dialog::backdrop {
 }
 
 .selected-20 {
-  background-color: #97a2a6;
+  // background-color: #97a2a6;
+  background-color: rgba(226, 87, 87, 0.75);
 }
 
 .AnswerDivBackground.selected-tan {
@@ -373,8 +381,8 @@ dialog::backdrop {
 .Tan {
   background-color: #e28757;
 }
-.Grey {
-  background: #97a2a6;
+.Red {
+  background: rgba(226, 87, 87, 0.75);
 }
 
 .focus-highlight {
@@ -470,4 +478,11 @@ span {
   top: 0;
   left: 0;
   z-index: 5;
+}
+
+.checkedStatusScreenReader {
+  position: absolute;
+  margin-top: -10000px;
+  margin-left: -10000px;
+  opacity: 0;
 }

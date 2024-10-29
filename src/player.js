@@ -61,6 +61,8 @@ let percentScore = 0,
 	attempts = 0,
 	scoreCount = 0;
 
+//checked status div for screen readers
+const checkedStatus = document.getElementById('checkedStatusScreenReader');
 //screenreader element
 const ScreenReaderElement = document.getElementById('screenReader');
 let maxAttempts = 0; //change it to dimensionX later
@@ -167,6 +169,12 @@ function setupGame(qset) {
 			if (event.key === 'Enter') {
 				event.preventDefault();
 				checkbox.click();
+				if(checkbox.checked){
+					checkedStatus.text = `You have selected ${word.trim()}`;
+				}
+				else {
+					checkedStatus.text = `You have deselected ${word.trim()}`;
+				}
 			}
 		});
 	});
@@ -232,7 +240,7 @@ async function checkSelection(count) {
 					JSON.stringify(group),
 					pointsPerCorrectGroup,
 				);
-				//this dosent actually matter anymore to be honest but its nice to remember how to do this weird string thing.
+				//Create the answer div with the associated color
 				const className = `selected-${(index + 1) * 4}`;
 				setTimeout(() => {
 					const answerDiv = createAnswerDiv(

@@ -115,7 +115,7 @@ export function updatePreview() {
 }
 
 export function createDynamicInputs() {
-	const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Grey', 'Yellow'];
+	const colors = ['Pink', 'Blue', 'Green', 'Tan', 'Red', 'Yellow'];
 
 	const dynamicInputs = document.getElementById('dynamicInputs');
 	if (!dynamicInputs) return;
