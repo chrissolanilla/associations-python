@@ -288,13 +288,13 @@ dialog::backdrop {
   // background-color: red;
 }
 .previewItem.selected-4 input[type='checkbox']:checked + label {
-  background-color: rgb(223, 123, 234);
+  background-color: rgba(223, 123, 234,0.65);
 }
 .previewItem.selected-8 input[type='checkbox']:checked + label {
-  background-color: rgb(84, 146, 255);
+  background-color: rgba(84, 146, 255,0.65);
 }
 .previewItem.selected-12 input[type='checkbox']:checked + label {
-  background-color: rgb(105, 227, 82);
+  background-color: rgba(105, 227, 82,0.65);
 }
 .previewItem.selected-16 input[type='checkbox']:checked + label {
   background-color: #e28757;
@@ -320,28 +320,28 @@ dialog::backdrop {
   padding: 2rem 2rem;
   margin-bottom: 8px;
   width: 90vw;
-  color: black;
+  color: #fff;
   font-weight: bold;
   font-size: larger;
   // how do i make the colors correspond to the groups like red blue and green?
 }
 .AnswerDivBackground.selected-8 {
-  background-color: #6ba0c9;
+  background-color: rgba(107, 160, 201,0.65);
 }
 .AnswerDivBackground.selected-12 {
-  background-color: #85be64;
+  background-color: rgba(133, 190, 100,0.65);
 }
 .AnswerDivBackground.selected-4 {
-  background-color: #94579c;
+  background-color: rgba(148, 87, 156,0.65);
 }
 .AnswerDivBackground.selected-24 {
-  background-color: rgb(251, 212, 0);
+  background-color: rgba(251, 212, 0,0.65);
 }
 .AnswerDivBackground.selected-16 {
-  background-color: #e28757;
+  background-color: rgba(226, 135, 87,0.65);
 }
 .AnswerDivBackground.selected-20 {
-  background-color: #97a2a6;
+  background-color: rgba(151, 162, 166,0.65);
 }
 
 .selected-24 {
