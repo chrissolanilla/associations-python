@@ -49,7 +49,7 @@ let livesConstant = 0;
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
 modal.showModal();
-closeButton.addEventListener('pointerdown', () => {
+closeButton.addEventListener('click', () => {
 	modal.close();
 });
 
@@ -61,8 +61,6 @@ let percentScore = 0,
 	attempts = 0,
 	scoreCount = 0;
 
-const AttemptsElement = document.getElementById('Attempts');
-AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
 //screenreader element
 const ScreenReaderElement = document.getElementById('screenReader');
 let maxAttempts = 0; //change it to dimensionX later
@@ -99,9 +97,8 @@ function setupGame(qset) {
 	);
 
 	const helpButton = document.getElementById('helpButton');
-	helpButton.addEventListener('pointerdown', openModal);
+	helpButton.addEventListener('click', openModal);
 
-	const descriptions = qset.items.map((item) => item.questions[0].text); // Extract descriptions
 	const wordsGrid = document.querySelector('.wordsPreview');
 	//this styles it based on the x dimensions
 	let columnString = '';
@@ -122,7 +119,7 @@ function setupGame(qset) {
 		'aria-label',
 		`Check your selection of ${dimensionX} words.`,
 	);
-	button.addEventListener('pointerdown', (event) => {
+	button.addEventListener('click', (event) => {
 		if (!event.target.classList.contains('styled-button')) {
 			event.preventDefault();
 			return;
@@ -174,7 +171,6 @@ function setupGame(qset) {
 		});
 	});
 
-	AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
 }
 
 async function checkSelection(count) {
@@ -189,7 +185,6 @@ async function checkSelection(count) {
 	let groupsToRemove = [];
 	const selectedWords = getSelectedWords();
 	const currentQset = getCurrentQset();
-	//refacotr things to be by dimensionX instead of 4
 	for (let i = 0; i < selectedWords.length; i += dimensionXGlobal) {
 		const currentGroup = selectedWords
 			.slice(i, i + dimensionXGlobal)
@@ -291,10 +286,7 @@ async function checkSelection(count) {
 	});
 
 	//case where our selecton is wrong, we should submit the question for scoring to log their answer
-	//or maybe we don't submit the question for scoring, we just do it once?
 	if (validWordsCount !== count) {
-		//item is not defined since its out of scope form the parameter
-		// const pointsPerCorrectGroup = 100 / currentQset.items.length; // Dynamic points allocation
 		Materia.Score.submitQuestionForScoring(
 			closestMatch.id,
 			JSON.stringify(selectedWords),
@@ -310,15 +302,9 @@ async function checkSelection(count) {
 			ScreenReaderElement.textContent = 'Incorrect, try again';
 		}
 		attempts++;
-		AttemptsElement.innerHTML = 'Wrong Attempts: ' + attempts;
 		maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} left)`;
 		const btn = document.getElementById(`check${dimensionXGlobal}`);
 		btn.classList.remove('styled-button');
-		//we only have one button now...
-		// for (let i = 1; i <= dimensionYGlobal; i++) {
-		// 	const btn = document.getElementById(`check${dimensionXGlobal * i}`);
-		// 	btn.classList.remove('styled-button');
-		// }
 		if (attempts >= maxAttempts) {
 			disableGame();
 		}
@@ -369,7 +355,6 @@ function showRemainingCorrectAnswers() {
 	wordsGrid.innerHTML = '';
 }
 
-//we don't need to get their best guess anymore
 function disableGame() {
 	const wordsGrid = document.querySelector('.wordsPreview');
 	const currentQset = getCurrentQset();
@@ -406,14 +391,13 @@ function disableGame() {
 	}
 	// Show the modal for the final score
 	resultsModal.classList.remove('hidden');
-	//stupid way of centering it but I'm convinced I have to cause iFrame
 	const rect = resultsModal.getBoundingClientRect();
 	resultsModal.style.top = `calc(50% - ${rect.height / 2}px)`;
 	resultsModal.style.left = `calc(51% - ${rect.height / 2}px)`;
 	const darkenBody = document.createElement('div');
 	darkenBody.classList.add('darkenBody');
 	document.body.appendChild(darkenBody);
-	document.getElementById('goToScoreScreen').addEventListener('pointerdown', () => {
+	document.getElementById('goToScoreScreen').addEventListener('click', () => {
 		// End the game and go to the score screen
 		setTimeout(() => {
 			Materia.Engine.end();

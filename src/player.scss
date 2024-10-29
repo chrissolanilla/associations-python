@@ -1,8 +1,5 @@
-/* my player scss */
 body {
   font-family: 'Lato', serif;
-  // background: #545f62;
-  // background: #3E363F;
   background: #323b3e;
   color: #fff;
 }
@@ -40,12 +37,10 @@ header {
 	font-size: 16px;
 	cursor: pointer;
 	width: fit-content;
-	// margin: 0 auto;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   button:hover {
-	// background-color: #333;
 	background-color: #8a3ab9;
   }
 
@@ -106,9 +101,6 @@ dialog::backdrop {
 .modalClass3 {
   user-select: none;
   max-width: 50rem;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
   text-align: center;
   background: #3e363f;
   color: #fff;
@@ -143,7 +135,6 @@ dialog::backdrop {
   font-size: 16px;
   cursor: pointer;
   width: fit-content;
-  // margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .styled-button {
@@ -155,12 +146,10 @@ dialog::backdrop {
   font-size: 16px;
   cursor: pointer;
   width: fit-content;
-  // margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .styled-button:hover {
-  // background-color: #333;
   background-color: #8a3ab9;
 
 }
@@ -172,7 +161,6 @@ dialog::backdrop {
 }
 .wordsPreview {
   display: grid;
-  // grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .previewItem {
@@ -189,7 +177,6 @@ dialog::backdrop {
   text-align: center;
   text-transform: uppercase;
   margin: 0.5rem;
-  // transition: .2s ease-in-out 0s;
   transition:
 	transform 0.2s,
 	opacity 0.5s;
@@ -284,9 +271,6 @@ dialog::backdrop {
   }
 }
 
-.previewItem input[type='checkbox']:checked + label {
-  // background-color: red;
-}
 .previewItem.selected-4 input[type='checkbox']:checked + label {
   background-color: rgba(223, 123, 234,0.65);
 }
@@ -308,12 +292,8 @@ dialog::backdrop {
 .CorrectAnswers {
   display: grid;
   justify-content: center;
-  // margin-bottom: 8px;
   gap: 8px;
-  // background-color: rgb(84, 146, 255);;
   text-align: center;
-  // padding: 2rem 2rem;
-  // color: white;
   font-weight: bold;
 }
 .AnswerDivBackground {
@@ -323,7 +303,6 @@ dialog::backdrop {
   color: #fff;
   font-weight: bold;
   font-size: larger;
-  // how do i make the colors correspond to the groups like red blue and green?
 }
 .AnswerDivBackground.selected-8 {
   background-color: rgba(107, 160, 201,0.65);
@@ -399,7 +378,7 @@ dialog::backdrop {
 }
 
 .focus-highlight {
-  outline: 4px solid #3b82f6; // Change the color to your preference
+  outline: 4px solid #3b82f6;
   outline-offset: 2px;
 }
 
@@ -420,14 +399,12 @@ span {
   top: 20px;
   right: 20px;
   z-index: 1000;
-  // display: none; /* Initially hidden */
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 
 .toast-container.show {
-  // display: block; /* Show when needed */
   visibility: visible;
   opacity: 1;
 }
@@ -442,7 +419,7 @@ span {
   animation:
 	slidein 0.5s,
 	fadeout 0.5s 4.5s;
-  font-size:2.5rem;
+  font-size:1.8rem;
 }
 
 @keyframes slidein {

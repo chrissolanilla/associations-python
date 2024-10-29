@@ -1,9 +1,7 @@
-//needed for scss
 import { showToast } from './FunctionsPlayer';
 import {createCreatorHelpModal} from './creatorTutorialModal.js'
 import './creator.scss';
 import {
-	//my god tried and tested like functions but now modular
 	updateGameName,
 	updatePreview,
 	createDynamicInputs,
@@ -31,11 +29,6 @@ const gameNameForm = document.getElementById('gameNameForm');
 gameNameForm.addEventListener('submit', (event) => {
 	event.preventDefault(); //stops from refreshing the page
 	const gameName = document.getElementById('GameName2').value;
-	//currently this dosen't work since you can not submit empty forms
-	// if (gameName.trim() === '') {
-	//   showToast('Please enter a game name', 'error');
-	//   return;
-	// }
 	widgetState._title = gameName;
 	introModal.close();
 	modal.showModal();
@@ -217,7 +210,7 @@ document.addEventListener('keydown', (event) => {
 	}
 });
 
-// trying out the cool grid mouse selector
+//on hover for grid cells
 const DimensionContainer = document.getElementById('DimensionContainer');
 const DimensionStatusElement = document.getElementById('DimensionStatus');
 const DimensionStatusElement2 = document.getElementById('DimensionStatus2');
