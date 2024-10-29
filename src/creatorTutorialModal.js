@@ -10,17 +10,16 @@ export function createCreatorHelpModal() {
 	modal.innerHTML = `
 	<div class="modalClass3">
 		<h1 id="HowToCreate">How to Create Your Associations Game</h1>
-		<p id="help1">In this widget creator, you can customize a Associations game by selecting a grid size,
+		<p id="help1">In this widget creator, you can customize an Associations game by selecting a grid size,
 			creating categories, and populating them with words or phrases related to each category.</p>
 		<p id="help2">Here's a quick guide:</p>
 		<ul id="help3">
-			<li><strong>Grid Size(X by Y):</strong> Choose the number of groups(Y) and the number of words per group(X). This defines how many groups and words per group players will see in the game.</li>
-			<li><strong>Categories:</strong> Create distinct topics for each group, ensuring that words in each group relate to the same theme.</li>
-			<li><strong>Words:</strong> Fill each category with words or phrases. You can modify the words and categories later if needed. Make sure there are no duplicate words per widget.</li>
-			<li><strong>Lives:</strong> Set the number of attempts players will have before the game ends. When a player checks a selection of words and it is wrong, they lose a life. Their total score is based on how many associations they got by the end of the game. Losing life will not deduct to total score.</li>
-			<li><strong>Revealing Answers:</strong> Decide if you want to reveal correct answers at the end of the game.</li>
+			<li><strong>Grid Size (X by Y):</strong> Choose the number of groups (Y) and the number of words per group (X). This defines how many groups and words per group players will see in the game.</li>
+			<li><strong>Categories:</strong> Create distinct topics for each group, ensuring that words in each group relate to the overall theme of your widget.</li>
+			<li><strong>Words:</strong> Populate each category with words or phrases. You can modify the words and categories later if needed. Ensure there are no duplicate words.</li>
+			<li><strong>Lives:</strong> Configure the number of incorrect attempts player can make before the game ends. When a player selects an incorret combination of words, they lose a life. A player's total score is determined by the percentage of correctly guessed categories. Losing lives will not affect the final score.</li>
+			<li><strong>Reveal Answers:</strong> If disabled, the score screen will not display correct category selections upon completion.</li>
 		</ul>
-		<p style="text-align:center;" id="help4">For more detailed instructions, check out the full creator guide or reach out for help. Good luck creating your Associations game!</p>
 		<button
 			id="closeButton"
 			class="ChooseButton"

@@ -208,11 +208,11 @@ label {
 		}
 	}
 	&.dInput:focus {
-		text-shadow: 0 0 10px #000;
+		text-shadow: 0 0 6px rgba(0,0,0,0.65);
 		background:rgba(0,0,0,0.1);
 	}
 	&.dInput:hover {
-		text-shadow: 0 0 10px #000;
+		text-shadow: 0 0 6px rgba(0,0,0,0.65);
 		background:rgba(0,0,0,0.1);
 	}
 }
@@ -704,9 +704,13 @@ p.whatis {
 	gap: 0.5rem;
 	margin: auto 0 1rem 0;
 
-	.ChooseButton:enabled {
-		border: solid 2px #d9a0ff;
-		animation: border-pulse 2s infinite;
+	.ChooseButton {
+		border: solid 2px #444;
+
+		&:enabled {
+			border: solid 2px #d9a0ff;
+			animation: border-pulse 2s infinite;
+		}
 	}
 }
 
