@@ -5,6 +5,8 @@ let dimensionX = 0;
 let dimensionY = 0;
 let buttonIDs = '';
 let correctGuesses = 0;
+let clickedTooMany = true;
+let toastIsFinished = true;
 
 export function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -177,13 +179,35 @@ function toggleCheckbox() {
 	const checkboxes = document.querySelectorAll(
 		'.previewItem input[type="checkbox"]',
 	);
+
+	//having function here makes it more consistent
+	function handleClickWarning() {
+		clickedTooMany = true;
+		if (clickedTooMany && toastIsFinished) showClickWarning();
+	}
+
 	checkboxes.forEach((checkbox) => {
+		const parent = checkbox.parentNode;
 		if (!checkbox.checked && selectedWords.length >= dimensionX) {
 			checkbox.disabled = true;
+			if (!parent.hasClickWarning) {
+				parent.addEventListener('click', handleClickWarning);
+				parent.hasClickWarning = true; //avoids re-attaching
+			}
 		} else {
 			checkbox.disabled = false;
+			if (parent.hasClickWarning) {
+				parent.removeEventListener('click', handleClickWarning);
+				parent.hasClickWarning = false;
+			}
 		}
 	});
+}
+
+
+function showClickWarning(){
+	toastIsFinished = false;
+	showToast(`You can only select ${dimensionX} words at a time`, 'warning');
 }
 
 /** @param {string} message @param {string} type */
@@ -200,12 +224,16 @@ export function showToast(message, type) {
 	else if (type === 'error') {
 		toast.style.backgroundColor = 'red';
 	}
+	else if(type === 'warning'){
+		toast.style.backgroundColor = '#886b05';
+	}
 	// toast.style.display = 'none';
 	// toast.style.display = 'block';
 	//after 5 seconds get rid of the toast
 	setTimeout(() => {
 		toastContainer.classList.remove('show');
 		// toast.classList.add('hide');
+		toastIsFinished = true;
 	}, 5000);
 }
 

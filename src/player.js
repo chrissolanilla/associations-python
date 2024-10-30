@@ -44,7 +44,6 @@ const guessedGroupsState = {
 };
 
 let livesConstant = 0;
-
 // Modal code
 const closeButton = document.querySelector('[data-close-modal]');
 const modal = document.querySelector('[data-modal]');
