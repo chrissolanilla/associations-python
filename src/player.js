@@ -85,7 +85,7 @@ function setupGame(qset) {
 	dimensionXGlobal = dimensionX;
 	dimensionYGlobal = dimensionY;
 	maxAttempts = livesConstant;
-	maxWrongAttemptsElement.textContent = `(${maxAttempts - attempts} left)`;
+	maxWrongAttemptsElement.textContent = `(${maxAttempts - attempts} Attempts Remaining)`;
 	instructionDescription.textContent = `Select words in groups of  ${dimensionXGlobal} that belong to a common category.`;
 	const instructoinDescriptions2 =
 		document.getElementById('instructionsModal2');
@@ -113,7 +113,7 @@ function setupGame(qset) {
 	const controlsElement = document.getElementById('controls');
 	const attemptsSpan = document.getElementById('span');
 	const button = document.createElement('button');
-	button.textContent = `Check ${dimensionX}`;
+	button.textContent = `Select ${dimensionX} Additional Words`;
 	button.id = `check${dimensionX}`;
 	button.classList.add('greyOutButton');
 	button.setAttribute(
@@ -309,7 +309,7 @@ async function checkSelection(count) {
 			ScreenReaderElement.textContent = 'Incorrect, try again';
 		}
 		attempts++;
-		maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} left)`;
+		maxWrongAttemptsElement.innerHTML = `(${maxAttempts - attempts} Attempts Remaining)`;
 		const btn = document.getElementById(`check${dimensionXGlobal}`);
 		btn.classList.remove('styled-button');
 		if (attempts >= maxAttempts) {

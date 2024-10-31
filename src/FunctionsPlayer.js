@@ -100,13 +100,13 @@ export function updateSelectionStyles() {
 
 	const selectionCount = selectedWords.length;
 	//call the function dimensinoX times for the button ids that are dynamically created.
-	let styleBool = false;
-	if (selectionCount == dimensionX) {
-		styleBool = true;
-	} //
-	else {
-	}
-	updateButtonStyles(buttonIDs, styleBool);
+	let fullGroup = selectionCount == dimensionX
+
+	const checkBtn = document.getElementById(buttonIDs)
+	if ( !fullGroup) checkBtn.textContent = `Select ${dimensionX - selectedWords.length} Additional Words`
+	else checkBtn.textContent = 'Check Answer' 
+
+	updateButtonStyles(buttonIDs, fullGroup);
 	toggleCheckbox();
 }
 
