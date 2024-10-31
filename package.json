@@ -3,7 +3,7 @@
 	"materia": {
 		"cleanName": "associations"
 	},
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"description": "Match sets of words based on commonality or theme.",
 	"scripts": {
 		"start": "mwdk-start",
