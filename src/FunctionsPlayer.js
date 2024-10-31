@@ -5,7 +5,7 @@ let dimensionX = 0;
 let dimensionY = 0;
 let buttonIDs = '';
 let correctGuesses = 0;
-let clickedTooMany = true;
+let clickedTooMany = false;
 let toastIsFinished = true;
 
 export function sleep(ms) {
@@ -180,24 +180,23 @@ function toggleCheckbox() {
 		'.previewItem input[type="checkbox"]',
 	);
 
-	//having function here makes it more consistent
-	function handleClickWarning() {
-		clickedTooMany = true;
-		if (clickedTooMany && toastIsFinished) showClickWarning();
-	}
-
 	checkboxes.forEach((checkbox) => {
 		const parent = checkbox.parentNode;
 		if (!checkbox.checked && selectedWords.length >= dimensionX) {
 			checkbox.disabled = true;
 			if (!parent.hasClickWarning) {
-				parent.addEventListener('click', handleClickWarning);
+				parent.addEventListener('click', () => {
+					if(selectedWords.length >=dimensionX) {
+						clickedTooMany = true;
+						console.log("setting clickedTooMany to true");
+					}
+					if(clickedTooMany && checkbox.disabled == true && toastIsFinished) showClickWarning();
+				})
 				parent.hasClickWarning = true; //avoids re-attaching
 			}
 		} else {
 			checkbox.disabled = false;
 			if (parent.hasClickWarning) {
-				parent.removeEventListener('click', handleClickWarning);
 				parent.hasClickWarning = false;
 			}
 		}
@@ -239,6 +238,7 @@ export function showToast(message, type) {
 
 /** @param {boolean} isCorrect */
 export function animateSelectionToTop(isCorrect) {
+	clickedTooMany = false;
 	const selectedWords = getSelectedWords();
 	const wordsGrid = document.querySelector('.wordsPreview');
 
