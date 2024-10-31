@@ -99,16 +99,20 @@ dialog::backdrop {
 }
 
 .modalClass3 {
-  user-select: none;
-  max-width: 50rem;
-  text-align: center;
-  background: #3e363f;
-  color: #fff;
-  padding: 1rem;
+	user-select: none;
+	max-width: 50rem;
+	text-align: center;
+	background: #3e363f;
+	color: #fff;
+	padding: 1rem;
 
-  p {
-	text-align: left;
-  }
+	p {
+		text-align: left;
+	}
+
+	strong {
+		color: #d9a0ff;
+	}
 }
 
 .modal {

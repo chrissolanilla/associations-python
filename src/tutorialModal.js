@@ -13,18 +13,20 @@ export function createTutorialModal(dimensionX, dimensionY, maxAttempts) {
 	modal.innerHTML = `
 	<div class="modalClass3">
 	  <h1 id="HowToPlay">How to Play</h1>
-	  <p style="text-align:center;" id="tutorial1">There are ${dimensionX * dimensionY} words on the grid, with
-		${dimensionY} groups, each group containing ${dimensionX} words.</p>
-	  <p id="tutorial2">Your goal is select words from the grid to see if your selection of words
-		 all have a <strong>connection</strong> or a relationship between each other.
+	  <p style="text-align:center;" id="tutorial1">There are ${dimensionX * dimensionY} words on the grid divided into
+		${dimensionY} groups: each group contains ${dimensionX} words.</p>
+	  <p id="tutorial2">
+	  	Your goal is to identify each group of words through their thematic or topical <strong>associations</strong> with one another.
 	  </p>
-	  <p id="tutorial3">If you are able to correct match a selection of words that belong to
-		the same group, you will be able to see what describes their connection. However, if you make
-		an incorrect selection, you will lose a life.</p>
-	  <p id="tutorial4">You start the game with ${maxAttempts} lives and if
-		you lose them all the game will end. If this happens your score will be your correct selections
-		divided by the total number of groups. Losing life will not deduct your final score, so if you
-		are able to guess all the groups but lose some life along the way, you will still get a 100%.</p>
+	  <p id="tutorial3">
+	  	Once you select a <strong>group of ${dimensionX} words</strong>, select the <strong>Check Answer</strong> button to reveal whether
+		your choices were correct.
+	  </p> 
+
+	  <p id="tutorial4">You start with a bank of <strong>${maxAttempts} attempts</strong>. Losing them all ends the game.
+	   Your score is determined by the percentage of groups guessed correctly at the end of the game. Incorrect attempts will not deduct from
+	   your final score while you still have attempts remaining.
+	  </p>
 	  <p style="text-align:center;" id="tutorial5"> For a more detailed explanation, check out the player guide. Good luck!</p>
 	  <button
 		id="continueButton"
