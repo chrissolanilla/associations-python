@@ -128,7 +128,6 @@ export function createDynamicInputs() {
 		inputContainer.classList.add('CreatorKVP', colors[j]);
 
 		const creatorAnswersDiv = document.createElement('div');
-		console.log(`created creatorAnswersDiv with id ${creatorAnswersDiv.id}`);
 		creatorAnswersDiv.classList.add('CreatorAnswers');
 
 		const descriptionInput = document.createElement('input');
@@ -224,11 +223,8 @@ export function createDynamicInputs() {
 		}
 
 		creatorAnswersDiv.appendChild(wordsGrid);
-		console.log(`appenindg creatorAnswersDiv to wordsGrid`);
 		inputContainer.appendChild(creatorAnswersDiv);
-		console.log(`appeing creatorAnswersDiv to inputContainer`);
 		dynamicInputs.appendChild(inputContainer);
-		console.log(`appening inputs to dynamicInputs`);
 	}
 }
 
@@ -240,25 +236,15 @@ function updateSets() {
 		widgetState[`words${i}`].forEach((word) => wordSet.add(word.trim()));
 		descriptionSet.add(savedWidgetState[`description${i}`].trim());
 	}
-	console.log('WORDSET', wordSet);
-	console.log('DESCRIPTIONSET', descriptionSet);
 }
 
 function updateWidgetState(group, position, value) {
 	widgetState[`words${group}`][position - 1] = value.trim();
-	console.log(
-		`Updated widgetState.words${group}:`,
-		widgetState[`words${group}`],
-	);
 	updateSets();
 }
 
 function updateDescriptionState(group, value) {
 	savedWidgetState[`description${group}`] = value;
-	console.log(
-		`Updated widgetState.description${group}:`,
-		savedWidgetState[`description${group}`],
-	);
 }
 
 export function trunkcadeWords(widgetState, savedWidgetState) {
@@ -363,7 +349,6 @@ export function addKeydownEventListener(
 				) {
 					showToast('The grid must be at least 2x2', 'error');
 				} else {
-					console.log('WE ARE IN THE ELSSE FROZEN');
 					event.preventDefault();
 					modal.close();
 					modal.classList.add('hidden');
@@ -371,7 +356,6 @@ export function addKeydownEventListener(
 						widgetState.dimensionX <= 6 &&
 						widgetState.dimensionY <= 6
 					) {
-						console.log("WE ARE CALLING TEH FUNCTION");
 						createDynamicInputs();
 					}
 				}

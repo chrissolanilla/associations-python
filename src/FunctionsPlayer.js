@@ -104,7 +104,7 @@ export function updateSelectionStyles() {
 
 	const checkBtn = document.getElementById(buttonIDs)
 	if ( !fullGroup) checkBtn.textContent = `Select ${dimensionX - selectedWords.length} Additional Words`
-	else checkBtn.textContent = 'Check Answer' 
+	else checkBtn.textContent = 'Check Answer'
 
 	updateButtonStyles(buttonIDs, fullGroup);
 	toggleCheckbox();
@@ -188,7 +188,6 @@ function toggleCheckbox() {
 				parent.addEventListener('click', () => {
 					if(selectedWords.length >=dimensionX) {
 						clickedTooMany = true;
-						console.log("setting clickedTooMany to true");
 					}
 					if(clickedTooMany && checkbox.disabled == true && toastIsFinished) showClickWarning();
 				})
