@@ -45,6 +45,7 @@ export let descriptionSet = new Set();
 export const placeholders = [
 	[
 		'Cell Organelles',
+		'Chloroplast',
 		'Nucleus',
 		'Mitochondria',
 		'Ribosome',
@@ -54,6 +55,7 @@ export const placeholders = [
 
 	[
 		'Natural Earth',
+		'Angel Falls',
 		'Sahara Desert',
 		'Amazon Rainforest',
 		'Himalayas',
@@ -63,6 +65,7 @@ export const placeholders = [
 
 	[
 		'Cyber Security',
+		'Hydra',
 		'Firewall',
 		'Pentesting',
 		'Zero Day',
@@ -72,6 +75,7 @@ export const placeholders = [
 
 	[
 		'Historical Events',
+		'The Great Depression',
 		'Civil Rights Movement',
 		'Berlin Wall',
 		'Signing of the Magna Carta',
@@ -81,6 +85,7 @@ export const placeholders = [
 
 	[
 		'Famous Scientists',
+		'Niel Degrasse Tyson',
 		'Einstein',
 		'Galileo',
 		'Tesla',
@@ -88,7 +93,15 @@ export const placeholders = [
 		'Maxwell',
 	],
 
-	['Units of Measurement', 'Newton', 'Joule', 'Watt', 'Pascal', 'Meter'],
+	[
+		'Units of Measurement',
+		'Ampere',
+		'Newton',
+		'Joule',
+		'Watt',
+		'Pascal',
+		'Meter',
+	],
 ];
 
 export function updateGameName() {
@@ -178,7 +191,7 @@ export function createDynamicInputs() {
 			wordInput.name = `Word${j + 1}-${i + 1}`;
 			wordInput.id = `Word${j + 1}-${i + 1}`;
 			wordInput.required = true;
-			wordInput.placeholder = placeholders[j][i];
+			wordInput.placeholder = placeholders[j][i+1];
 			wordInput.value = widgetState[`words${j + 1}`][i] || '';
 			wordCell.appendChild(wordInput);
 			wordCell.appendChild(duplicateWarning);
