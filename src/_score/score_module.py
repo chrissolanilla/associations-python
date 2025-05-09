@@ -1,6 +1,8 @@
 from scoring.module import ScoreModule
 import json
 
+from core.models import WidgetQset
+
 
 class Associations(ScoreModule):
     def __init__(self, play_id, instance, play=None):
@@ -14,16 +16,30 @@ class Associations(ScoreModule):
         """Loads questions and optionally sets lives from options"""
         super().load_questions(timestamp)
         widget_qset = self.instance.get_latest_qset()
-        if (
-            widget_qset
-            and isinstance(widget_qset.data, dict)
-            and "options" in widget_qset.data
-            and "lives" in widget_qset.data["options"]
-        ):
-            self.lives = widget_qset.data["options"]["lives"]
+
+        if not widget_qset:
+            print("No widget_qset found!")
+            return
+
+        try:
+            decoded_data = WidgetQset.decode_data(widget_qset.data)
+
+            if (
+                decoded_data
+                and isinstance(decoded_data, dict)
+                and "options" in decoded_data
+                and "lives" in decoded_data["options"]
+            ):
+                print(f"we in the if statement: {json.dumps(decoded_data, indent=2)}")
+                self.lives = decoded_data["options"]["lives"]
+            else:
+                print("WE DONT HAVE LIVES IN OPTIONS")
+                print("Decoded data:", decoded_data)
+
+        except Exception as e:
+            print(f"[ERROR] Failed to decode widget_qset data: {e}")
 
     def handle_log_question_answered(self, log):
-        # item_id = str(getattr(log, "item_id", log["item_id"]))
         item_id = str(log.item_id) if hasattr(log, "item_id") else str(log["item_id"])
 
 
@@ -36,14 +52,19 @@ class Associations(ScoreModule):
         self.scores[item_id] = score  # for base calculate_score()
 
         if score == 100:
+            print("our question is correct!")
+            print(f"lives left: {self.lives}")
             self.total_questions += 1
             self.verified_score += 100
         else:
+            print("our question is wrong!")
             if self.lives > 0:
                 self.lives -= 1
                 self.seen_wrong_answers[item_id] = (
                     log.text if hasattr(log, "text") else log["text"]
                 )
+
+                print(f"lives left: {self.lives}")
             else:
                 self.total_questions += 1
 
@@ -74,12 +95,25 @@ class Associations(ScoreModule):
 
         return 0
 
+    def calculate_score(self):
+        print("OVERIDING CALCULATE_SCORE")
+        print("OVERIDING CALCULATE_SCORE")
+        print("OVERIDING CALCULATE_SCORE")
+        print("OVERIDING CALCULATE_SCORE")
+        if self.lives > 0:
+            print(f"Our lives are over 0: {self.lives}")
+            self.calculated_percent = 100
+        else:
+            print(f"Our lives under 0: {self.lives}")
+            super().calculate_score()
+
+
     def contains_all(self, correct_list, user_list):
         return all(c in user_list for c in correct_list)
 
     def get_overview_items(self):
         items = []
-        items.append({"message": "Lives Used", "value": self.seen_wrong_answers.__len__()})
+        items.append({"message": "Points Lost", "value": 100 - self.calculated_percent})
         items.append({"message": "Final Score", "value": self.calculated_percent})
         return items
 
