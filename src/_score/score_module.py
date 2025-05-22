@@ -96,15 +96,9 @@ class Associations(ScoreModule):
         return 0
 
     def calculate_score(self):
-        print("OVERIDING CALCULATE_SCORE")
-        print("OVERIDING CALCULATE_SCORE")
-        print("OVERIDING CALCULATE_SCORE")
-        print("OVERIDING CALCULATE_SCORE")
         if self.lives > 0:
-            print(f"Our lives are over 0: {self.lives}")
             self.calculated_percent = 100
         else:
-            print(f"Our lives under 0: {self.lives}")
             super().calculate_score()
 
 
